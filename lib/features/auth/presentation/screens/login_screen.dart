@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:vehicle_calculator/features/auth/presentation/screens/register_screen.dart';
+import 'package:vehicle_calculator/features/shared/presentation/providers/locale_provider.dart';
+import 'package:vehicle_calculator/features/shared/presentation/providers/theme_provider.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_badge_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_button_widget.dart';
+import 'package:vehicle_calculator/features/shared/presentation/widgets/app_icon_toggle.dart';
+import 'package:vehicle_calculator/features/shared/presentation/widgets/app_scaffold.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_text_form_field.dart';
+import 'package:vehicle_calculator/l10n/app_localizations.dart';
 
 class LoginScreen extends StatelessWidget {
   static const screenName = '/login';
-  const new({super.key});
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    return Scaffold(
-      backgroundColor: colorScheme.surface,
-      body: _LoginScreenView()
+    return const AppScaffold(
+      body: _LoginScreenView(),
     );
   }
 }
@@ -23,19 +28,47 @@ class _LoginScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Column(
-          spacing: 12,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            _LoginViewHeader(),
-            _LoginForm(),
-            _LoginViewFooter()
-          ],
-        ),
+    return const Column(
+      spacing: 24,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        _LoginPreferences(),
+        _LoginViewHeader(),
+        _LoginForm(),
+        _LoginViewFooter(),
+      ],
+    );
+  }
+}
+
+class _LoginPreferences extends StatelessWidget {
+  const _LoginPreferences();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final themeProvider = context.watch<ThemeProvider>();
+    final localeProvider = context.watch<LocaleProvider>();
+
+    return Align(
+      alignment: Alignment.topRight,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        spacing: 12,
+        children: [
+          AppIconToggle(
+            icon: themeProvider.isDark
+                ? Icons.light_mode_outlined
+                : Icons.dark_mode_outlined,
+            tooltip: l10n.toggleTheme,
+            onTap: themeProvider.toggleTheme,
+          ),
+          AppIconToggle(
+            icon: Icons.translate_outlined,
+            tooltip: l10n.toggleLanguage,
+            onTap: localeProvider.toggleLocale,
+          ),
+        ],
       ),
     );
   }
@@ -47,31 +80,32 @@ class _LoginViewHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
+
     return Column(
       spacing: 12,
       children: [
-        // AppIconWidget(action: AppIconAction.profile),
         AppBadgeWidget(
-          label: 'PORTAL ACADÉMICO',
+          label: l10n.academicPortal,
           showDot: false,
           status: AppBadgeStatus.info,
         ),
         Text(
-          'Acarreo U',
+          // l10n.appName,
+          'App Name',
           style: theme.textTheme.titleLarge?.copyWith(
-            // fontFamily: '',
             fontSize: 32,
             fontWeight: FontWeight.w700,
           ),
         ),
         Text(
-          'Optimización de ciclo, pala y tolvas para minería e ingeniería civil',
+          l10n.appTagline,
           style: theme.textTheme.bodySmall?.copyWith(
             fontSize: 16,
           ),
           textAlign: TextAlign.center,
-        )
-      ]
+        ),
+      ],
     );
   }
 }
@@ -83,6 +117,8 @@ class _LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       decoration: BoxDecoration(
@@ -93,44 +129,42 @@ class _LoginForm extends StatelessWidget {
         spacing: 12,
         children: [
           AppTextFormField(
-            label: 'Correo Institucional',
-            hintText: 'alumno@uni.edu.pe',
+            label: l10n.institutionalEmail,
+            hintText: l10n.emailHint,
             prefixIcon: Icons.alternate_email,
             keyboardType: TextInputType.emailAddress,
-            // controller: emailController,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Ingresa tu correo';
+                return l10n.emailRequired;
               }
-
               return null;
             },
           ),
           AppTextFormField(
-            label: 'Contraseña',
+            label: l10n.password,
+            hintText: l10n.passwordHint,
             prefixIcon: Icons.lock_outline,
             suffixIcon: IconButton(
               onPressed: () {},
               icon: const Icon(Icons.visibility_outlined),
             ),
             obscureText: true,
-            // controller: passwordController,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Ingresa tu contraseña';
+                return l10n.passwordRequired;
               }
               return null;
             },
           ),
           const SizedBox(height: 6),
           AppButtonWidget(
-            label: 'Iniciar Sesion',
-            onPressed: (){},
+            label: l10n.signIn,
+            onPressed: () {},
             variant: AppButtonVariant.primary,
             icon: Icons.arrow_forward,
-          )
+          ),
         ],
-      )
+      ),
     );
   }
 }
@@ -142,27 +176,31 @@ class _LoginViewFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       spacing: 8,
       children: [
-        Text(
-          'Aún no tienes una cuenta?',
-          style: theme.textTheme.bodySmall?.copyWith(
-            fontSize: 16,
+        Flexible(
+          child: Text(
+            l10n.noAccount,
+            style: theme.textTheme.bodySmall?.copyWith(
+              fontSize: 16,
+            ),
           ),
         ),
         TextButton(
-          onPressed: (){},
+          onPressed: () => context.pushNamed(RegisterScreen.screenName),
           child: Text(
-            'Registrate aquí',
+            l10n.registerHere,
             style: theme.textTheme.bodySmall?.copyWith(
               fontSize: 16,
               color: colorScheme.primary,
             ),
           ),
-        )
-      ]
+        ),
+      ],
     );
   }
 }
