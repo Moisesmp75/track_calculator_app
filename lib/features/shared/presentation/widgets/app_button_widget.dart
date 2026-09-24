@@ -7,6 +7,7 @@ class AppButtonWidget extends StatelessWidget {
   final VoidCallback onPressed;
   final AppButtonVariant variant;
   final IconData? icon;
+  final IconData? trailingIcon;
   final double height;
 
   const AppButtonWidget({
@@ -15,6 +16,7 @@ class AppButtonWidget extends StatelessWidget {
     required this.onPressed,
     this.variant = AppButtonVariant.primary,
     this.icon,
+    this.trailingIcon,
     this.height = 56.0,
   });
 
@@ -64,6 +66,10 @@ class AppButtonWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            if (trailingIcon != null) ...[
+              Icon(trailingIcon, size: 20, color: fgColor),
+              const SizedBox(width: 8),
+            ],
             Text(
               label,
               style: theme.textTheme.labelLarge?.copyWith(

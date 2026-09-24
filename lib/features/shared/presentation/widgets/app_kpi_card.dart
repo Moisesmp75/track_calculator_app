@@ -7,6 +7,8 @@ class AppKpiCard extends StatelessWidget {
   final String unit;
   final String subtitle;
   final IconData icon;
+  final Color? iconColor;
+  final double? iconSize;
 
   const AppKpiCard({
     super.key,
@@ -15,6 +17,8 @@ class AppKpiCard extends StatelessWidget {
     required this.unit,
     required this.subtitle,
     required this.icon,
+    this.iconColor,
+    this.iconSize,
   });
 
   @override
@@ -23,7 +27,7 @@ class AppKpiCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return Container(
-      padding: const EdgeInsets.all(14.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(16),
@@ -43,16 +47,11 @@ class AppKpiCard extends StatelessWidget {
                   color: colorScheme.outline,
                   fontWeight: FontWeight.bold,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
-              Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  color: colorScheme.primaryContainer,
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Icon(icon, size: 14, color: colorScheme.primary),
-              ),
+              const SizedBox(width: 10),
+              Icon(icon, size: iconSize ?? 16, color: iconColor ?? colorScheme.outline),
             ],
           ),
           const SizedBox(height: 6),

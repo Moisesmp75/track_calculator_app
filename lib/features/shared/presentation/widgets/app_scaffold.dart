@@ -26,7 +26,7 @@ class AppScaffold extends StatelessWidget {
       body: SafeArea(
         bottom: false,
         child: Padding(
-          padding: bodyPadding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: bodyPadding ?? const EdgeInsets.symmetric(horizontal: 16),
           child: body ?? const SizedBox.shrink()
         )
       ),
