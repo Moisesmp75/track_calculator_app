@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vehicle_calculator/features/shared/presentation/providers/locale_provider.dart';
 import 'package:vehicle_calculator/features/shared/presentation/providers/theme_provider.dart';
 import 'package:vehicle_calculator/l10n/app_localizations.dart';
@@ -8,12 +9,15 @@ import 'package:vehicle_calculator/router/go_router.dart';
 import 'package:vehicle_calculator/theme/dark_theme.dart';
 import 'package:vehicle_calculator/theme/light_theme.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        ChangeNotifierProvider(create: (_) => LocaleProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider(prefs)),
+        ChangeNotifierProvider(create: (_) => LocaleProvider(prefs)),
       ],
       child: const MyApp(),
     ),
