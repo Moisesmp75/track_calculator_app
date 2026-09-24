@@ -40,7 +40,7 @@ class _CalculatorScreenView extends StatelessWidget {
         children: [
           Text(
             l10n.haulageSimulation,
-            style: theme.textTheme.bodySmall
+            style: theme.textTheme.bodyMedium
           ),
           Text(
             l10n.newCalculation,

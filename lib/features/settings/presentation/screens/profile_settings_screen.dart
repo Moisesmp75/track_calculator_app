@@ -55,7 +55,7 @@ class _ProfileSettingsScreenView extends StatelessWidget {
               ),
               Text(
                 l10n.settingsSubtitle,
-                style: theme.textTheme.bodySmall,
+                style: theme.textTheme.bodyMedium,
               ),
             ],
           ),
