@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:vehicle_calculator/features/auth/presentation/screens/register_screen.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/screens/calculator_screen.dart';
 import 'package:vehicle_calculator/features/shared/presentation/providers/locale_provider.dart';
 import 'package:vehicle_calculator/features/shared/presentation/providers/theme_provider.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_badge_widget.dart';
@@ -159,7 +160,7 @@ class _LoginForm extends StatelessWidget {
           const SizedBox(height: 6),
           AppButtonWidget(
             label: l10n.signIn,
-            onPressed: () {},
+            onPressed: () { context.goNamed(CalculatorScreen.screenName); },
             variant: AppButtonVariant.primary,
             icon: Icons.arrow_forward,
           ),
