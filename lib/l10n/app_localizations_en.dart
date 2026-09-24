@@ -91,4 +91,135 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get alreadyHaveAccount => 'Already have an account?';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get configuration => 'Configuration';
+
+  @override
+  String get settingsSubtitle => 'App preferences and account information';
+
+  @override
+  String get editPersonalData => 'Edit personal data';
+
+  @override
+  String get editPersonalDataSubtitle =>
+      'Edit personal data, email and password';
+
+  @override
+  String get interfacePreferences => 'INTERFACE PREFERENCES';
+
+  @override
+  String get systemLanguage => 'System language';
+
+  @override
+  String get spanishActive => 'Spanish active';
+
+  @override
+  String get englishActive => 'English active';
+
+  @override
+  String get spanishPe => 'Spanish (PE)';
+
+  @override
+  String get englishUs => 'English (US)';
+
+  @override
+  String get visualAppearance => 'Visual appearance';
+
+  @override
+  String get lightMode => 'Light mode';
+
+  @override
+  String get darkMode => 'Dark mode';
+
+  @override
+  String get accountAndSecurity => 'ACCOUNT AND SECURITY';
+
+  @override
+  String get changePassword => 'Change password';
+
+  @override
+  String get passwordLastModified => 'Last updated 3 months ago';
+
+  @override
+  String get signOut => 'Sign out';
+
+  @override
+  String get dangerZone => 'Danger zone';
+
+  @override
+  String get deleteAccountWarning =>
+      'Deleting your account will erase all your data, including the saved results history. This action cannot be undone.';
+
+  @override
+  String get deleteAccountTwoSteps => 'Delete account (2-step process)';
+
+  @override
+  String get calculate => 'Calculate';
+
+  @override
+  String get haulageSimulation => 'HAULAGE SIMULATION';
+
+  @override
+  String get newCalculation => 'New calculation';
+
+  @override
+  String get calculateFleetAndCycle => 'Calculate fleet and cycle';
+
+  @override
+  String get generalData => 'General data';
+
+  @override
+  String get optional => 'Optional';
+
+  @override
+  String get miningProject => 'Mining project / site';
+
+  @override
+  String get transportRoute => 'Transport route';
+
+  @override
+  String get operationParameters => 'Operation parameters';
+
+  @override
+  String get inSituMaterial => 'In-situ / swell material';
+
+  @override
+  String get selectMaterial => 'Select a material';
+
+  @override
+  String get haulageUnit => 'Haulage unit (dump truck)';
+
+  @override
+  String get selectUnit => 'Select a unit';
+
+  @override
+  String get outboundDistance => 'Outbound distance';
+
+  @override
+  String get loadingYield => 'Loading yield';
+
+  @override
+  String get loadedSpeed => 'Loaded speed';
+
+  @override
+  String get returnSpeed => 'Return speed';
+
+  @override
+  String get shiftHours => 'Shift hours';
+
+  @override
+  String get efficiency => 'Efficiency';
+
+  @override
+  String get costAnalysis => 'Cost analysis';
+
+  @override
+  String get estimateUnitRatios => 'Estimate unit ratios';
+
+  @override
+  String get history => 'History';
 }

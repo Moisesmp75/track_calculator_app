@@ -259,6 +259,264 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'¿Ya tienes una cuenta?'**
   String get alreadyHaveAccount;
+
+  /// No description provided for @settings.
+  ///
+  /// In es, this message translates to:
+  /// **'Ajustes'**
+  String get settings;
+
+  /// No description provided for @configuration.
+  ///
+  /// In es, this message translates to:
+  /// **'Configuración'**
+  String get configuration;
+
+  /// No description provided for @settingsSubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Preferencias de la aplicación e información de la cuenta'**
+  String get settingsSubtitle;
+
+  /// No description provided for @editPersonalData.
+  ///
+  /// In es, this message translates to:
+  /// **'Editar datos personales'**
+  String get editPersonalData;
+
+  /// No description provided for @editPersonalDataSubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Editar datos personales, correo electrónico y contraseña'**
+  String get editPersonalDataSubtitle;
+
+  /// No description provided for @interfacePreferences.
+  ///
+  /// In es, this message translates to:
+  /// **'PREFERENCIAS DE INTERFAZ'**
+  String get interfacePreferences;
+
+  /// No description provided for @systemLanguage.
+  ///
+  /// In es, this message translates to:
+  /// **'Idioma del Sistema'**
+  String get systemLanguage;
+
+  /// No description provided for @spanishActive.
+  ///
+  /// In es, this message translates to:
+  /// **'Español activo'**
+  String get spanishActive;
+
+  /// No description provided for @englishActive.
+  ///
+  /// In es, this message translates to:
+  /// **'English activo'**
+  String get englishActive;
+
+  /// No description provided for @spanishPe.
+  ///
+  /// In es, this message translates to:
+  /// **'Español (PE)'**
+  String get spanishPe;
+
+  /// No description provided for @englishUs.
+  ///
+  /// In es, this message translates to:
+  /// **'English (US)'**
+  String get englishUs;
+
+  /// No description provided for @visualAppearance.
+  ///
+  /// In es, this message translates to:
+  /// **'Apariencia Visual'**
+  String get visualAppearance;
+
+  /// No description provided for @lightMode.
+  ///
+  /// In es, this message translates to:
+  /// **'Modo Claro'**
+  String get lightMode;
+
+  /// No description provided for @darkMode.
+  ///
+  /// In es, this message translates to:
+  /// **'Modo Oscuro'**
+  String get darkMode;
+
+  /// No description provided for @accountAndSecurity.
+  ///
+  /// In es, this message translates to:
+  /// **'CUENTA Y SEGURIDAD'**
+  String get accountAndSecurity;
+
+  /// No description provided for @changePassword.
+  ///
+  /// In es, this message translates to:
+  /// **'Cambiar contraseña'**
+  String get changePassword;
+
+  /// No description provided for @passwordLastModified.
+  ///
+  /// In es, this message translates to:
+  /// **'Última modificación hace 3 meses'**
+  String get passwordLastModified;
+
+  /// No description provided for @signOut.
+  ///
+  /// In es, this message translates to:
+  /// **'Cerrar Sesión'**
+  String get signOut;
+
+  /// No description provided for @dangerZone.
+  ///
+  /// In es, this message translates to:
+  /// **'Zona de Riesgo'**
+  String get dangerZone;
+
+  /// No description provided for @deleteAccountWarning.
+  ///
+  /// In es, this message translates to:
+  /// **'Al borrar tu cuenta se borrarán todos tus datos, incluyendo el historial de resultados guardados. Esta acción no puede ser revertida.'**
+  String get deleteAccountWarning;
+
+  /// No description provided for @deleteAccountTwoSteps.
+  ///
+  /// In es, this message translates to:
+  /// **'Eliminar cuenta (proceso de 2 pasos)'**
+  String get deleteAccountTwoSteps;
+
+  /// No description provided for @calculate.
+  ///
+  /// In es, this message translates to:
+  /// **'Calcular'**
+  String get calculate;
+
+  /// No description provided for @haulageSimulation.
+  ///
+  /// In es, this message translates to:
+  /// **'SIMULACIÓN DE ACARREO'**
+  String get haulageSimulation;
+
+  /// No description provided for @newCalculation.
+  ///
+  /// In es, this message translates to:
+  /// **'Nuevo Cálculo'**
+  String get newCalculation;
+
+  /// No description provided for @calculateFleetAndCycle.
+  ///
+  /// In es, this message translates to:
+  /// **'Calcular Flota y Ciclo'**
+  String get calculateFleetAndCycle;
+
+  /// No description provided for @generalData.
+  ///
+  /// In es, this message translates to:
+  /// **'Datos Generales'**
+  String get generalData;
+
+  /// No description provided for @optional.
+  ///
+  /// In es, this message translates to:
+  /// **'Opcional'**
+  String get optional;
+
+  /// No description provided for @miningProject.
+  ///
+  /// In es, this message translates to:
+  /// **'Proyecto Minero / Obra'**
+  String get miningProject;
+
+  /// No description provided for @transportRoute.
+  ///
+  /// In es, this message translates to:
+  /// **'Ruta de Transporte'**
+  String get transportRoute;
+
+  /// No description provided for @operationParameters.
+  ///
+  /// In es, this message translates to:
+  /// **'Parámetros de Operación'**
+  String get operationParameters;
+
+  /// No description provided for @inSituMaterial.
+  ///
+  /// In es, this message translates to:
+  /// **'Material In Situ / Esponjado'**
+  String get inSituMaterial;
+
+  /// No description provided for @selectMaterial.
+  ///
+  /// In es, this message translates to:
+  /// **'Selecciona un material'**
+  String get selectMaterial;
+
+  /// No description provided for @haulageUnit.
+  ///
+  /// In es, this message translates to:
+  /// **'Unidad de Acarreo (Volquete)'**
+  String get haulageUnit;
+
+  /// No description provided for @selectUnit.
+  ///
+  /// In es, this message translates to:
+  /// **'Selecciona una unidad'**
+  String get selectUnit;
+
+  /// No description provided for @outboundDistance.
+  ///
+  /// In es, this message translates to:
+  /// **'Distancia ida'**
+  String get outboundDistance;
+
+  /// No description provided for @loadingYield.
+  ///
+  /// In es, this message translates to:
+  /// **'Rend. Carguío'**
+  String get loadingYield;
+
+  /// No description provided for @loadedSpeed.
+  ///
+  /// In es, this message translates to:
+  /// **'Vel. Cargado'**
+  String get loadedSpeed;
+
+  /// No description provided for @returnSpeed.
+  ///
+  /// In es, this message translates to:
+  /// **'Vel. Retorno'**
+  String get returnSpeed;
+
+  /// No description provided for @shiftHours.
+  ///
+  /// In es, this message translates to:
+  /// **'Jornada Turno'**
+  String get shiftHours;
+
+  /// No description provided for @efficiency.
+  ///
+  /// In es, this message translates to:
+  /// **'Eficiencia'**
+  String get efficiency;
+
+  /// No description provided for @costAnalysis.
+  ///
+  /// In es, this message translates to:
+  /// **'Análisis de Costos'**
+  String get costAnalysis;
+
+  /// No description provided for @estimateUnitRatios.
+  ///
+  /// In es, this message translates to:
+  /// **'Estimar ratios unitarios'**
+  String get estimateUnitRatios;
+
+  /// No description provided for @history.
+  ///
+  /// In es, this message translates to:
+  /// **'Historial'**
+  String get history;
 }
 
 class _AppLocalizationsDelegate
