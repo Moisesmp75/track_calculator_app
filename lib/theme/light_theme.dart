@@ -74,21 +74,24 @@ final ThemeData lightTheme = ThemeData(
 
   // Campos de Texto / Inputs
   inputDecorationTheme: InputDecorationThemeData(
-    filled: true,
-    fillColor: const Color(0xFFFFFFFF),
+    // filled: true,
+    // fillColor: const Color(0xFFFFFFFF),
     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(14),
-      borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(14),
-      borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(14),
-      borderSide: const BorderSide(color: Color(0xFF0D9488), width: 2),
-    ),
+    border: InputBorder.none,
+    
+    // border: OutlineInputBorder(
+    //   borderRadius: BorderRadius.circular(14),
+    //   borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+    // ),
+    // enabledBorder: OutlineInputBorder(
+    //   borderRadius: BorderRadius.circular(14),
+    //   borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+    // ),
+    // focusedBorder: OutlineInputBorder(
+    //   borderRadius: BorderRadius.circular(14),
+    //   borderSide: const BorderSide(color: Color(0xFF0D9488), width: 2),
+    // ),
     hintStyle: const TextStyle(color: Color(0xFF94A3B8)),
+    
   ),
 );

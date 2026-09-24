@@ -23,6 +23,11 @@ final ColorScheme darkColorScheme = const ColorScheme(
   surface: Color(0xFF0B141E),
   onSurface: Color(0xFFDAE3F1),
   onSurfaceVariant: Color(0xFFBBCAC6),
+  surfaceContainerLowest: Color(0xFF111A24),
+  surfaceContainerLow: Color(0xFF16202C),
+  surfaceContainer: Color(0xFF1A2533),
+  surfaceContainerHigh: Color(0xFF1E2D3D),
+  surfaceContainerHighest: Color(0xFF243548),
   outline: Color(0xFF859490),
   outlineVariant: Color(0xFF3C4947),
   inverseSurface: Color(0xFFDAE3F1),
@@ -48,7 +53,6 @@ final ThemeData darkTheme = ThemeData(
     ),
   ),
 
-  // Botón Principal Nocturno
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       backgroundColor: const Color(0xFF14B8A6),
@@ -62,23 +66,24 @@ final ThemeData darkTheme = ThemeData(
     ),
   ),
 
-  // Inputs Nocturnos
+
   inputDecorationTheme: InputDecorationThemeData(
-    filled: true,
-    fillColor: const Color(0xFF111A24),
+    // filled: true,
+    // fillColor: const Color(0xFF111A24),
     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(color: Color(0xFF243548)),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(color: Color(0xFF243548)),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(color: Color(0xFF2DD4BF), width: 1.5),
-    ),
+    border: InputBorder.none,
+    // border: OutlineInputBorder(
+    //   borderRadius: BorderRadius.circular(8),
+    //   borderSide: const BorderSide(color: Color(0xFF243548)),
+    // ),
+    // enabledBorder: OutlineInputBorder(
+    //   borderRadius: BorderRadius.circular(8),
+    //   borderSide: const BorderSide(color: Color(0xFF243548)),
+    // ),
+    // focusedBorder: OutlineInputBorder(
+    //   borderRadius: BorderRadius.circular(8),
+    //   borderSide: const BorderSide(color: Color(0xFF2DD4BF), width: 1.5),
+    // ),
     hintStyle: const TextStyle(color: Color(0xFF475569)),
   ),
 );

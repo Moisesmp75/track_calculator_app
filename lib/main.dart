@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:vehicle_calculator/features/shared/presentation/providers/locale_provider.dart';
+import 'package:vehicle_calculator/features/shared/presentation/providers/theme_provider.dart';
+import 'package:vehicle_calculator/l10n/app_localizations.dart';
 import 'package:vehicle_calculator/router/go_router.dart';
-// import 'package:vehicle_calculator/theme/dark_theme.dart';
-
+import 'package:vehicle_calculator/theme/dark_theme.dart';
 import 'package:vehicle_calculator/theme/light_theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => LocaleProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -13,9 +25,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = context.watch<ThemeProvider>();
+    final localeProvider = context.watch<LocaleProvider>();
+
     return MaterialApp.router(
-      title: 'Flutter Demo',
-      theme: ThemeData(colorScheme: lightColorScheme),
+      title: 'Acarreo U',
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: themeProvider.themeMode,
+      locale: localeProvider.locale,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       routerConfig: goRouter,
       debugShowCheckedModeBanner: false,
     );
