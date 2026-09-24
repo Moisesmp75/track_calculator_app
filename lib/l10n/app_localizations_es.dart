@@ -91,4 +91,136 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
+
+  @override
+  String get settings => 'Ajustes';
+
+  @override
+  String get configuration => 'Configuración';
+
+  @override
+  String get settingsSubtitle =>
+      'Preferencias de la aplicación e información de la cuenta';
+
+  @override
+  String get editPersonalData => 'Editar datos personales';
+
+  @override
+  String get editPersonalDataSubtitle =>
+      'Editar datos personales, correo electrónico y contraseña';
+
+  @override
+  String get interfacePreferences => 'PREFERENCIAS DE INTERFAZ';
+
+  @override
+  String get systemLanguage => 'Idioma del Sistema';
+
+  @override
+  String get spanishActive => 'Español activo';
+
+  @override
+  String get englishActive => 'English activo';
+
+  @override
+  String get spanishPe => 'Español (PE)';
+
+  @override
+  String get englishUs => 'English (US)';
+
+  @override
+  String get visualAppearance => 'Apariencia Visual';
+
+  @override
+  String get lightMode => 'Modo Claro';
+
+  @override
+  String get darkMode => 'Modo Oscuro';
+
+  @override
+  String get accountAndSecurity => 'CUENTA Y SEGURIDAD';
+
+  @override
+  String get changePassword => 'Cambiar contraseña';
+
+  @override
+  String get passwordLastModified => 'Última modificación hace 3 meses';
+
+  @override
+  String get signOut => 'Cerrar Sesión';
+
+  @override
+  String get dangerZone => 'Zona de Riesgo';
+
+  @override
+  String get deleteAccountWarning =>
+      'Al borrar tu cuenta se borrarán todos tus datos, incluyendo el historial de resultados guardados. Esta acción no puede ser revertida.';
+
+  @override
+  String get deleteAccountTwoSteps => 'Eliminar cuenta (proceso de 2 pasos)';
+
+  @override
+  String get calculate => 'Calcular';
+
+  @override
+  String get haulageSimulation => 'SIMULACIÓN DE ACARREO';
+
+  @override
+  String get newCalculation => 'Nuevo Cálculo';
+
+  @override
+  String get calculateFleetAndCycle => 'Calcular Flota y Ciclo';
+
+  @override
+  String get generalData => 'Datos Generales';
+
+  @override
+  String get optional => 'Opcional';
+
+  @override
+  String get miningProject => 'Proyecto Minero / Obra';
+
+  @override
+  String get transportRoute => 'Ruta de Transporte';
+
+  @override
+  String get operationParameters => 'Parámetros de Operación';
+
+  @override
+  String get inSituMaterial => 'Material In Situ / Esponjado';
+
+  @override
+  String get selectMaterial => 'Selecciona un material';
+
+  @override
+  String get haulageUnit => 'Unidad de Acarreo (Volquete)';
+
+  @override
+  String get selectUnit => 'Selecciona una unidad';
+
+  @override
+  String get outboundDistance => 'Distancia ida';
+
+  @override
+  String get loadingYield => 'Rend. Carguío';
+
+  @override
+  String get loadedSpeed => 'Vel. Cargado';
+
+  @override
+  String get returnSpeed => 'Vel. Retorno';
+
+  @override
+  String get shiftHours => 'Jornada Turno';
+
+  @override
+  String get efficiency => 'Eficiencia';
+
+  @override
+  String get costAnalysis => 'Análisis de Costos';
+
+  @override
+  String get estimateUnitRatios => 'Estimar ratios unitarios';
+
+  @override
+  String get history => 'Historial';
 }
