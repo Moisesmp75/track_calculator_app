@@ -222,4 +222,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get history => 'History';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get networkError =>
+      'Could not connect to the server. Please try again.';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get invalidBirthDateFormat => 'Use the dd/mm/yyyy format';
+
+  @override
+  String get registerSuccess => 'Account created. Sign in to continue.';
 }

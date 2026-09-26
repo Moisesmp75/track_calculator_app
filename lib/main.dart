@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vehicle_calculator/features/shared/presentation/providers/locale_provider.dart';
-import 'package:vehicle_calculator/features/shared/presentation/providers/theme_provider.dart';
+import 'package:vehicle_calculator/core/di/core_providers.dart';
+import 'package:vehicle_calculator/features/shared/presentation/viewmodels/locale_view_model.dart';
+import 'package:vehicle_calculator/features/shared/presentation/viewmodels/theme_view_model.dart';
 import 'package:vehicle_calculator/l10n/app_localizations.dart';
 import 'package:vehicle_calculator/router/go_router.dart';
 import 'package:vehicle_calculator/theme/dark_theme.dart';
@@ -14,30 +15,29 @@ Future<void> main() async {
   final prefs = await SharedPreferences.getInstance();
 
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => ThemeProvider(prefs)),
-        ChangeNotifierProvider(create: (_) => LocaleProvider(prefs)),
+    ProviderScope(
+      overrides: [
+        sharedPreferencesProvider.overrideWithValue(prefs),
       ],
       child: const MyApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final themeProvider = context.watch<ThemeProvider>();
-    final localeProvider = context.watch<LocaleProvider>();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeViewModelProvider);
+    final locale = ref.watch(localeViewModelProvider);
 
     return MaterialApp.router(
       title: 'Acarreo U',
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: themeProvider.themeMode,
-      locale: localeProvider.locale,
+      themeMode: themeMode,
+      locale: locale,
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: const [
         AppLocalizations.delegate,

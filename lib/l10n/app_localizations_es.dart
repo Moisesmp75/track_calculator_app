@@ -223,4 +223,20 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get history => 'Historial';
+
+  @override
+  String get fieldRequired => 'Este campo es obligatorio';
+
+  @override
+  String get networkError =>
+      'No se pudo conectar con el servidor. Inténtalo de nuevo.';
+
+  @override
+  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
+
+  @override
+  String get invalidBirthDateFormat => 'Usa el formato dd/mm/aaaa';
+
+  @override
+  String get registerSuccess => 'Cuenta creada. Inicia sesión para continuar.';
 }

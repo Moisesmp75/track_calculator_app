@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:vehicle_calculator/features/auth/presentation/screens/login_screen.dart';
-import 'package:vehicle_calculator/features/shared/presentation/providers/locale_provider.dart';
-import 'package:vehicle_calculator/features/shared/presentation/providers/theme_provider.dart';
+import 'package:vehicle_calculator/features/auth/presentation/viewmodels/auth_view_model.dart';
+import 'package:vehicle_calculator/features/shared/presentation/viewmodels/locale_view_model.dart';
+import 'package:vehicle_calculator/features/shared/presentation/viewmodels/theme_view_model.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_badge_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_button_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_icon_widget.dart';
@@ -142,15 +143,17 @@ class _PersonalInformationSection extends StatelessWidget {
   }
 }
 
-class _PreferencesSection extends StatelessWidget {
+class _PreferencesSection extends ConsumerWidget {
   const _PreferencesSection();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
-    final localeProvider = context.watch<LocaleProvider>();
-    final themeProvider = context.watch<ThemeProvider>();
+    final locale = ref.watch(localeViewModelProvider);
+    final themeMode = ref.watch(themeViewModelProvider);
+    final isSpanish = locale.languageCode == 'es';
+    final isDark = themeMode == ThemeMode.dark;
 
     return Column(
       spacing: 12,
@@ -163,10 +166,8 @@ class _PreferencesSection extends StatelessWidget {
             children: [
               AppToogleSwitchDual<String>(
                 title: l10n.systemLanguage,
-                statusText: localeProvider.isSpanish
-                    ? l10n.spanishActive
-                    : l10n.englishActive,
-                selectedValue: localeProvider.locale.languageCode,
+                statusText: isSpanish ? l10n.spanishActive : l10n.englishActive,
+                selectedValue: locale.languageCode,
                 option1: ToogleSwitchDualOption(
                   value: 'es',
                   label: l10n.spanishPe,
@@ -178,13 +179,13 @@ class _PreferencesSection extends StatelessWidget {
                   icon: Icons.translate,
                 ),
                 valueChanged: (val) {
-                  context.read<LocaleProvider>().setLocale(Locale(val));
+                  ref.read(localeViewModelProvider.notifier).setLocale(Locale(val));
                 },
               ),
               AppToogleSwitchDual<ThemeMode>(
                 title: l10n.visualAppearance,
-                statusText: themeProvider.isDark ? l10n.darkMode : l10n.lightMode,
-                selectedValue: themeProvider.themeMode,
+                statusText: isDark ? l10n.darkMode : l10n.lightMode,
+                selectedValue: themeMode,
                 option1: ToogleSwitchDualOption(
                   value: ThemeMode.light,
                   label: l10n.lightMode,
@@ -196,7 +197,7 @@ class _PreferencesSection extends StatelessWidget {
                   icon: Icons.dark_mode_outlined,
                 ),
                 valueChanged: (mode) {
-                  context.read<ThemeProvider>().setThemeMode(mode);
+                  ref.read(themeViewModelProvider.notifier).setThemeMode(mode);
                 },
               ),
             ],
@@ -207,11 +208,11 @@ class _PreferencesSection extends StatelessWidget {
   }
 }
 
-class _AccountAndSecuritySection extends StatelessWidget {
+class _AccountAndSecuritySection extends ConsumerWidget {
   const _AccountAndSecuritySection();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
     return Column(
@@ -254,8 +255,11 @@ class _AccountAndSecuritySection extends StatelessWidget {
               ),
               AppButtonWidget(
                 label: l10n.signOut,
-                onPressed: () {
-                  context.goNamed(LoginScreen.screenName);
+                onPressed: () async {
+                  await ref.read(authViewModelProvider.notifier).logout();
+                  if (context.mounted) {
+                    context.goNamed(LoginScreen.screenName);
+                  }
                 },
                 trailingIcon: Icons.logout,
                 variant: AppButtonVariant.primary,

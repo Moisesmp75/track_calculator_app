@@ -69,5 +69,10 @@
   "efficiency": "Efficiency",
   "costAnalysis": "Cost analysis",
   "estimateUnitRatios": "Estimate unit ratios",
-  "history": "History"
+  "history": "History",
+  "fieldRequired": "This field is required",
+  "networkError": "Could not connect to the server. Please try again.",
+  "passwordsDoNotMatch": "Passwords do not match",
+  "invalidBirthDateFormat": "Use the dd/mm/yyyy format",
+  "registerSuccess": "Account created. Sign in to continue."
 }

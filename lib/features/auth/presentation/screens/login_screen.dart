@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:vehicle_calculator/features/auth/presentation/screens/register_screen.dart';
+import 'package:vehicle_calculator/features/auth/presentation/viewmodels/auth_view_model.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/screens/calculator_screen.dart';
-import 'package:vehicle_calculator/features/shared/presentation/providers/locale_provider.dart';
-import 'package:vehicle_calculator/features/shared/presentation/providers/theme_provider.dart';
+import 'package:vehicle_calculator/features/shared/presentation/viewmodels/locale_view_model.dart';
+import 'package:vehicle_calculator/features/shared/presentation/viewmodels/theme_view_model.dart';
+import 'package:vehicle_calculator/features/shared/presentation/extensions/snackbar_extension.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_badge_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_button_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_icon_toggle.dart';
@@ -29,27 +31,30 @@ class _LoginScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      spacing: 24,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        _LoginPreferences(),
-        _LoginViewHeader(),
-        _LoginForm(),
-        _LoginViewFooter(),
-      ],
+    return const SingleChildScrollView(
+      child: Column(
+        spacing: 24,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _LoginPreferences(),
+          _LoginViewHeader(),
+          _LoginForm(),
+          _LoginViewFooter(),
+        ],
+      ),
     );
   }
 }
 
-class _LoginPreferences extends StatelessWidget {
+class _LoginPreferences extends ConsumerWidget {
   const _LoginPreferences();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final themeProvider = context.watch<ThemeProvider>();
-    final localeProvider = context.watch<LocaleProvider>();
+    final themeMode = ref.watch(themeViewModelProvider);
+    final themeViewModel = ref.read(themeViewModelProvider.notifier);
+    final localeViewModel = ref.read(localeViewModelProvider.notifier);
 
     return Align(
       alignment: Alignment.topRight,
@@ -58,16 +63,16 @@ class _LoginPreferences extends StatelessWidget {
         spacing: 12,
         children: [
           AppIconToggle(
-            icon: themeProvider.isDark
+            icon: themeMode == ThemeMode.dark
                 ? Icons.light_mode_outlined
                 : Icons.dark_mode_outlined,
             tooltip: l10n.toggleTheme,
-            onTap: themeProvider.toggleTheme,
+            onTap: themeViewModel.toggleTheme,
           ),
           AppIconToggle(
             icon: Icons.translate_outlined,
             tooltip: l10n.toggleLanguage,
-            onTap: localeProvider.toggleLocale,
+            onTap: localeViewModel.toggleLocale,
           ),
         ],
       ),
@@ -111,60 +116,115 @@ class _LoginViewHeader extends StatelessWidget {
   }
 }
 
-class _LoginForm extends StatelessWidget {
+class _LoginForm extends ConsumerStatefulWidget {
   const _LoginForm();
+
+  @override
+  ConsumerState<_LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends ConsumerState<_LoginForm> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _obscurePassword = true;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    final l10n = AppLocalizations.of(context);
+    final auth = ref.read(authViewModelProvider.notifier);
+    final success = await auth.signIn(
+      email: _emailController.text,
+      password: _passwordController.text,
+      networkErrorMessage: l10n.networkError,
+    );
+    if (!mounted) return;
+
+    if (success) {
+      context.goNamed(CalculatorScreen.screenName);
+      return;
+    }
+
+    final message = ref.read(authViewModelProvider).errorMessage;
+    if (message != null) {
+      context.showSnackBar(message: message);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final l10n = AppLocalizations.of(context);
+    final isLoading = ref.watch(authViewModelProvider).isLoading;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-      decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerLowest,
-        borderRadius: BorderRadius.circular(32),
-      ),
-      child: Column(
-        spacing: 12,
-        children: [
-          AppTextFormField(
-            label: l10n.institutionalEmail,
-            hintText: l10n.emailHint,
-            prefixIcon: Icons.alternate_email,
-            keyboardType: TextInputType.emailAddress,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return l10n.emailRequired;
-              }
-              return null;
-            },
-          ),
-          AppTextFormField(
-            label: l10n.password,
-            hintText: l10n.passwordHint,
-            prefixIcon: Icons.lock_outline,
-            suffixIcon: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.visibility_outlined),
+    return Form(
+      key: _formKey,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainerLowest,
+          borderRadius: BorderRadius.circular(32),
+        ),
+        child: Column(
+          spacing: 12,
+          children: [
+            AppTextFormField(
+              label: l10n.institutionalEmail,
+              hintText: l10n.emailHint,
+              controller: _emailController,
+              prefixIcon: Icons.alternate_email,
+              keyboardType: TextInputType.emailAddress,
+              enabled: !isLoading,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return l10n.emailRequired;
+                }
+                return null;
+              },
             ),
-            obscureText: true,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return l10n.passwordRequired;
-              }
-              return null;
-            },
-          ),
-          const SizedBox(height: 6),
-          AppButtonWidget(
-            label: l10n.signIn,
-            onPressed: () { context.goNamed(CalculatorScreen.screenName); },
-            variant: AppButtonVariant.primary,
-            icon: Icons.arrow_forward,
-          ),
-        ],
+            AppTextFormField(
+              label: l10n.password,
+              hintText: l10n.passwordHint,
+              controller: _passwordController,
+              prefixIcon: Icons.lock_outline,
+              enabled: !isLoading,
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() => _obscurePassword = !_obscurePassword);
+                },
+                icon: Icon(
+                  _obscurePassword
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                ),
+              ),
+              obscureText: _obscurePassword,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return l10n.passwordRequired;
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 6),
+            AppButtonWidget(
+              label: l10n.signIn,
+              onPressed: _submit,
+              isLoading: isLoading,
+              variant: AppButtonVariant.primary,
+              icon: Icons.arrow_forward,
+            ),
+          ],
+        ),
       ),
     );
   }

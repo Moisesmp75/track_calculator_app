@@ -9,7 +9,7 @@ import 'package:vehicle_calculator/features/shared/presentation/screens/splash_s
 import 'package:vehicle_calculator/features/shared/presentation/widgets/main_layout.dart';
 
 final goRouter = GoRouter(
-  initialLocation: LoginScreen.screenName,
+  initialLocation: SplashScreen.screenName,
   routes: [
     GoRoute(
       name: SplashScreen.screenName,

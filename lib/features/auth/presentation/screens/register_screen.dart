@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vehicle_calculator/features/auth/presentation/screens/login_screen.dart';
+import 'package:vehicle_calculator/features/auth/presentation/viewmodels/auth_view_model.dart';
+import 'package:vehicle_calculator/features/auth/presentation/utils/born_date_parser.dart';
+import 'package:vehicle_calculator/features/shared/presentation/extensions/snackbar_extension.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_badge_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_button_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_scaffold.dart';
@@ -70,78 +74,204 @@ class _RegisterViewHeader extends StatelessWidget {
   }
 }
 
-class _RegisterForm extends StatelessWidget {
+class _RegisterForm extends ConsumerStatefulWidget {
   const _RegisterForm();
+
+  @override
+  ConsumerState<_RegisterForm> createState() => _RegisterFormState();
+}
+
+class _RegisterFormState extends ConsumerState<_RegisterForm> {
+  final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _bornDateController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _lastNameController.dispose();
+    _bornDateController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    final l10n = AppLocalizations.of(context);
+    final bornDate = toIsoBornDate(_bornDateController.text);
+    if (bornDate == null) {
+      context.showSnackBar(message: l10n.invalidBirthDateFormat);
+      return;
+    }
+
+    final auth = ref.read(authViewModelProvider.notifier);
+    final success = await auth.signUp(
+      email: _emailController.text,
+      password: _passwordController.text,
+      name: _nameController.text,
+      lastName: _lastNameController.text,
+      bornDate: bornDate,
+      networkErrorMessage: l10n.networkError,
+    );
+    if (!mounted) return;
+
+    if (success) {
+      context.showSnackBar(message: l10n.registerSuccess);
+      context.goNamed(LoginScreen.screenName);
+      return;
+    }
+
+    final message = ref.read(authViewModelProvider).errorMessage;
+    if (message != null) {
+      context.showSnackBar(message: message);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final l10n = AppLocalizations.of(context);
+    final isLoading = ref.watch(authViewModelProvider).isLoading;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-      decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerLowest,
-        borderRadius: BorderRadius.circular(32),
-      ),
-      child: Column(
-        spacing: 12,
-        children: [
-          AppTextFormField(
-            label: l10n.firstNames,
-            prefixIcon: Icons.person,
-            keyboardType: TextInputType.name,
-            hintText: l10n.firstNamesHint,
-          ),
-          AppTextFormField(
-            label: l10n.lastNames,
-            prefixIcon: Icons.person,
-            keyboardType: TextInputType.name,
-            hintText: l10n.lastNamesHint,
-          ),
-          AppTextFormField(
-            label: l10n.birthDate,
-            prefixIcon: Icons.calendar_month,
-            keyboardType: TextInputType.number,
-            hintText: l10n.birthDateHint,
-          ),
-          AppTextFormField(
-            label: l10n.email,
-            prefixIcon: Icons.alternate_email,
-            keyboardType: TextInputType.emailAddress,
-            hintText: l10n.emailPersonalHint,
-          ),
-          AppTextFormField(
-            label: l10n.password,
-            prefixIcon: Icons.lock_outline,
-            suffixIcon: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.visibility_outlined),
+    return Form(
+      key: _formKey,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainerLowest,
+          borderRadius: BorderRadius.circular(32),
+        ),
+        child: Column(
+          spacing: 12,
+          children: [
+            AppTextFormField(
+              label: l10n.firstNames,
+              controller: _nameController,
+              prefixIcon: Icons.person,
+              keyboardType: TextInputType.name,
+              hintText: l10n.firstNamesHint,
+              enabled: !isLoading,
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return l10n.fieldRequired;
+                }
+                return null;
+              },
             ),
-            keyboardType: TextInputType.visiblePassword,
-            hintText: l10n.passwordHint,
-            obscureText: true,
-          ),
-          AppTextFormField(
-            label: l10n.confirmPassword,
-            prefixIcon: Icons.lock_outline,
-            suffixIcon: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.visibility_outlined),
+            AppTextFormField(
+              label: l10n.lastNames,
+              controller: _lastNameController,
+              prefixIcon: Icons.person,
+              keyboardType: TextInputType.name,
+              hintText: l10n.lastNamesHint,
+              enabled: !isLoading,
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return l10n.fieldRequired;
+                }
+                return null;
+              },
             ),
-            keyboardType: TextInputType.visiblePassword,
-            hintText: l10n.passwordHint,
-            obscureText: true,
-          ),
-          const SizedBox(height: 12),
-          AppButtonWidget(
-            label: l10n.createAccount,
-            onPressed: () {},
-            variant: AppButtonVariant.primary,
-            icon: Icons.arrow_forward,
-          ),
-        ],
+            AppTextFormField(
+              label: l10n.birthDate,
+              controller: _bornDateController,
+              prefixIcon: Icons.calendar_month,
+              keyboardType: TextInputType.datetime,
+              hintText: l10n.birthDateHint,
+              enabled: !isLoading,
+              validator: (value) {
+                if (value == null || toIsoBornDate(value) == null) {
+                  return l10n.invalidBirthDateFormat;
+                }
+                return null;
+              },
+            ),
+            AppTextFormField(
+              label: l10n.email,
+              controller: _emailController,
+              prefixIcon: Icons.alternate_email,
+              keyboardType: TextInputType.emailAddress,
+              hintText: l10n.emailPersonalHint,
+              enabled: !isLoading,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return l10n.emailRequired;
+                }
+                return null;
+              },
+            ),
+            AppTextFormField(
+              label: l10n.password,
+              controller: _passwordController,
+              prefixIcon: Icons.lock_outline,
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() => _obscurePassword = !_obscurePassword);
+                },
+                icon: Icon(
+                  _obscurePassword
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                ),
+              ),
+              keyboardType: TextInputType.visiblePassword,
+              hintText: l10n.passwordHint,
+              obscureText: _obscurePassword,
+              enabled: !isLoading,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return l10n.passwordRequired;
+                }
+                return null;
+              },
+            ),
+            AppTextFormField(
+              label: l10n.confirmPassword,
+              controller: _confirmPasswordController,
+              prefixIcon: Icons.lock_outline,
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _obscureConfirmPassword = !_obscureConfirmPassword;
+                  });
+                },
+                icon: Icon(
+                  _obscureConfirmPassword
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                ),
+              ),
+              keyboardType: TextInputType.visiblePassword,
+              hintText: l10n.passwordHint,
+              obscureText: _obscureConfirmPassword,
+              enabled: !isLoading,
+              validator: (value) {
+                if (value != _passwordController.text) {
+                  return l10n.passwordsDoNotMatch;
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 12),
+            AppButtonWidget(
+              label: l10n.createAccount,
+              onPressed: _submit,
+              isLoading: isLoading,
+              variant: AppButtonVariant.primary,
+              icon: Icons.arrow_forward,
+            ),
+          ],
+        ),
       ),
     );
   }

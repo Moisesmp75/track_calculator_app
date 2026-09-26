@@ -69,5 +69,10 @@
   "efficiency": "Eficiencia",
   "costAnalysis": "Análisis de Costos",
   "estimateUnitRatios": "Estimar ratios unitarios",
-  "history": "Historial"
+  "history": "Historial",
+  "fieldRequired": "Este campo es obligatorio",
+  "networkError": "No se pudo conectar con el servidor. Inténtalo de nuevo.",
+  "passwordsDoNotMatch": "Las contraseñas no coinciden",
+  "invalidBirthDateFormat": "Usa el formato dd/mm/aaaa",
+  "registerSuccess": "Cuenta creada. Inicia sesión para continuar."
 }

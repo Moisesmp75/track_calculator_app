@@ -517,6 +517,36 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Historial'**
   String get history;
+
+  /// No description provided for @fieldRequired.
+  ///
+  /// In es, this message translates to:
+  /// **'Este campo es obligatorio'**
+  String get fieldRequired;
+
+  /// No description provided for @networkError.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo conectar con el servidor. Inténtalo de nuevo.'**
+  String get networkError;
+
+  /// No description provided for @passwordsDoNotMatch.
+  ///
+  /// In es, this message translates to:
+  /// **'Las contraseñas no coinciden'**
+  String get passwordsDoNotMatch;
+
+  /// No description provided for @invalidBirthDateFormat.
+  ///
+  /// In es, this message translates to:
+  /// **'Usa el formato dd/mm/aaaa'**
+  String get invalidBirthDateFormat;
+
+  /// No description provided for @registerSuccess.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuenta creada. Inicia sesión para continuar.'**
+  String get registerSuccess;
 }
 
 class _AppLocalizationsDelegate
