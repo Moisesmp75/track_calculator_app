@@ -52,11 +52,13 @@ class ApiClient {
   Future<T> get<T>(
     String path, {
     bool skipAuth = false,
+    Map<String, dynamic>? queryParameters,
     required T Function(dynamic data) parse,
   }) {
     return _send(
       () => _dio.get<dynamic>(
         path,
+        queryParameters: queryParameters,
         options: Options(extra: {'skipAuth': skipAuth}),
       ),
       parse,

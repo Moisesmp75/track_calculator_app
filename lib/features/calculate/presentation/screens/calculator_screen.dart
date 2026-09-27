@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/viewmodels/catalog_view_model.dart';
+import 'package:vehicle_calculator/features/shared/presentation/extensions/snackbar_extension.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_badge_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_button_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_icon_widget.dart';
@@ -118,13 +121,49 @@ class _GeneralInformationForm extends StatelessWidget {
   }
 }
 
-class _OperationInformationForm extends StatelessWidget {
+class _OperationInformationForm extends ConsumerStatefulWidget {
   const _OperationInformationForm();
+
+  @override
+  ConsumerState<_OperationInformationForm> createState() =>
+      _OperationInformationFormState();
+}
+
+class _OperationInformationFormState
+    extends ConsumerState<_OperationInformationForm> {
+  String? _materialId;
+  String? _dumpTruckTypeId;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
+    final catalog = ref.watch(catalogViewModelProvider);
+
+    ref.listen(catalogViewModelProvider, (previous, next) {
+      final message = next.errorMessage;
+      if (message != null && message != previous?.errorMessage) {
+        context.showSnackBar(message: message);
+      }
+    });
+
+    final materialItems = catalog.materials
+        .map(
+          (material) => DropdownMenuItem(
+            value: material.id,
+            child: Text(material.label, overflow: TextOverflow.ellipsis),
+          ),
+        )
+        .toList();
+    final truckItems = catalog.dumpTruckTypes
+        .map(
+          (truck) => DropdownMenuItem(
+            value: truck.id,
+            child: Text(truck.label, overflow: TextOverflow.ellipsis),
+          ),
+        )
+        .toList();
+
     return CardContainerWidget(
       child: Column(
         spacing: 12,
@@ -139,6 +178,14 @@ class _OperationInformationForm extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
+              if (catalog.isLoading) ...[
+                const Spacer(),
+                const SizedBox(
+                  width: 18,
+                  height: 18,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                ),
+              ],
             ],
           ),
           Form(
@@ -146,44 +193,28 @@ class _OperationInformationForm extends StatelessWidget {
               spacing: 12,
               children: [
                 DropdownFormField<String>(
+                  key: ValueKey('materials-${catalog.materials.length}'),
                   label: l10n.inSituMaterial,
                   hintText: l10n.selectMaterial,
                   prefixIcon: Icons.layers_outlined,
-                  items: const [
-                    DropdownMenuItem(
-                      value: '1.85',
-                      child: Text('Grava / Roca Fragmentada - 1.85 t/m³'),
-                    ),
-                    DropdownMenuItem(
-                      value: '2.10',
-                      child: Text('Sulfuros Pesados / Cobre - 2.10 t/m³'),
-                    ),
-                    DropdownMenuItem(
-                      value: '1.60',
-                      child: Text('Estéril de Desbroce / Andesita - 1.60 t/m³'),
-                    ),
-                  ],
-                  onChanged: (newValue) {},
+                  enabled: !catalog.isLoading && materialItems.isNotEmpty,
+                  value: _materialId,
+                  items: materialItems,
+                  onChanged: (newValue) {
+                    setState(() => _materialId = newValue);
+                  },
                 ),
                 DropdownFormField<String>(
+                  key: ValueKey('trucks-${catalog.dumpTruckTypes.length}'),
                   label: l10n.haulageUnit,
                   hintText: l10n.selectUnit,
                   prefixIcon: Icons.layers_outlined,
-                  items: const [
-                    DropdownMenuItem(
-                      value: '1.85',
-                      child: Text('Grava / Roca Fragmentada - 1.85 t/m³'),
-                    ),
-                    DropdownMenuItem(
-                      value: '2.10',
-                      child: Text('Sulfuros Pesados / Cobre - 2.10 t/m³'),
-                    ),
-                    DropdownMenuItem(
-                      value: '1.60',
-                      child: Text('Estéril de Desbroce / Andesita - 1.60 t/m³'),
-                    ),
-                  ],
-                  onChanged: (newValue) {},
+                  enabled: !catalog.isLoading && truckItems.isNotEmpty,
+                  value: _dumpTruckTypeId,
+                  items: truckItems,
+                  onChanged: (newValue) {
+                    setState(() => _dumpTruckTypeId = newValue);
+                  },
                 ),
                 Row(
                   spacing: 12,

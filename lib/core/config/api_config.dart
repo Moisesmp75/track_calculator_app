@@ -11,4 +11,6 @@ class ApiConfig {
   static const refreshToken = '/v1/authentication/refresh-token';
   static const validateRefreshToken = '/v1/authentication/refresh-token/validate';
   static const me = '/v1/authentication/me';
+  static const materials = '/v1/materials';
+  static const dumpTruckTypes = '/v1/dump-truck-types';
 }
