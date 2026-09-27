@@ -10,6 +10,7 @@ class AppButtonWidget extends StatelessWidget {
   final IconData? trailingIcon;
   final double height;
   final bool isLoading;
+  final bool enabled;
 
   const AppButtonWidget({
     super.key,
@@ -20,6 +21,7 @@ class AppButtonWidget extends StatelessWidget {
     this.trailingIcon,
     this.height = 56.0,
     this.isLoading = false,
+    this.enabled = true,
   });
 
   @override
@@ -64,7 +66,7 @@ class AppButtonWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
         ),
-        onPressed: isLoading ? null : onPressed,
+        onPressed: (isLoading || !enabled) ? null : onPressed,
         child: isLoading
             ? SizedBox(
                 width: 22,

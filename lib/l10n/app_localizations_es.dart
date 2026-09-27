@@ -66,13 +66,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get firstNames => 'Nombres';
 
   @override
-  String get firstNamesHint => 'Ej. Juan Carlos';
+  String get firstNamesHint => 'Ej. Juan';
 
   @override
   String get lastNames => 'Apellidos';
 
   @override
-  String get lastNamesHint => 'Ej. Pérez Mendoza';
+  String get lastNamesHint => 'Ej. Pérez';
 
   @override
   String get birthDate => 'Fecha de Nacimiento';
@@ -239,4 +239,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get registerSuccess => 'Cuenta creada. Inicia sesión para continuar.';
+
+  @override
+  String get invalidEmailFormat => 'Ingresa un correo con formato válido';
+
+  @override
+  String get invalidNameFormat => 'Solo letras, sin espacios ni números';
+
+  @override
+  String get invalidPasswordFormat =>
+      'Mínimo 10 caracteres, con mayúscula, minúscula, número y un símbolo (@, !, %, *, ? o &)';
 }

@@ -18,9 +18,9 @@
   "createAccount": "Create Account",
   "registerTagline": "Enter your personal details to access the calculator and mining haulage simulations.",
   "firstNames": "First name",
-  "firstNamesHint": "E.g. John Charles",
+  "firstNamesHint": "E.g. John",
   "lastNames": "Last name",
-  "lastNamesHint": "E.g. Perez Mendoza",
+  "lastNamesHint": "E.g. Perez",
   "birthDate": "Date of birth",
   "birthDateHint": "dd/mm/yyyy",
   "email": "Email",
@@ -74,5 +74,8 @@
   "networkError": "Could not connect to the server. Please try again.",
   "passwordsDoNotMatch": "Passwords do not match",
   "invalidBirthDateFormat": "Use the dd/mm/yyyy format",
-  "registerSuccess": "Account created. Sign in to continue."
+  "registerSuccess": "Account created. Sign in to continue.",
+  "invalidEmailFormat": "Enter a valid email address",
+  "invalidNameFormat": "Letters only, no spaces or numbers",
+  "invalidPasswordFormat": "At least 10 characters, with uppercase, lowercase, a number, and a symbol (@, !, %, *, ? or &)"
 }

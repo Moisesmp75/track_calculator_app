@@ -209,7 +209,7 @@ abstract class AppLocalizations {
   /// No description provided for @firstNamesHint.
   ///
   /// In es, this message translates to:
-  /// **'Ej. Juan Carlos'**
+  /// **'Ej. Juan'**
   String get firstNamesHint;
 
   /// No description provided for @lastNames.
@@ -221,7 +221,7 @@ abstract class AppLocalizations {
   /// No description provided for @lastNamesHint.
   ///
   /// In es, this message translates to:
-  /// **'Ej. Pérez Mendoza'**
+  /// **'Ej. Pérez'**
   String get lastNamesHint;
 
   /// No description provided for @birthDate.
@@ -547,6 +547,24 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Cuenta creada. Inicia sesión para continuar.'**
   String get registerSuccess;
+
+  /// No description provided for @invalidEmailFormat.
+  ///
+  /// In es, this message translates to:
+  /// **'Ingresa un correo con formato válido'**
+  String get invalidEmailFormat;
+
+  /// No description provided for @invalidNameFormat.
+  ///
+  /// In es, this message translates to:
+  /// **'Solo letras, sin espacios ni números'**
+  String get invalidNameFormat;
+
+  /// No description provided for @invalidPasswordFormat.
+  ///
+  /// In es, this message translates to:
+  /// **'Mínimo 10 caracteres, con mayúscula, minúscula, número y un símbolo (@, !, %, *, ? o &)'**
+  String get invalidPasswordFormat;
 }
 
 class _AppLocalizationsDelegate

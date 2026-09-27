@@ -24,7 +24,7 @@ class AuthRepositoryImpl implements AuthRepository {
     required String password,
     required String name,
     required String lastName,
-    required String bornDate,
+    String? bornDate,
   }) async {
     final model = await _datasource.signUp(
       SignUpRequestModel(
@@ -74,6 +74,12 @@ class AuthRepositoryImpl implements AuthRepository {
       refreshToken: tokens.refreshToken,
     );
     return AuthSession(tokens: tokens);
+  }
+
+  @override
+  Future<User> getCurrentUser() async {
+    final model = await _datasource.getCurrentUser();
+    return _mapper.toUser(model);
   }
 
   @override

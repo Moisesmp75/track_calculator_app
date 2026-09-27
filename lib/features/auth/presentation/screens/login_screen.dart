@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vehicle_calculator/features/auth/presentation/screens/register_screen.dart';
+import 'package:vehicle_calculator/features/auth/presentation/utils/auth_form_validators.dart';
 import 'package:vehicle_calculator/features/auth/presentation/viewmodels/auth_view_model.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/screens/calculator_screen.dart';
 import 'package:vehicle_calculator/features/shared/presentation/viewmodels/locale_view_model.dart';
@@ -130,9 +131,27 @@ class _LoginFormState extends ConsumerState<_LoginForm> {
   bool _obscurePassword = true;
 
   @override
+  void initState() {
+    super.initState();
+    _emailController.addListener(_onChanged);
+    _passwordController.addListener(_onChanged);
+  }
+
+  void _onChanged() => setState(() {});
+
+  bool get _isValid {
+    return AuthFormValidators.isValidEmail(_emailController.text) &&
+        _passwordController.text.isNotEmpty;
+  }
+
+  @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
+    _emailController
+      ..removeListener(_onChanged)
+      ..dispose();
+    _passwordController
+      ..removeListener(_onChanged)
+      ..dispose();
     super.dispose();
   }
 
@@ -184,9 +203,13 @@ class _LoginFormState extends ConsumerState<_LoginForm> {
               prefixIcon: Icons.alternate_email,
               keyboardType: TextInputType.emailAddress,
               enabled: !isLoading,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return l10n.emailRequired;
+                }
+                if (!AuthFormValidators.isValidEmail(value)) {
+                  return l10n.invalidEmailFormat;
                 }
                 return null;
               },
@@ -208,6 +231,7 @@ class _LoginFormState extends ConsumerState<_LoginForm> {
                 ),
               ),
               obscureText: _obscurePassword,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return l10n.passwordRequired;
@@ -219,6 +243,7 @@ class _LoginFormState extends ConsumerState<_LoginForm> {
             AppButtonWidget(
               label: l10n.signIn,
               onPressed: _submit,
+              enabled: _isValid,
               isLoading: isLoading,
               variant: AppButtonVariant.primary,
               icon: Icons.arrow_forward,

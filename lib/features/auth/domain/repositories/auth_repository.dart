@@ -7,7 +7,7 @@ abstract class AuthRepository {
     required String password,
     required String name,
     required String lastName,
-    required String bornDate,
+    String? bornDate,
   });
 
   Future<AuthSession> signIn({
@@ -16,6 +16,8 @@ abstract class AuthRepository {
   });
 
   Future<AuthSession?> restoreSession();
+
+  Future<User> getCurrentUser();
 
   Future<void> logout();
 }

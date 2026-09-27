@@ -88,7 +88,7 @@ class AuthViewModel extends Notifier<AuthState> {
     required String password,
     required String name,
     required String lastName,
-    required String bornDate,
+    String? bornDate,
     required String networkErrorMessage,
   }) {
     return _run(() async {

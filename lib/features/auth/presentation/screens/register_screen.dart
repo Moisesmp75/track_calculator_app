@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vehicle_calculator/features/auth/presentation/screens/login_screen.dart';
 import 'package:vehicle_calculator/features/auth/presentation/viewmodels/auth_view_model.dart';
+import 'package:vehicle_calculator/features/auth/presentation/utils/auth_form_validators.dart';
 import 'package:vehicle_calculator/features/auth/presentation/utils/born_date_parser.dart';
 import 'package:vehicle_calculator/features/shared/presentation/extensions/snackbar_extension.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_badge_widget.dart';
@@ -93,13 +94,45 @@ class _RegisterFormState extends ConsumerState<_RegisterForm> {
   bool _obscureConfirmPassword = true;
 
   @override
+  void initState() {
+    super.initState();
+    for (final controller in [
+      _nameController,
+      _lastNameController,
+      _bornDateController,
+      _emailController,
+      _passwordController,
+      _confirmPasswordController,
+    ]) {
+      controller.addListener(_onChanged);
+    }
+  }
+
+  void _onChanged() => setState(() {});
+
+  bool get _isValid {
+    return AuthFormValidators.isValidName(_nameController.text) &&
+        AuthFormValidators.isValidName(_lastNameController.text) &&
+        AuthFormValidators.isValidEmail(_emailController.text) &&
+        AuthFormValidators.isValidPassword(_passwordController.text) &&
+        _confirmPasswordController.text == _passwordController.text &&
+        AuthFormValidators.isValidOptionalBornDate(_bornDateController.text);
+  }
+
+  @override
   void dispose() {
-    _nameController.dispose();
-    _lastNameController.dispose();
-    _bornDateController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
+    for (final controller in [
+      _nameController,
+      _lastNameController,
+      _bornDateController,
+      _emailController,
+      _passwordController,
+      _confirmPasswordController,
+    ]) {
+      controller
+        ..removeListener(_onChanged)
+        ..dispose();
+    }
     super.dispose();
   }
 
@@ -107,11 +140,8 @@ class _RegisterFormState extends ConsumerState<_RegisterForm> {
     if (!_formKey.currentState!.validate()) return;
 
     final l10n = AppLocalizations.of(context);
-    final bornDate = toIsoBornDate(_bornDateController.text);
-    if (bornDate == null) {
-      context.showSnackBar(message: l10n.invalidBirthDateFormat);
-      return;
-    }
+    final bornDateRaw = _bornDateController.text.trim();
+    final bornDate = bornDateRaw.isEmpty ? null : toIsoBornDate(bornDateRaw);
 
     final auth = ref.read(authViewModelProvider.notifier);
     final success = await auth.signUp(
@@ -161,9 +191,13 @@ class _RegisterFormState extends ConsumerState<_RegisterForm> {
               keyboardType: TextInputType.name,
               hintText: l10n.firstNamesHint,
               enabled: !isLoading,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
                   return l10n.fieldRequired;
+                }
+                if (!AuthFormValidators.isValidName(value)) {
+                  return l10n.invalidNameFormat;
                 }
                 return null;
               },
@@ -175,9 +209,13 @@ class _RegisterFormState extends ConsumerState<_RegisterForm> {
               keyboardType: TextInputType.name,
               hintText: l10n.lastNamesHint,
               enabled: !isLoading,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
                   return l10n.fieldRequired;
+                }
+                if (!AuthFormValidators.isValidName(value)) {
+                  return l10n.invalidNameFormat;
                 }
                 return null;
               },
@@ -189,8 +227,12 @@ class _RegisterFormState extends ConsumerState<_RegisterForm> {
               keyboardType: TextInputType.datetime,
               hintText: l10n.birthDateHint,
               enabled: !isLoading,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (value) {
-                if (value == null || toIsoBornDate(value) == null) {
+                if (value == null || value.trim().isEmpty) {
+                  return null;
+                }
+                if (toIsoBornDate(value) == null) {
                   return l10n.invalidBirthDateFormat;
                 }
                 return null;
@@ -203,9 +245,13 @@ class _RegisterFormState extends ConsumerState<_RegisterForm> {
               keyboardType: TextInputType.emailAddress,
               hintText: l10n.emailPersonalHint,
               enabled: !isLoading,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return l10n.emailRequired;
+                }
+                if (!AuthFormValidators.isValidEmail(value)) {
+                  return l10n.invalidEmailFormat;
                 }
                 return null;
               },
@@ -228,9 +274,13 @@ class _RegisterFormState extends ConsumerState<_RegisterForm> {
               hintText: l10n.passwordHint,
               obscureText: _obscurePassword,
               enabled: !isLoading,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return l10n.passwordRequired;
+                }
+                if (!AuthFormValidators.isValidPassword(value)) {
+                  return l10n.invalidPasswordFormat;
                 }
                 return null;
               },
@@ -255,6 +305,7 @@ class _RegisterFormState extends ConsumerState<_RegisterForm> {
               hintText: l10n.passwordHint,
               obscureText: _obscureConfirmPassword,
               enabled: !isLoading,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (value) {
                 if (value != _passwordController.text) {
                   return l10n.passwordsDoNotMatch;
@@ -266,6 +317,7 @@ class _RegisterFormState extends ConsumerState<_RegisterForm> {
             AppButtonWidget(
               label: l10n.createAccount,
               onPressed: _submit,
+              enabled: _isValid,
               isLoading: isLoading,
               variant: AppButtonVariant.primary,
               icon: Icons.arrow_forward,

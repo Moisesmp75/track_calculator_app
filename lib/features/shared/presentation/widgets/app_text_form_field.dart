@@ -15,6 +15,7 @@ class AppTextFormField extends StatelessWidget {
     this.enabled = true,
     this.readOnly = false,
     this.autofocus = false,
+    this.autovalidateMode,
   });
 
   final String label;
@@ -29,6 +30,7 @@ class AppTextFormField extends StatelessWidget {
   final bool enabled;
   final bool readOnly;
   final bool autofocus;
+  final AutovalidateMode? autovalidateMode;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +58,7 @@ class AppTextFormField extends StatelessWidget {
             keyboardType: keyboardType,
             obscureText: obscureText,
             validator: validator,
+            autovalidateMode: autovalidateMode,
             onChanged: onChanged,
             enabled: enabled,
             readOnly: readOnly,

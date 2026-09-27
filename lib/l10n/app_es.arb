@@ -18,9 +18,9 @@
   "createAccount": "Crear Cuenta",
   "registerTagline": "Ingresa tus datos personales para acceder a la calculadora y simulaciones de transporte minero.",
   "firstNames": "Nombres",
-  "firstNamesHint": "Ej. Juan Carlos",
+  "firstNamesHint": "Ej. Juan",
   "lastNames": "Apellidos",
-  "lastNamesHint": "Ej. Pérez Mendoza",
+  "lastNamesHint": "Ej. Pérez",
   "birthDate": "Fecha de Nacimiento",
   "birthDateHint": "dd/mm/aaaa",
   "email": "Correo Electrónico",
@@ -74,5 +74,8 @@
   "networkError": "No se pudo conectar con el servidor. Inténtalo de nuevo.",
   "passwordsDoNotMatch": "Las contraseñas no coinciden",
   "invalidBirthDateFormat": "Usa el formato dd/mm/aaaa",
-  "registerSuccess": "Cuenta creada. Inicia sesión para continuar."
+  "registerSuccess": "Cuenta creada. Inicia sesión para continuar.",
+  "invalidEmailFormat": "Ingresa un correo con formato válido",
+  "invalidNameFormat": "Solo letras, sin espacios ni números",
+  "invalidPasswordFormat": "Mínimo 10 caracteres, con mayúscula, minúscula, número y un símbolo (@, !, %, *, ? o &)"
 }

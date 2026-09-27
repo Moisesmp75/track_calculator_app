@@ -4,20 +4,20 @@ class SignUpRequestModel {
     required this.password,
     required this.name,
     required this.lastName,
-    required this.bornDate,
+    this.bornDate,
   });
 
   final String email;
   final String password;
   final String name;
   final String lastName;
-  final String bornDate;
+  final String? bornDate;
 
   Map<String, dynamic> toJson() => {
         'email': email,
         'password': password,
         'name': name,
         'lastName': lastName,
-        'bornDate': bornDate,
+        if (bornDate != null && bornDate!.isNotEmpty) 'bornDate': bornDate,
       };
 }
