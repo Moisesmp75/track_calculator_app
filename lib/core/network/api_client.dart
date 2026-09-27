@@ -38,14 +38,38 @@ class ApiClient {
     Object? data,
     bool skipAuth = false,
     required T Function(dynamic data) parse,
-  }) async {
-    try {
-      final response = await _dio.post<dynamic>(
+  }) {
+    return _send(
+      () => _dio.post<dynamic>(
         path,
         data: data,
         options: Options(extra: {'skipAuth': skipAuth}),
-      );
-      return await Future.value(_unwrap(response, parse));
+      ),
+      parse,
+    );
+  }
+
+  Future<T> get<T>(
+    String path, {
+    bool skipAuth = false,
+    required T Function(dynamic data) parse,
+  }) {
+    return _send(
+      () => _dio.get<dynamic>(
+        path,
+        options: Options(extra: {'skipAuth': skipAuth}),
+      ),
+      parse,
+    );
+  }
+
+  Future<T> _send<T>(
+    Future<Response<dynamic>> Function() request,
+    T Function(dynamic data) parse,
+  ) async {
+    try {
+      final response = await request();
+      return await Future<T>.value(_unwrap(response, parse));
     } on DioException catch (error) {
       throw _mapDioException(error);
     }

@@ -10,4 +10,5 @@ class ApiConfig {
   static const signIn = '/v1/authentication/sign-in';
   static const refreshToken = '/v1/authentication/refresh-token';
   static const validateRefreshToken = '/v1/authentication/refresh-token/validate';
+  static const me = '/v1/authentication/me';
 }

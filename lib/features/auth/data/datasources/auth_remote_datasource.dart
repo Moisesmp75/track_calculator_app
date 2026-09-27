@@ -39,6 +39,19 @@ class AuthRemoteDatasource {
     );
   }
 
+  Future<UserModel> getCurrentUser() {
+    return _apiClient.get(
+      ApiConfig.me,
+      parse: (data) {
+        final map = _asMap(data);
+        if (map['user'] is Map) {
+          return UserModel.fromJson(_asMap(map['user']));
+        }
+        return UserModel.fromJson(map);
+      },
+    );
+  }
+
   Future<RefreshTokensResponseModel> refreshToken(String refreshToken) {
     return _apiClient.post(
       ApiConfig.refreshToken,

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vehicle_calculator/features/auth/presentation/screens/login_screen.dart';
 import 'package:vehicle_calculator/features/auth/presentation/viewmodels/auth_view_model.dart';
+import 'package:vehicle_calculator/features/settings/presentation/viewmodels/profile_view_model.dart';
 import 'package:vehicle_calculator/features/shared/presentation/viewmodels/locale_view_model.dart';
 import 'package:vehicle_calculator/features/shared/presentation/viewmodels/theme_view_model.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_badge_widget.dart';
@@ -70,15 +71,22 @@ class _ProfileSettingsScreenView extends StatelessWidget {
   }
 }
 
-class _PersonalInformationSection extends StatelessWidget {
+class _PersonalInformationSection extends ConsumerWidget {
   const _PersonalInformationSection();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
+    final profile = ref.watch(profileViewModelProvider);
+
     return CardContainerWidget(
-      child: Column(
+      child: profile.isLoading
+          ? const SizedBox(
+              height: 88,
+              child: Center(child: CircularProgressIndicator()),
+            )
+          : Column(
         spacing: 12,
         children: [
           Row(
@@ -91,16 +99,17 @@ class _PersonalInformationSection extends StatelessWidget {
                   spacing: 4,
                   children: [
                     Text(
-                      'Carlos Mendoza Davila',
+                      profile.user?.displayName ?? '—',
                       style: theme.textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    AppBadgeWidget(
-                      label: 'carlos.mendoza@gmail.com',
-                      showDot: false,
-                      status: AppBadgeStatus.info,
-                    )
+                    if (profile.user?.email.isNotEmpty == true)
+                      AppBadgeWidget(
+                        label: profile.user!.email,
+                        showDot: false,
+                        status: AppBadgeStatus.info,
+                      )
                   ],
                 ),
               )
@@ -257,6 +266,7 @@ class _AccountAndSecuritySection extends ConsumerWidget {
                 label: l10n.signOut,
                 onPressed: () async {
                   await ref.read(authViewModelProvider.notifier).logout();
+                  ref.invalidate(profileViewModelProvider);
                   if (context.mounted) {
                     context.goNamed(LoginScreen.screenName);
                   }

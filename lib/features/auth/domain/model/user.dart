@@ -11,5 +11,7 @@ class User {
   final String lastName;
   final String bornDate;
 
-  String get fullName => '$name $lastName';
+  String get fullName => '$name $lastName'.trim();
+
+  String get displayName => fullName.isEmpty ? email : fullName;
 }
