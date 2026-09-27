@@ -18,4 +18,10 @@ class CalculationRepositoryImpl implements CalculationRepository {
     final model = await _datasource.processAndSave(_mapper.toRequest(input));
     return _mapper.toDomain(model);
   }
+
+  @override
+  Future<List<CalculationHistory>> getMine() async {
+    final models = await _datasource.getMine();
+    return models.map(_mapper.toDomain).toList();
+  }
 }

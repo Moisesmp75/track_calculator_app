@@ -18,6 +18,20 @@ class CalculationRemoteDatasource {
     );
   }
 
+  Future<List<CalculationHistoryModel>> getMine() {
+    return _apiClient.get(
+      ApiConfig.calculationHistories,
+      parse: (data) => _asList(data)
+          .map((item) => CalculationHistoryModel.fromJson(_asMap(item)))
+          .toList(),
+    );
+  }
+
+  List<dynamic> _asList(dynamic data) {
+    if (data is List) return data;
+    return const [];
+  }
+
   Map<String, dynamic> _asMap(dynamic data) {
     return Map<String, dynamic>.from(data as Map);
   }

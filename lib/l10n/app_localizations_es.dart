@@ -258,6 +258,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get history => 'Historial';
 
   @override
+  String get calculationHistoryTitle => 'Historial de cálculos';
+
+  @override
+  String get historySubtitle =>
+      'Tus simulaciones y reportes guardados para campo y laboratorio';
+
+  @override
+  String get historySynced => 'Sincronizado';
+
+  @override
+  String get historyEmpty => 'Aún no tienes cálculos guardados.';
+
+  @override
+  String get untitledCalculation => 'Cálculo';
+
+  @override
   String get fieldRequired => 'Este campo es obligatorio';
 
   @override

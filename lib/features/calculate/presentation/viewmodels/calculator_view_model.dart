@@ -3,6 +3,7 @@ import 'package:vehicle_calculator/core/error/api_exception.dart';
 import 'package:vehicle_calculator/features/calculate/data/providers/calculation_repository_provider.dart';
 import 'package:vehicle_calculator/features/calculate/domain/model/calculation_history.dart';
 import 'package:vehicle_calculator/features/calculate/domain/model/create_calculation_input.dart';
+import 'package:vehicle_calculator/features/history/presentation/viewmodels/history_view_model.dart';
 
 class CalculatorState {
   const CalculatorState({
@@ -32,6 +33,7 @@ class CalculatorViewModel extends Notifier<CalculatorState> {
       final result = await ref
           .read(calculationRepositoryProvider)
           .processAndSave(input);
+      ref.invalidate(historyViewModelProvider);
       state = const CalculatorState();
       return result;
     } on ApiException catch (error) {

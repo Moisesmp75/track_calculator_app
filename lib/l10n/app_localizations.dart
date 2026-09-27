@@ -584,6 +584,36 @@ abstract class AppLocalizations {
   /// **'Historial'**
   String get history;
 
+  /// No description provided for @calculationHistoryTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Historial de cálculos'**
+  String get calculationHistoryTitle;
+
+  /// No description provided for @historySubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus simulaciones y reportes guardados para campo y laboratorio'**
+  String get historySubtitle;
+
+  /// No description provided for @historySynced.
+  ///
+  /// In es, this message translates to:
+  /// **'Sincronizado'**
+  String get historySynced;
+
+  /// No description provided for @historyEmpty.
+  ///
+  /// In es, this message translates to:
+  /// **'Aún no tienes cálculos guardados.'**
+  String get historyEmpty;
+
+  /// No description provided for @untitledCalculation.
+  ///
+  /// In es, this message translates to:
+  /// **'Cálculo'**
+  String get untitledCalculation;
+
   /// No description provided for @fieldRequired.
   ///
   /// In es, this message translates to:

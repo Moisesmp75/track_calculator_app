@@ -257,6 +257,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get history => 'History';
 
   @override
+  String get calculationHistoryTitle => 'Calculation history';
+
+  @override
+  String get historySubtitle =>
+      'Your saved simulations and reports for field and lab work';
+
+  @override
+  String get historySynced => 'Synced';
+
+  @override
+  String get historyEmpty => 'You don\'t have any saved calculations yet.';
+
+  @override
+  String get untitledCalculation => 'Calculation';
+
+  @override
   String get fieldRequired => 'This field is required';
 
   @override
