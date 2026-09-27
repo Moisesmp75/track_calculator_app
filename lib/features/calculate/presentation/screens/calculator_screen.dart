@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:vehicle_calculator/features/calculate/domain/model/create_calculation_input.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/screens/result_detail_screen.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/utils/calculation_form_parsers.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/viewmodels/calculator_view_model.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/viewmodels/catalog_view_model.dart';
 import 'package:vehicle_calculator/features/shared/presentation/extensions/snackbar_extension.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_badge_widget.dart';
@@ -29,22 +34,151 @@ class CalculatorScreen extends StatelessWidget {
   }
 }
 
-class _CalculatorScreenView extends StatelessWidget {
+class _CalculatorScreenView extends ConsumerStatefulWidget {
   const _CalculatorScreenView();
+
+  @override
+  ConsumerState<_CalculatorScreenView> createState() =>
+      _CalculatorScreenViewState();
+}
+
+class _CalculatorScreenViewState extends ConsumerState<_CalculatorScreenView> {
+  final _projectController = TextEditingController();
+  final _sectionController = TextEditingController();
+  final _distanceController = TextEditingController();
+  final _loaderPerformanceController = TextEditingController();
+  final _loadedSpeedController = TextEditingController();
+  final _unloadedSpeedController = TextEditingController();
+  final _shiftHoursController = TextEditingController();
+  final _efficiencyController = TextEditingController();
+  final _dumpTruckRateController = TextEditingController();
+  final _loaderRateController = TextEditingController();
+  final _staffRateController = TextEditingController();
+
+  String? _materialId;
+  String? _dumpTruckTypeId;
+
+  @override
+  void initState() {
+    super.initState();
+    for (final controller in _controllers) {
+      controller.addListener(_onFieldChanged);
+    }
+  }
+
+  List<TextEditingController> get _controllers => [
+        _projectController,
+        _sectionController,
+        _distanceController,
+        _loaderPerformanceController,
+        _loadedSpeedController,
+        _unloadedSpeedController,
+        _shiftHoursController,
+        _efficiencyController,
+        _dumpTruckRateController,
+        _loaderRateController,
+        _staffRateController,
+      ];
+
+  void _onFieldChanged() => setState(() {});
+
+  @override
+  void dispose() {
+    for (final controller in _controllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  bool get _canSubmit {
+    if (_materialId == null || _dumpTruckTypeId == null) return false;
+    if (!isPositive(parseOptionalNumber(_distanceController.text))) {
+      return false;
+    }
+    if (!isValidSpeed(parseOptionalNumber(_loadedSpeedController.text))) {
+      return false;
+    }
+    if (!isValidSpeed(parseOptionalNumber(_unloadedSpeedController.text))) {
+      return false;
+    }
+    if (!isPositive(parseOptionalNumber(_shiftHoursController.text))) {
+      return false;
+    }
+    if (!isValidEfficiency(parseOptionalNumber(_efficiencyController.text))) {
+      return false;
+    }
+    if (!isPositive(parseOptionalNumber(_loaderPerformanceController.text))) {
+      return false;
+    }
+    return _isOptionalRateValid(_dumpTruckRateController.text) &&
+        _isOptionalRateValid(_loaderRateController.text) &&
+        _isOptionalRateValid(_staffRateController.text);
+  }
+
+  bool _isOptionalRateValid(String raw) {
+    if (raw.trim().isEmpty) return true;
+    return isPositive(parseOptionalNumber(raw));
+  }
+
+  Future<void> _submit() async {
+    if (!_canSubmit) return;
+
+    final l10n = AppLocalizations.of(context);
+    final projectName = _projectController.text.trim();
+    final section = _sectionController.text.trim();
+
+    final result = await ref.read(calculatorViewModelProvider.notifier).submit(
+      input: CreateCalculationInput(
+        materialId: _materialId!,
+        dumpTruckTypeId: _dumpTruckTypeId!,
+        distanceKm: parseOptionalNumber(_distanceController.text)!,
+        loadedSpeedKmh: parseOptionalNumber(_loadedSpeedController.text)!,
+        unloadedSpeedKmh: parseOptionalNumber(_unloadedSpeedController.text)!,
+        shiftHours: parseOptionalNumber(_shiftHoursController.text)!,
+        efficiency: parseOptionalNumber(_efficiencyController.text)!,
+        loaderPerformanceM3h:
+            parseOptionalNumber(_loaderPerformanceController.text)!,
+        projectName: projectName.isEmpty ? null : projectName,
+        section: section.isEmpty ? null : section,
+        dumpTruckHourlyRate: parseOptionalNumber(_dumpTruckRateController.text),
+        loaderHourlyRate: parseOptionalNumber(_loaderRateController.text),
+        staffHourlyRate: parseOptionalNumber(_staffRateController.text),
+      ),
+      networkErrorMessage: l10n.networkError,
+    );
+    if (!mounted) return;
+
+    if (result == null) {
+      final message = ref.read(calculatorViewModelProvider).errorMessage;
+      if (message != null) {
+        context.showSnackBar(message: message);
+      }
+      return;
+    }
+
+    context.pushNamed(ResultDetailScreen.screenName, extra: result);
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
+    final catalog = ref.watch(catalogViewModelProvider);
+    final calculator = ref.watch(calculatorViewModelProvider);
+
+    ref.listen(catalogViewModelProvider, (previous, next) {
+      final message = next.errorMessage;
+      if (message != null && message != previous?.errorMessage) {
+        context.showSnackBar(message: message);
+      }
+    });
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 22,
         children: [
-          Text(
-            l10n.haulageSimulation,
-            style: theme.textTheme.bodyMedium
-          ),
+          Text(l10n.haulageSimulation, style: theme.textTheme.bodyMedium),
           Text(
             l10n.newCalculation,
             style: theme.textTheme.titleLarge?.copyWith(
@@ -52,29 +186,24 @@ class _CalculatorScreenView extends StatelessWidget {
               fontSize: 24,
             ),
           ),
-          const _GeneralInformationForm(),
-          const _OperationInformationForm(),
-          const _CoastAnalysisForm(),
+          _buildGeneralForm(theme, l10n),
+          _buildOperationForm(theme, l10n, catalog),
+          _buildCostForm(theme, l10n),
           AppButtonWidget(
             label: l10n.calculateFleetAndCycle,
-            onPressed: () {},
+            onPressed: _submit,
+            enabled: _canSubmit && !calculator.isSubmitting,
+            isLoading: calculator.isSubmitting,
             trailingIcon: Icons.speed,
             icon: Icons.arrow_forward,
           ),
-          const SizedBox(height: 10,)
+          const SizedBox(height: 10),
         ],
       ),
     );
   }
-}
 
-class _GeneralInformationForm extends StatelessWidget {
-  const _GeneralInformationForm();
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
+  Widget _buildGeneralForm(ThemeData theme, AppLocalizations l10n) {
     return CardContainerWidget(
       child: Column(
         spacing: 12,
@@ -93,7 +222,7 @@ class _GeneralInformationForm extends StatelessWidget {
               AppBadgeWidget(
                 label: l10n.optional,
                 showDot: false,
-              )
+              ),
             ],
           ),
           Form(
@@ -103,50 +232,28 @@ class _GeneralInformationForm extends StatelessWidget {
                 AppTextFormField(
                   label: l10n.miningProject,
                   hintText: l10n.miningProjectHint,
+                  controller: _projectController,
                   suffixIcon: AppSimpleIcon(action: AppIconAction.apartment),
-                  onChanged: (value) {},
                 ),
                 AppTextFormField(
                   label: l10n.transportRoute,
                   hintText: l10n.transportRouteHint,
+                  controller: _sectionController,
                   suffixIcon: AppSimpleIcon(action: AppIconAction.allRoute),
-                  onChanged: (value) {},
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
   }
-}
 
-class _OperationInformationForm extends ConsumerStatefulWidget {
-  const _OperationInformationForm();
-
-  @override
-  ConsumerState<_OperationInformationForm> createState() =>
-      _OperationInformationFormState();
-}
-
-class _OperationInformationFormState
-    extends ConsumerState<_OperationInformationForm> {
-  String? _materialId;
-  String? _dumpTruckTypeId;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
-    final catalog = ref.watch(catalogViewModelProvider);
-
-    ref.listen(catalogViewModelProvider, (previous, next) {
-      final message = next.errorMessage;
-      if (message != null && message != previous?.errorMessage) {
-        context.showSnackBar(message: message);
-      }
-    });
-
+  Widget _buildOperationForm(
+    ThemeData theme,
+    AppLocalizations l10n,
+    CatalogState catalog,
+  ) {
     final materialItems = catalog.materials
         .map(
           (material) => DropdownMenuItem(
@@ -223,22 +330,22 @@ class _OperationInformationFormState
                       child: AppTextFormField(
                         label: l10n.outboundDistance,
                         hintText: '4.2',
+                        controller: _distanceController,
                         suffixText: l10n.unitKm,
                         keyboardType: const TextInputType.numberWithOptions(
                           decimal: true,
                         ),
-                        onChanged: (value) {},
                       ),
                     ),
                     Expanded(
                       child: AppTextFormField(
                         label: l10n.loadingYield,
                         hintText: '450',
+                        controller: _loaderPerformanceController,
                         suffixText: l10n.unitM3h,
                         keyboardType: const TextInputType.numberWithOptions(
                           decimal: true,
                         ),
-                        onChanged: (value) {},
                       ),
                     ),
                   ],
@@ -250,22 +357,22 @@ class _OperationInformationFormState
                       child: AppTextFormField(
                         label: l10n.loadedSpeed,
                         hintText: '24',
+                        controller: _loadedSpeedController,
                         suffixText: l10n.unitKmh,
                         keyboardType: const TextInputType.numberWithOptions(
                           decimal: true,
                         ),
-                        onChanged: (value) {},
                       ),
                     ),
                     Expanded(
                       child: AppTextFormField(
                         label: l10n.returnSpeed,
                         hintText: '38',
+                        controller: _unloadedSpeedController,
                         suffixText: l10n.unitKmh,
                         keyboardType: const TextInputType.numberWithOptions(
                           decimal: true,
                         ),
-                        onChanged: (value) {},
                       ),
                     ),
                   ],
@@ -277,22 +384,22 @@ class _OperationInformationFormState
                       child: AppTextFormField(
                         label: l10n.shiftHours,
                         hintText: '8.0',
+                        controller: _shiftHoursController,
                         suffixText: l10n.unitHours,
                         keyboardType: const TextInputType.numberWithOptions(
                           decimal: true,
                         ),
-                        onChanged: (value) {},
                       ),
                     ),
                     Expanded(
                       child: AppTextFormField(
                         label: l10n.efficiency,
                         hintText: '0.85',
+                        controller: _efficiencyController,
                         suffixText: l10n.unitRatio,
                         keyboardType: const TextInputType.numberWithOptions(
                           decimal: true,
                         ),
-                        onChanged: (value) {},
                       ),
                     ),
                   ],
@@ -304,15 +411,8 @@ class _OperationInformationFormState
       ),
     );
   }
-}
 
-class _CoastAnalysisForm extends StatelessWidget {
-  const _CoastAnalysisForm();
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
+  Widget _buildCostForm(ThemeData theme, AppLocalizations l10n) {
     return CardContainerWidget(
       child: Column(
         spacing: 12,
@@ -359,22 +459,22 @@ class _CoastAnalysisForm extends StatelessWidget {
                       child: AppTextFormField(
                         label: l10n.dumpTruckHourlyRate,
                         hintText: '180',
+                        controller: _dumpTruckRateController,
                         suffixText: l10n.unitPerHour,
                         keyboardType: const TextInputType.numberWithOptions(
                           decimal: true,
                         ),
-                        onChanged: (value) {},
                       ),
                     ),
                     Expanded(
                       child: AppTextFormField(
                         label: l10n.loaderHourlyRate,
                         hintText: '250',
+                        controller: _loaderRateController,
                         suffixText: l10n.unitPerHour,
                         keyboardType: const TextInputType.numberWithOptions(
                           decimal: true,
                         ),
-                        onChanged: (value) {},
                       ),
                     ),
                   ],
@@ -382,11 +482,11 @@ class _CoastAnalysisForm extends StatelessWidget {
                 AppTextFormField(
                   label: l10n.staffHourlyRate,
                   hintText: '45',
+                  controller: _staffRateController,
                   suffixText: l10n.unitPerHour,
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
                   ),
-                  onChanged: (value) {},
                 ),
               ],
             ),

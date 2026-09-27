@@ -281,4 +281,110 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get invalidPasswordFormat =>
       'At least 10 characters, with uppercase, lowercase, a number, and a symbol (@, !, %, *, ? or &)';
+
+  @override
+  String get resultDetail => 'Cycle detail';
+
+  @override
+  String get missingCalculationResult => 'There is no result to show.';
+
+  @override
+  String get suggestedTrucks => 'Suggested trucks';
+
+  @override
+  String get cycleTime => 'Cycle time';
+
+  @override
+  String get tripsPerShift => 'Trips per shift';
+
+  @override
+  String get totalVolume => 'Total volume';
+
+  @override
+  String get hourlyOutput => 'Hourly output';
+
+  @override
+  String get swellFactor => 'Swell factor';
+
+  @override
+  String get effectiveCapacity => 'Effective capacity';
+
+  @override
+  String get unitCost => 'Unit cost';
+
+  @override
+  String get unitMinutes => 'min';
+
+  @override
+  String get unitM3 => 'm³';
+
+  @override
+  String get unitPerM3 => '/m³';
+
+  @override
+  String get simulationCompleted => 'Simulation completed';
+
+  @override
+  String get requiredFleet => 'Required fleet';
+
+  @override
+  String get dumpTrucks => 'Dump trucks';
+
+  @override
+  String get fleetBalanceHint =>
+      'Suggested fleet to balance loader and haulage';
+
+  @override
+  String get totalProduction => 'Total production';
+
+  @override
+  String perShiftHours(String hours) {
+    return 'per shift ($hours h)';
+  }
+
+  @override
+  String get yieldLabel => 'Yield';
+
+  @override
+  String get hourlyCapacity => 'hourly capacity';
+
+  @override
+  String get cycleTimeCaption => 'outbound, return and dump';
+
+  @override
+  String get perM3Hauled => 'per hauled m³';
+
+  @override
+  String get operationalBreakdown => 'Operational breakdown and factors';
+
+  @override
+  String get swellFactorLabel => 'Swell factor';
+
+  @override
+  String get effectiveHopperCapacity => 'Effective hopper capacity';
+
+  @override
+  String get tripsPerUnit => 'Trips / shift per unit';
+
+  @override
+  String get tripsUnit => 'trips';
+
+  @override
+  String get modifyParameters => 'Edit parameters';
+
+  @override
+  String swellFactorValue(String factor, String percent) {
+    return '$factor (+$percent%)';
+  }
+
+  @override
+  String get invalidPositiveNumber => 'Enter a number greater than 0';
+
+  @override
+  String get invalidSpeedRange =>
+      'Speed must be greater than 0 and at most 120 km/h';
+
+  @override
+  String get invalidEfficiencyRange =>
+      'Efficiency must be greater than 0 and at most 1';
 }

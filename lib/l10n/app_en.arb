@@ -88,5 +88,49 @@
   "registerSuccess": "Account created. Sign in to continue.",
   "invalidEmailFormat": "Enter a valid email address",
   "invalidNameFormat": "Letters only, no spaces or numbers",
-  "invalidPasswordFormat": "At least 10 characters, with uppercase, lowercase, a number, and a symbol (@, !, %, *, ? or &)"
+  "invalidPasswordFormat": "At least 10 characters, with uppercase, lowercase, a number, and a symbol (@, !, %, *, ? or &)",
+  "resultDetail": "Cycle detail",
+  "missingCalculationResult": "There is no result to show.",
+  "suggestedTrucks": "Suggested trucks",
+  "cycleTime": "Cycle time",
+  "tripsPerShift": "Trips per shift",
+  "totalVolume": "Total volume",
+  "hourlyOutput": "Hourly output",
+  "swellFactor": "Swell factor",
+  "effectiveCapacity": "Effective capacity",
+  "unitCost": "Unit cost",
+  "unitMinutes": "min",
+  "unitM3": "m³",
+  "unitPerM3": "/m³",
+  "simulationCompleted": "Simulation completed",
+  "requiredFleet": "Required fleet",
+  "dumpTrucks": "Dump trucks",
+  "fleetBalanceHint": "Suggested fleet to balance loader and haulage",
+  "totalProduction": "Total production",
+  "perShiftHours": "per shift ({hours} h)",
+  "@perShiftHours": {
+    "placeholders": {
+      "hours": { "type": "String" }
+    }
+  },
+  "yieldLabel": "Yield",
+  "hourlyCapacity": "hourly capacity",
+  "cycleTimeCaption": "outbound, return and dump",
+  "perM3Hauled": "per hauled m³",
+  "operationalBreakdown": "Operational breakdown and factors",
+  "swellFactorLabel": "Swell factor",
+  "effectiveHopperCapacity": "Effective hopper capacity",
+  "tripsPerUnit": "Trips / shift per unit",
+  "tripsUnit": "trips",
+  "modifyParameters": "Edit parameters",
+  "swellFactorValue": "{factor} (+{percent}%)",
+  "@swellFactorValue": {
+    "placeholders": {
+      "factor": { "type": "String" },
+      "percent": { "type": "String" }
+    }
+  },
+  "invalidPositiveNumber": "Enter a number greater than 0",
+  "invalidSpeedRange": "Speed must be greater than 0 and at most 120 km/h",
+  "invalidEfficiencyRange": "Efficiency must be greater than 0 and at most 1"
 }

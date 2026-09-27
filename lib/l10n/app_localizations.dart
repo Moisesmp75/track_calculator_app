@@ -631,6 +631,204 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Mínimo 10 caracteres, con mayúscula, minúscula, número y un símbolo (@, !, %, *, ? o &)'**
   String get invalidPasswordFormat;
+
+  /// No description provided for @resultDetail.
+  ///
+  /// In es, this message translates to:
+  /// **'Detalle de ciclo'**
+  String get resultDetail;
+
+  /// No description provided for @missingCalculationResult.
+  ///
+  /// In es, this message translates to:
+  /// **'No hay un resultado para mostrar.'**
+  String get missingCalculationResult;
+
+  /// No description provided for @suggestedTrucks.
+  ///
+  /// In es, this message translates to:
+  /// **'Volquetes sugeridos'**
+  String get suggestedTrucks;
+
+  /// No description provided for @cycleTime.
+  ///
+  /// In es, this message translates to:
+  /// **'Tiempo de ciclo'**
+  String get cycleTime;
+
+  /// No description provided for @tripsPerShift.
+  ///
+  /// In es, this message translates to:
+  /// **'Viajes por turno'**
+  String get tripsPerShift;
+
+  /// No description provided for @totalVolume.
+  ///
+  /// In es, this message translates to:
+  /// **'Volumen total'**
+  String get totalVolume;
+
+  /// No description provided for @hourlyOutput.
+  ///
+  /// In es, this message translates to:
+  /// **'Productividad'**
+  String get hourlyOutput;
+
+  /// No description provided for @swellFactor.
+  ///
+  /// In es, this message translates to:
+  /// **'Esponjamiento'**
+  String get swellFactor;
+
+  /// No description provided for @effectiveCapacity.
+  ///
+  /// In es, this message translates to:
+  /// **'Capacidad efectiva'**
+  String get effectiveCapacity;
+
+  /// No description provided for @unitCost.
+  ///
+  /// In es, this message translates to:
+  /// **'Costo unitario'**
+  String get unitCost;
+
+  /// No description provided for @unitMinutes.
+  ///
+  /// In es, this message translates to:
+  /// **'min'**
+  String get unitMinutes;
+
+  /// No description provided for @unitM3.
+  ///
+  /// In es, this message translates to:
+  /// **'m³'**
+  String get unitM3;
+
+  /// No description provided for @unitPerM3.
+  ///
+  /// In es, this message translates to:
+  /// **'/m³'**
+  String get unitPerM3;
+
+  /// No description provided for @simulationCompleted.
+  ///
+  /// In es, this message translates to:
+  /// **'Simulación completada'**
+  String get simulationCompleted;
+
+  /// No description provided for @requiredFleet.
+  ///
+  /// In es, this message translates to:
+  /// **'Flota requerida'**
+  String get requiredFleet;
+
+  /// No description provided for @dumpTrucks.
+  ///
+  /// In es, this message translates to:
+  /// **'Volquetes'**
+  String get dumpTrucks;
+
+  /// No description provided for @fleetBalanceHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Flota sugerida para equilibrar pala y acarreo'**
+  String get fleetBalanceHint;
+
+  /// No description provided for @totalProduction.
+  ///
+  /// In es, this message translates to:
+  /// **'Producción total'**
+  String get totalProduction;
+
+  /// No description provided for @perShiftHours.
+  ///
+  /// In es, this message translates to:
+  /// **'por turno ({hours} h)'**
+  String perShiftHours(String hours);
+
+  /// No description provided for @yieldLabel.
+  ///
+  /// In es, this message translates to:
+  /// **'Rendimiento'**
+  String get yieldLabel;
+
+  /// No description provided for @hourlyCapacity.
+  ///
+  /// In es, this message translates to:
+  /// **'capacidad horaria'**
+  String get hourlyCapacity;
+
+  /// No description provided for @cycleTimeCaption.
+  ///
+  /// In es, this message translates to:
+  /// **'ida, vuelta y descarga'**
+  String get cycleTimeCaption;
+
+  /// No description provided for @perM3Hauled.
+  ///
+  /// In es, this message translates to:
+  /// **'por m³ transportado'**
+  String get perM3Hauled;
+
+  /// No description provided for @operationalBreakdown.
+  ///
+  /// In es, this message translates to:
+  /// **'Desglose operativo y factores'**
+  String get operationalBreakdown;
+
+  /// No description provided for @swellFactorLabel.
+  ///
+  /// In es, this message translates to:
+  /// **'Factor de esponjamiento'**
+  String get swellFactorLabel;
+
+  /// No description provided for @effectiveHopperCapacity.
+  ///
+  /// In es, this message translates to:
+  /// **'Capacidad tolva efectiva'**
+  String get effectiveHopperCapacity;
+
+  /// No description provided for @tripsPerUnit.
+  ///
+  /// In es, this message translates to:
+  /// **'Viajes / turno por unidad'**
+  String get tripsPerUnit;
+
+  /// No description provided for @tripsUnit.
+  ///
+  /// In es, this message translates to:
+  /// **'viajes'**
+  String get tripsUnit;
+
+  /// No description provided for @modifyParameters.
+  ///
+  /// In es, this message translates to:
+  /// **'Modificar parámetros'**
+  String get modifyParameters;
+
+  /// No description provided for @swellFactorValue.
+  ///
+  /// In es, this message translates to:
+  /// **'{factor} (+{percent}%)'**
+  String swellFactorValue(String factor, String percent);
+
+  /// No description provided for @invalidPositiveNumber.
+  ///
+  /// In es, this message translates to:
+  /// **'Ingresa un número mayor a 0'**
+  String get invalidPositiveNumber;
+
+  /// No description provided for @invalidSpeedRange.
+  ///
+  /// In es, this message translates to:
+  /// **'La velocidad debe ser mayor a 0 y hasta 120 km/h'**
+  String get invalidSpeedRange;
+
+  /// No description provided for @invalidEfficiencyRange.
+  ///
+  /// In es, this message translates to:
+  /// **'La eficiencia debe ser mayor a 0 y hasta 1'**
+  String get invalidEfficiencyRange;
 }
 
 class _AppLocalizationsDelegate

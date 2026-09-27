@@ -88,5 +88,49 @@
   "registerSuccess": "Cuenta creada. Inicia sesión para continuar.",
   "invalidEmailFormat": "Ingresa un correo con formato válido",
   "invalidNameFormat": "Solo letras, sin espacios ni números",
-  "invalidPasswordFormat": "Mínimo 10 caracteres, con mayúscula, minúscula, número y un símbolo (@, !, %, *, ? o &)"
+  "invalidPasswordFormat": "Mínimo 10 caracteres, con mayúscula, minúscula, número y un símbolo (@, !, %, *, ? o &)",
+  "resultDetail": "Detalle de ciclo",
+  "missingCalculationResult": "No hay un resultado para mostrar.",
+  "suggestedTrucks": "Volquetes sugeridos",
+  "cycleTime": "Tiempo de ciclo",
+  "tripsPerShift": "Viajes por turno",
+  "totalVolume": "Volumen total",
+  "hourlyOutput": "Productividad",
+  "swellFactor": "Esponjamiento",
+  "effectiveCapacity": "Capacidad efectiva",
+  "unitCost": "Costo unitario",
+  "unitMinutes": "min",
+  "unitM3": "m³",
+  "unitPerM3": "/m³",
+  "simulationCompleted": "Simulación completada",
+  "requiredFleet": "Flota requerida",
+  "dumpTrucks": "Volquetes",
+  "fleetBalanceHint": "Flota sugerida para equilibrar pala y acarreo",
+  "totalProduction": "Producción total",
+  "perShiftHours": "por turno ({hours} h)",
+  "@perShiftHours": {
+    "placeholders": {
+      "hours": { "type": "String" }
+    }
+  },
+  "yieldLabel": "Rendimiento",
+  "hourlyCapacity": "capacidad horaria",
+  "cycleTimeCaption": "ida, vuelta y descarga",
+  "perM3Hauled": "por m³ transportado",
+  "operationalBreakdown": "Desglose operativo y factores",
+  "swellFactorLabel": "Factor de esponjamiento",
+  "effectiveHopperCapacity": "Capacidad tolva efectiva",
+  "tripsPerUnit": "Viajes / turno por unidad",
+  "tripsUnit": "viajes",
+  "modifyParameters": "Modificar parámetros",
+  "swellFactorValue": "{factor} (+{percent}%)",
+  "@swellFactorValue": {
+    "placeholders": {
+      "factor": { "type": "String" },
+      "percent": { "type": "String" }
+    }
+  },
+  "invalidPositiveNumber": "Ingresa un número mayor a 0",
+  "invalidSpeedRange": "La velocidad debe ser mayor a 0 y hasta 120 km/h",
+  "invalidEfficiencyRange": "La eficiencia debe ser mayor a 0 y hasta 1"
 }

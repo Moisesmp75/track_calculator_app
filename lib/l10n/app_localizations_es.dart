@@ -282,4 +282,110 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get invalidPasswordFormat =>
       'Mínimo 10 caracteres, con mayúscula, minúscula, número y un símbolo (@, !, %, *, ? o &)';
+
+  @override
+  String get resultDetail => 'Detalle de ciclo';
+
+  @override
+  String get missingCalculationResult => 'No hay un resultado para mostrar.';
+
+  @override
+  String get suggestedTrucks => 'Volquetes sugeridos';
+
+  @override
+  String get cycleTime => 'Tiempo de ciclo';
+
+  @override
+  String get tripsPerShift => 'Viajes por turno';
+
+  @override
+  String get totalVolume => 'Volumen total';
+
+  @override
+  String get hourlyOutput => 'Productividad';
+
+  @override
+  String get swellFactor => 'Esponjamiento';
+
+  @override
+  String get effectiveCapacity => 'Capacidad efectiva';
+
+  @override
+  String get unitCost => 'Costo unitario';
+
+  @override
+  String get unitMinutes => 'min';
+
+  @override
+  String get unitM3 => 'm³';
+
+  @override
+  String get unitPerM3 => '/m³';
+
+  @override
+  String get simulationCompleted => 'Simulación completada';
+
+  @override
+  String get requiredFleet => 'Flota requerida';
+
+  @override
+  String get dumpTrucks => 'Volquetes';
+
+  @override
+  String get fleetBalanceHint =>
+      'Flota sugerida para equilibrar pala y acarreo';
+
+  @override
+  String get totalProduction => 'Producción total';
+
+  @override
+  String perShiftHours(String hours) {
+    return 'por turno ($hours h)';
+  }
+
+  @override
+  String get yieldLabel => 'Rendimiento';
+
+  @override
+  String get hourlyCapacity => 'capacidad horaria';
+
+  @override
+  String get cycleTimeCaption => 'ida, vuelta y descarga';
+
+  @override
+  String get perM3Hauled => 'por m³ transportado';
+
+  @override
+  String get operationalBreakdown => 'Desglose operativo y factores';
+
+  @override
+  String get swellFactorLabel => 'Factor de esponjamiento';
+
+  @override
+  String get effectiveHopperCapacity => 'Capacidad tolva efectiva';
+
+  @override
+  String get tripsPerUnit => 'Viajes / turno por unidad';
+
+  @override
+  String get tripsUnit => 'viajes';
+
+  @override
+  String get modifyParameters => 'Modificar parámetros';
+
+  @override
+  String swellFactorValue(String factor, String percent) {
+    return '$factor (+$percent%)';
+  }
+
+  @override
+  String get invalidPositiveNumber => 'Ingresa un número mayor a 0';
+
+  @override
+  String get invalidSpeedRange =>
+      'La velocidad debe ser mayor a 0 y hasta 120 km/h';
+
+  @override
+  String get invalidEfficiencyRange =>
+      'La eficiencia debe ser mayor a 0 y hasta 1';
 }

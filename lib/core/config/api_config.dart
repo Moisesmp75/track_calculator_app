@@ -13,4 +13,5 @@ class ApiConfig {
   static const me = '/v1/authentication/me';
   static const materials = '/v1/materials';
   static const dumpTruckTypes = '/v1/dump-truck-types';
+  static const calculationHistories = '/v1/calculation-histories';
 }

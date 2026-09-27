@@ -1,14 +1,20 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vehicle_calculator/features/auth/presentation/screens/login_screen.dart';
 import 'package:vehicle_calculator/features/auth/presentation/screens/register_screen.dart';
 import 'package:vehicle_calculator/features/auth/presentation/screens/restore_password.dart';
+import 'package:vehicle_calculator/features/calculate/domain/model/calculation_history.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/screens/calculator_screen.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/screens/result_detail_screen.dart';
 import 'package:vehicle_calculator/features/history/presentation/screens/calculation_history_screen.dart';
 import 'package:vehicle_calculator/features/settings/presentation/screens/profile_settings_screen.dart';
 import 'package:vehicle_calculator/features/shared/presentation/screens/splash_screen.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/main_layout.dart';
 
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
+
 final goRouter = GoRouter(
+  navigatorKey: _rootNavigatorKey,
   initialLocation: SplashScreen.screenName,
   routes: [
     GoRoute(
@@ -64,6 +70,17 @@ final goRouter = GoRouter(
           ]
         )
       ],
-    )
+    ),
+    GoRoute(
+      parentNavigatorKey: _rootNavigatorKey,
+      name: ResultDetailScreen.screenName,
+      path: ResultDetailScreen.screenName,
+      builder: (context, state) {
+        final extra = state.extra;
+        return ResultDetailScreen(
+          result: extra is CalculationHistory ? extra : null,
+        );
+      },
+    ),
   ],
 );
