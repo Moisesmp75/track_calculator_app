@@ -179,7 +179,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get miningProject => 'Mining project / site';
 
   @override
+  String get miningProjectHint => 'E.g. North pit';
+
+  @override
   String get transportRoute => 'Transport route';
+
+  @override
+  String get transportRouteHint => 'E.g. Segment A-B';
 
   @override
   String get operationParameters => 'Operation parameters';
@@ -219,6 +225,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get estimateUnitRatios => 'Estimate unit ratios';
+
+  @override
+  String get dumpTruckHourlyRate => 'Dump truck rate';
+
+  @override
+  String get loaderHourlyRate => 'Loader rate';
+
+  @override
+  String get staffHourlyRate => 'Staff rate';
+
+  @override
+  String get unitKm => 'km';
+
+  @override
+  String get unitKmh => 'km/h';
+
+  @override
+  String get unitM3h => 'm³/h';
+
+  @override
+  String get unitHours => 'h';
+
+  @override
+  String get unitRatio => '0–1';
+
+  @override
+  String get unitPerHour => '/h';
 
   @override
   String get history => 'History';

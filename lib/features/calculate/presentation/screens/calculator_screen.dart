@@ -102,13 +102,13 @@ class _GeneralInformationForm extends StatelessWidget {
               children: [
                 AppTextFormField(
                   label: l10n.miningProject,
-                  hintText: l10n.transportRoute,
+                  hintText: l10n.miningProjectHint,
                   suffixIcon: AppSimpleIcon(action: AppIconAction.apartment),
                   onChanged: (value) {},
                 ),
                 AppTextFormField(
                   label: l10n.transportRoute,
-                  hintText: l10n.transportRoute,
+                  hintText: l10n.transportRouteHint,
                   suffixIcon: AppSimpleIcon(action: AppIconAction.allRoute),
                   onChanged: (value) {},
                 ),
@@ -223,7 +223,10 @@ class _OperationInformationFormState
                       child: AppTextFormField(
                         label: l10n.outboundDistance,
                         hintText: '4.2',
-                        keyboardType: TextInputType.number,
+                        suffixText: l10n.unitKm,
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
                         onChanged: (value) {},
                       ),
                     ),
@@ -231,7 +234,10 @@ class _OperationInformationFormState
                       child: AppTextFormField(
                         label: l10n.loadingYield,
                         hintText: '450',
-                        keyboardType: TextInputType.number,
+                        suffixText: l10n.unitM3h,
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
                         onChanged: (value) {},
                       ),
                     ),
@@ -244,7 +250,10 @@ class _OperationInformationFormState
                       child: AppTextFormField(
                         label: l10n.loadedSpeed,
                         hintText: '24',
-                        keyboardType: TextInputType.number,
+                        suffixText: l10n.unitKmh,
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
                         onChanged: (value) {},
                       ),
                     ),
@@ -252,7 +261,10 @@ class _OperationInformationFormState
                       child: AppTextFormField(
                         label: l10n.returnSpeed,
                         hintText: '38',
-                        keyboardType: TextInputType.number,
+                        suffixText: l10n.unitKmh,
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
                         onChanged: (value) {},
                       ),
                     ),
@@ -265,7 +277,10 @@ class _OperationInformationFormState
                       child: AppTextFormField(
                         label: l10n.shiftHours,
                         hintText: '8.0',
-                        keyboardType: TextInputType.number,
+                        suffixText: l10n.unitHours,
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
                         onChanged: (value) {},
                       ),
                     ),
@@ -273,7 +288,10 @@ class _OperationInformationFormState
                       child: AppTextFormField(
                         label: l10n.efficiency,
                         hintText: '0.85',
-                        keyboardType: TextInputType.number,
+                        suffixText: l10n.unitRatio,
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
                         onChanged: (value) {},
                       ),
                     ),
@@ -303,26 +321,75 @@ class _CoastAnalysisForm extends StatelessWidget {
             spacing: 12,
             children: [
               AppSimpleIcon(action: AppIconAction.payments),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    l10n.costAnalysis,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.costAnalysis,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                  Text(
-                    l10n.estimateUnitRatios,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      fontWeight: FontWeight.w600,
+                    Text(
+                      l10n.estimateUnitRatios,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+                  ],
+                ),
+              ),
+              AppBadgeWidget(
+                label: l10n.optional,
+                showDot: false,
               ),
             ],
+          ),
+          Form(
+            child: Column(
+              spacing: 12,
+              children: [
+                Row(
+                  spacing: 12,
+                  children: [
+                    Expanded(
+                      child: AppTextFormField(
+                        label: l10n.dumpTruckHourlyRate,
+                        hintText: '180',
+                        suffixText: l10n.unitPerHour,
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
+                        onChanged: (value) {},
+                      ),
+                    ),
+                    Expanded(
+                      child: AppTextFormField(
+                        label: l10n.loaderHourlyRate,
+                        hintText: '250',
+                        suffixText: l10n.unitPerHour,
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
+                        onChanged: (value) {},
+                      ),
+                    ),
+                  ],
+                ),
+                AppTextFormField(
+                  label: l10n.staffHourlyRate,
+                  hintText: '45',
+                  suffixText: l10n.unitPerHour,
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                  onChanged: (value) {},
+                ),
+              ],
+            ),
           ),
         ],
       ),

@@ -428,11 +428,23 @@ abstract class AppLocalizations {
   /// **'Proyecto Minero / Obra'**
   String get miningProject;
 
+  /// No description provided for @miningProjectHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Ej. Tajo Norte'**
+  String get miningProjectHint;
+
   /// No description provided for @transportRoute.
   ///
   /// In es, this message translates to:
   /// **'Ruta de Transporte'**
   String get transportRoute;
+
+  /// No description provided for @transportRouteHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Ej. Tramo A-B'**
+  String get transportRouteHint;
 
   /// No description provided for @operationParameters.
   ///
@@ -511,6 +523,60 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Estimar ratios unitarios'**
   String get estimateUnitRatios;
+
+  /// No description provided for @dumpTruckHourlyRate.
+  ///
+  /// In es, this message translates to:
+  /// **'Costo volquete'**
+  String get dumpTruckHourlyRate;
+
+  /// No description provided for @loaderHourlyRate.
+  ///
+  /// In es, this message translates to:
+  /// **'Costo pala'**
+  String get loaderHourlyRate;
+
+  /// No description provided for @staffHourlyRate.
+  ///
+  /// In es, this message translates to:
+  /// **'Costo personal'**
+  String get staffHourlyRate;
+
+  /// No description provided for @unitKm.
+  ///
+  /// In es, this message translates to:
+  /// **'km'**
+  String get unitKm;
+
+  /// No description provided for @unitKmh.
+  ///
+  /// In es, this message translates to:
+  /// **'km/h'**
+  String get unitKmh;
+
+  /// No description provided for @unitM3h.
+  ///
+  /// In es, this message translates to:
+  /// **'m³/h'**
+  String get unitM3h;
+
+  /// No description provided for @unitHours.
+  ///
+  /// In es, this message translates to:
+  /// **'h'**
+  String get unitHours;
+
+  /// No description provided for @unitRatio.
+  ///
+  /// In es, this message translates to:
+  /// **'0–1'**
+  String get unitRatio;
+
+  /// No description provided for @unitPerHour.
+  ///
+  /// In es, this message translates to:
+  /// **'/h'**
+  String get unitPerHour;
 
   /// No description provided for @history.
   ///

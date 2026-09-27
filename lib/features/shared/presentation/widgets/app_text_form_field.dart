@@ -8,6 +8,7 @@ class AppTextFormField extends StatelessWidget {
     this.hintText,
     this.prefixIcon,
     this.suffixIcon,
+    this.suffixText,
     this.keyboardType,
     this.obscureText = false,
     this.validator,
@@ -23,6 +24,7 @@ class AppTextFormField extends StatelessWidget {
   final String? hintText;
   final IconData? prefixIcon;
   final Widget? suffixIcon;
+  final String? suffixText;
   final TextInputType? keyboardType;
   final bool obscureText;
   final String? Function(String?)? validator;
@@ -68,7 +70,24 @@ class AppTextFormField extends StatelessWidget {
               prefixIcon: prefixIcon != null
                   ? Icon(prefixIcon)
                   : null,
-              suffixIcon: suffixIcon,
+              suffixIcon: suffixText != null
+                  ? Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Center(
+                        widthFactor: 1,
+                        child: Text(
+                          suffixText!,
+                          style: theme.textTheme.labelLarge?.copyWith(
+                            color: colorScheme.outline,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    )
+                  : suffixIcon,
+              suffixIconConstraints: suffixText != null
+                  ? const BoxConstraints(minWidth: 0, minHeight: 0)
+                  : null,
             ),
           ),
         ),
