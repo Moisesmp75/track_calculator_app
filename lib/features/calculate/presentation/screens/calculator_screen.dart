@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vehicle_calculator/features/calculate/domain/model/create_calculation_input.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/models/result_detail_args.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/screens/result_detail_screen.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/utils/calculation_form_parsers.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/viewmodels/calculator_view_model.dart';
@@ -176,7 +177,27 @@ class _CalculatorFormState extends ConsumerState<_CalculatorForm> {
       return;
     }
 
-    context.pushNamed(ResultDetailScreen.screenName, extra: result);
+    final popAction = await context.pushNamed(
+      ResultDetailScreen.screenName,
+      extra: ResultDetailArgs(
+        result: result,
+        canModifyParameters: true,
+      ),
+    );
+    if (!mounted) return;
+    if (popAction != ResultPopAction.keepForm) {
+      _resetForm();
+    }
+  }
+
+  void _resetForm() {
+    for (final controller in _controllers) {
+      controller.clear();
+    }
+    setState(() {
+      _materialId = null;
+      _dumpTruckTypeId = null;
+    });
   }
 
   @override

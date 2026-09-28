@@ -24,4 +24,9 @@ class CalculationRepositoryImpl implements CalculationRepository {
     final models = await _datasource.getMine();
     return models.map(_mapper.toDomain).toList();
   }
+
+  @override
+  Future<void> delete(String id) {
+    return _datasource.delete(id);
+  }
 }

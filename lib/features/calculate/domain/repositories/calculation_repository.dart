@@ -5,4 +5,6 @@ abstract class CalculationRepository {
   Future<CalculationHistory> processAndSave(CreateCalculationInput input);
 
   Future<List<CalculationHistory>> getMine();
+
+  Future<void> delete(String id);
 }

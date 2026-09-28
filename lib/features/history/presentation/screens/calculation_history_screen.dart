@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/models/result_detail_args.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/screens/result_detail_screen.dart';
 import 'package:vehicle_calculator/features/history/presentation/viewmodels/history_view_model.dart';
 import 'package:vehicle_calculator/features/history/presentation/widgets/calculation_history_item.dart';
@@ -137,11 +138,48 @@ class _HistoryList extends ConsumerWidget {
           onTap: () {
             context.pushNamed(
               ResultDetailScreen.screenName,
-              extra: calculation,
+              extra: ResultDetailArgs(result: calculation),
             );
           },
+          onDelete: () => _confirmDelete(context, ref, calculation.id),
         );
       },
     );
+  }
+}
+
+Future<void> _confirmDelete(
+  BuildContext context,
+  WidgetRef ref,
+  String id,
+) async {
+  final l10n = AppLocalizations.of(context);
+  final confirmed = await showDialog<bool>(
+    context: context,
+    builder: (dialogContext) {
+      return AlertDialog(
+        title: Text(l10n.deleteCalculationTitle),
+        content: Text(l10n.deleteCalculationMessage),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(l10n.cancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(l10n.delete),
+          ),
+        ],
+      );
+    },
+  );
+  if (confirmed != true || !context.mounted) return;
+
+  final success = await ref.read(historyViewModelProvider.notifier).delete(id);
+  if (!success && context.mounted) {
+    final message = ref.read(historyViewModelProvider).errorMessage;
+    if (message != null) {
+      context.showSnackBar(message: message);
+    }
   }
 }

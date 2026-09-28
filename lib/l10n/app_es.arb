@@ -137,5 +137,9 @@
   },
   "invalidPositiveNumber": "Ingresa un número mayor a 0",
   "invalidSpeedRange": "La velocidad debe ser mayor a 0 y hasta 120 km/h",
-  "invalidEfficiencyRange": "La eficiencia debe ser mayor a 0 y hasta 1"
+  "invalidEfficiencyRange": "La eficiencia debe ser mayor a 0 y hasta 1",
+  "cancel": "Cancelar",
+  "delete": "Eliminar",
+  "deleteCalculationTitle": "Eliminar cálculo",
+  "deleteCalculationMessage": "Este cálculo se eliminará de tu historial. Esta acción no se puede deshacer."
 }

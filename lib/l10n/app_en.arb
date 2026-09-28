@@ -137,5 +137,9 @@
   },
   "invalidPositiveNumber": "Enter a number greater than 0",
   "invalidSpeedRange": "Speed must be greater than 0 and at most 120 km/h",
-  "invalidEfficiencyRange": "Efficiency must be greater than 0 and at most 1"
+  "invalidEfficiencyRange": "Efficiency must be greater than 0 and at most 1",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "deleteCalculationTitle": "Delete calculation",
+  "deleteCalculationMessage": "This calculation will be removed from your history. This action cannot be undone."
 }

@@ -859,6 +859,30 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'La eficiencia debe ser mayor a 0 y hasta 1'**
   String get invalidEfficiencyRange;
+
+  /// No description provided for @cancel.
+  ///
+  /// In es, this message translates to:
+  /// **'Cancelar'**
+  String get cancel;
+
+  /// No description provided for @delete.
+  ///
+  /// In es, this message translates to:
+  /// **'Eliminar'**
+  String get delete;
+
+  /// No description provided for @deleteCalculationTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Eliminar cálculo'**
+  String get deleteCalculationTitle;
+
+  /// No description provided for @deleteCalculationMessage.
+  ///
+  /// In es, this message translates to:
+  /// **'Este cálculo se eliminará de tu historial. Esta acción no se puede deshacer.'**
+  String get deleteCalculationMessage;
 }
 
 class _AppLocalizationsDelegate

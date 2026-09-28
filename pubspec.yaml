@@ -44,6 +44,7 @@ dependencies:
   pretty_dio_logger: ^1.4.0
   top_snackbar_flutter: ^3.3.0
   google_fonts: ^8.2.1
+  flutter_slidable: ^4.0.3
 
 dev_dependencies:
   flutter_test:

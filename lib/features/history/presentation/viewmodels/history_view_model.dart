@@ -36,4 +36,20 @@ class HistoryViewModel extends Notifier<HistoryState> {
       );
     }
   }
+
+  Future<bool> delete(String id) async {
+    try {
+      await ref.read(calculationRepositoryProvider).delete(id);
+      state = HistoryState(
+        items: state.items.where((item) => item.id != id).toList(),
+      );
+      return true;
+    } catch (error) {
+      state = HistoryState(
+        items: state.items,
+        errorMessage: error.toString(),
+      );
+      return false;
+    }
+  }
 }

@@ -32,6 +32,10 @@ class CalculationRemoteDatasource {
     return const [];
   }
 
+  Future<void> delete(String id) {
+    return _apiClient.delete(ApiConfig.calculationHistory(id));
+  }
+
   Map<String, dynamic> _asMap(dynamic data) {
     return Map<String, dynamic>.from(data as Map);
   }

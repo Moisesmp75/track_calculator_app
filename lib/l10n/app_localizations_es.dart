@@ -404,4 +404,17 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get invalidEfficiencyRange =>
       'La eficiencia debe ser mayor a 0 y hasta 1';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get delete => 'Eliminar';
+
+  @override
+  String get deleteCalculationTitle => 'Eliminar cálculo';
+
+  @override
+  String get deleteCalculationMessage =>
+      'Este cálculo se eliminará de tu historial. Esta acción no se puede deshacer.';
 }

@@ -14,4 +14,6 @@ class ApiConfig {
   static const materials = '/v1/materials';
   static const dumpTruckTypes = '/v1/dump-truck-types';
   static const calculationHistories = '/v1/calculation-histories';
+
+  static String calculationHistory(String id) => '$calculationHistories/$id';
 }

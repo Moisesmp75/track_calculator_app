@@ -4,6 +4,7 @@ import 'package:vehicle_calculator/features/auth/presentation/screens/login_scre
 import 'package:vehicle_calculator/features/auth/presentation/screens/register_screen.dart';
 import 'package:vehicle_calculator/features/auth/presentation/screens/restore_password.dart';
 import 'package:vehicle_calculator/features/calculate/domain/model/calculation_history.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/models/result_detail_args.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/screens/calculator_screen.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/screens/result_detail_screen.dart';
 import 'package:vehicle_calculator/features/history/presentation/screens/calculation_history_screen.dart';
@@ -77,6 +78,12 @@ final goRouter = GoRouter(
       path: ResultDetailScreen.screenName,
       builder: (context, state) {
         final extra = state.extra;
+        if (extra is ResultDetailArgs) {
+          return ResultDetailScreen(
+            result: extra.result,
+            canModifyParameters: extra.canModifyParameters,
+          );
+        }
         return ResultDetailScreen(
           result: extra is CalculationHistory ? extra : null,
         );

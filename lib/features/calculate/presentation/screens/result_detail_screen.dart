@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vehicle_calculator/features/calculate/domain/model/calculation_history.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/models/result_detail_args.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/utils/result_number_format.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/widgets/breakdown_header.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/widgets/breakdown_row.dart';
@@ -17,9 +19,14 @@ import 'package:vehicle_calculator/l10n/app_localizations.dart';
 class ResultDetailScreen extends StatelessWidget {
   static const screenName = '/result-detail';
 
-  const ResultDetailScreen({super.key, this.result});
+  const ResultDetailScreen({
+    super.key,
+    this.result,
+    this.canModifyParameters = false,
+  });
 
   final CalculationHistory? result;
+  final bool canModifyParameters;
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +36,22 @@ class ResultDetailScreen extends StatelessWidget {
       appBar: CustomAppBar(title: l10n.resultDetail),
       body: result == null
           ? const ResultEmptyState()
-          : _ResultContent(calculation: result!),
+          : _ResultContent(
+              calculation: result!,
+              canModifyParameters: canModifyParameters,
+            ),
     );
   }
 }
 
 class _ResultContent extends StatelessWidget {
-  const _ResultContent({required this.calculation});
+  const _ResultContent({
+    required this.calculation,
+    required this.canModifyParameters,
+  });
 
   final CalculationHistory calculation;
+  final bool canModifyParameters;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +65,10 @@ class _ResultContent extends StatelessWidget {
           ProductionYieldRow(calculation: calculation),
           CycleCostRow(calculation: calculation),
           _BreakdownCard(calculation: calculation),
-          const ModifyParametersButton(),
+          if (canModifyParameters)
+            ModifyParametersButton(
+              onPressed: () => context.pop(ResultPopAction.keepForm),
+            ),
           const SizedBox(height: 10),
         ],
       ),
