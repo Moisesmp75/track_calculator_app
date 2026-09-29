@@ -16,6 +16,11 @@ class AppConfig {
 
   static const apiBaseUrl = 'http://127.0.0.1:3000/api';
 
+  static const adsEnabled = true;
+
+  /// Interstitial after a successful calculation, at most this often.
+  static const interstitialMinInterval = Duration(minutes: 2);
+
   static const adMob = AdMobConfig(
     androidAppId: 'ca-app-pub-3940256099942544~3347511713',
     iosAppId: 'ca-app-pub-3940256099942544~1458002511',

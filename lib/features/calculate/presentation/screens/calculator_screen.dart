@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vehicle_calculator/core/di/core_providers.dart';
 import 'package:vehicle_calculator/features/calculate/domain/model/create_calculation_input.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/models/result_detail_args.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/screens/result_detail_screen.dart';
@@ -176,6 +177,11 @@ class _CalculatorFormState extends ConsumerState<_CalculatorForm> {
       }
       return;
     }
+
+    await ref
+        .read(interstitialAdControllerProvider)
+        .showAfterSuccessfulCalculation();
+    if (!mounted) return;
 
     final popAction = await context.pushNamed(
       ResultDetailScreen.screenName,

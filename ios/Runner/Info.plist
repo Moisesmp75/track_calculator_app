@@ -6,6 +6,10 @@
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-3940256099942544~1458002511</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Usamos este identificador para mostrar anuncios más relevantes.</string>
 	<key>CFBundleDisplayName</key>
 	<string>SmartHaul</string>
 	<key>CFBundleExecutable</key>

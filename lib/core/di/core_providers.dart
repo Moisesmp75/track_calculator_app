@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vehicle_calculator/core/ads/interstitial_ad_controller.dart';
 import 'package:vehicle_calculator/core/config/api_config.dart';
 import 'package:vehicle_calculator/core/config/app_env.dart';
 import 'package:vehicle_calculator/core/network/api_client.dart';
@@ -15,6 +16,14 @@ final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
 
 final packageInfoProvider = Provider<PackageInfo>((ref) {
   throw UnimplementedError('Override packageInfoProvider in main.');
+});
+
+final interstitialAdControllerProvider = Provider<InterstitialAdController>((
+  ref,
+) {
+  final controller = InterstitialAdController();
+  ref.onDispose(controller.dispose);
+  return controller;
 });
 
 final tokenStorageProvider = Provider<TokenStorage>((ref) {

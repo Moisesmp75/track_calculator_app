@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vehicle_calculator/core/di/core_providers.dart';
 import 'package:vehicle_calculator/features/auth/presentation/screens/login_screen.dart';
 import 'package:vehicle_calculator/features/auth/presentation/viewmodels/auth_view_model.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/screens/calculator_screen.dart';
@@ -23,6 +26,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   }
 
   Future<void> _restore() async {
+    unawaited(ref.read(interstitialAdControllerProvider).preload());
     final isAuthenticated =
         await ref.read(authViewModelProvider.notifier).restoreSession();
     if (!mounted) return;
