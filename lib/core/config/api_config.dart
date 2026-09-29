@@ -16,4 +16,5 @@ class ApiConfig {
   static const calculationHistories = '/v1/calculation-histories';
 
   static String calculationHistory(String id) => '$calculationHistories/$id';
+  static String user(String id) => '/v1/users/$id';
 }

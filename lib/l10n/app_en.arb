@@ -47,7 +47,7 @@
   "signOut": "Sign out",
   "dangerZone": "Danger zone",
   "deleteAccountWarning": "Deleting your account will erase all your data, including the saved results history. This action cannot be undone.",
-  "deleteAccountTwoSteps": "Delete account (2-step process)",
+  "deleteAccountTwoSteps": "Delete account",
   "calculate": "Calculate",
   "haulageSimulation": "HAULAGE SIMULATION",
   "newCalculation": "New calculation",
@@ -93,7 +93,7 @@
   "registerSuccess": "Account created. Sign in to continue.",
   "invalidEmailFormat": "Enter a valid email address",
   "invalidNameFormat": "Letters only, no spaces or numbers",
-  "invalidPasswordFormat": "At least 10 characters, with uppercase, lowercase, a number, and a symbol (@, !, %, *, ? or &)",
+  "invalidPasswordFormat": "At least 10 characters, with uppercase, lowercase, and a number",
   "resultDetail": "Cycle detail",
   "missingCalculationResult": "There is no result to show.",
   "suggestedTrucks": "Suggested trucks",
@@ -141,5 +141,6 @@
   "cancel": "Cancel",
   "delete": "Delete",
   "deleteCalculationTitle": "Delete calculation",
-  "deleteCalculationMessage": "This calculation will be removed from your history. This action cannot be undone."
+  "deleteCalculationMessage": "This calculation will be removed from your history. This action cannot be undone.",
+  "deleteAccountTitle": "Delete account"
 }

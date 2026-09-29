@@ -6,7 +6,6 @@ class AuthFormValidators {
   static final _upper = RegExp(r'[A-Z]');
   static final _lower = RegExp(r'[a-z]');
   static final _digit = RegExp(r'[0-9]');
-  static final _special = RegExp(r'[@$!%*?&]');
 
   static bool isValidEmail(String value) =>
       emailPattern.hasMatch(value.trim());
@@ -22,8 +21,7 @@ class AuthFormValidators {
     return value.length >= 10 &&
         _upper.hasMatch(value) &&
         _lower.hasMatch(value) &&
-        _digit.hasMatch(value) &&
-        _special.hasMatch(value);
+        _digit.hasMatch(value);
   }
 
   static bool isValidOptionalBornDate(String value) {

@@ -1,4 +1,6 @@
+import 'package:vehicle_calculator/core/error/api_exception.dart';
 import 'package:vehicle_calculator/core/storage/token_storage.dart';
+import 'package:vehicle_calculator/core/utils/jwt_utils.dart';
 import 'package:vehicle_calculator/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:vehicle_calculator/features/auth/data/mappers/auth_mapper.dart';
 import 'package:vehicle_calculator/features/auth/data/models/sign_in_request_model.dart';
@@ -84,4 +86,14 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> logout() => _tokenStorage.clear();
+
+  @override
+  Future<void> deleteAccount() async {
+    final userId = JwtUtils.subject(_tokenStorage.accessToken);
+    if (userId == null) {
+      throw const ApiException(message: 'No se pudo identificar la cuenta.');
+    }
+    await _datasource.deleteUser(userId);
+    await _tokenStorage.clear();
+  }
 }

@@ -155,7 +155,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Deleting your account will erase all your data, including the saved results history. This action cannot be undone.';
 
   @override
-  String get deleteAccountTwoSteps => 'Delete account (2-step process)';
+  String get deleteAccountTwoSteps => 'Delete account';
 
   @override
   String get calculate => 'Calculate';
@@ -296,7 +296,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invalidPasswordFormat =>
-      'At least 10 characters, with uppercase, lowercase, a number, and a symbol (@, !, %, *, ? or &)';
+      'At least 10 characters, with uppercase, lowercase, and a number';
 
   @override
   String get resultDetail => 'Cycle detail';
@@ -416,4 +416,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get deleteCalculationMessage =>
       'This calculation will be removed from your history. This action cannot be undone.';
+
+  @override
+  String get deleteAccountTitle => 'Delete account';
 }

@@ -107,6 +107,24 @@ class AuthViewModel extends Notifier<AuthState> {
     state = const AuthState(status: AuthStatus.unauthenticated);
   }
 
+  Future<bool> deleteAccount({required String networkErrorMessage}) async {
+    state = state.copyWith(isLoading: true, clearError: true);
+    try {
+      await _repository.deleteAccount();
+      state = const AuthState(status: AuthStatus.unauthenticated);
+      return true;
+    } on ApiException catch (error) {
+      state = state.copyWith(isLoading: false, errorMessage: error.message);
+      return false;
+    } catch (_) {
+      state = state.copyWith(
+        isLoading: false,
+        errorMessage: networkErrorMessage,
+      );
+      return false;
+    }
+  }
+
   Future<bool> _run(
     Future<void> Function() action,
     String networkErrorMessage,

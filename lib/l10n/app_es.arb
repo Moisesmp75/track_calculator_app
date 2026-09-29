@@ -47,7 +47,7 @@
   "signOut": "Cerrar Sesión",
   "dangerZone": "Zona de Riesgo",
   "deleteAccountWarning": "Al borrar tu cuenta se borrarán todos tus datos, incluyendo el historial de resultados guardados. Esta acción no puede ser revertida.",
-  "deleteAccountTwoSteps": "Eliminar cuenta (proceso de 2 pasos)",
+  "deleteAccountTwoSteps": "Eliminar cuenta",
   "calculate": "Calcular",
   "haulageSimulation": "SIMULACIÓN DE ACARREO",
   "newCalculation": "Nuevo Cálculo",
@@ -93,7 +93,7 @@
   "registerSuccess": "Cuenta creada. Inicia sesión para continuar.",
   "invalidEmailFormat": "Ingresa un correo con formato válido",
   "invalidNameFormat": "Solo letras, sin espacios ni números",
-  "invalidPasswordFormat": "Mínimo 10 caracteres, con mayúscula, minúscula, número y un símbolo (@, !, %, *, ? o &)",
+  "invalidPasswordFormat": "Mínimo 10 caracteres, con mayúscula, minúscula y número",
   "resultDetail": "Detalle de ciclo",
   "missingCalculationResult": "No hay un resultado para mostrar.",
   "suggestedTrucks": "Volquetes sugeridos",
@@ -141,5 +141,6 @@
   "cancel": "Cancelar",
   "delete": "Eliminar",
   "deleteCalculationTitle": "Eliminar cálculo",
-  "deleteCalculationMessage": "Este cálculo se eliminará de tu historial. Esta acción no se puede deshacer."
+  "deleteCalculationMessage": "Este cálculo se eliminará de tu historial. Esta acción no se puede deshacer.",
+  "deleteAccountTitle": "Eliminar cuenta"
 }

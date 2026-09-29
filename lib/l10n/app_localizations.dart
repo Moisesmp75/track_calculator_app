@@ -383,7 +383,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteAccountTwoSteps.
   ///
   /// In es, this message translates to:
-  /// **'Eliminar cuenta (proceso de 2 pasos)'**
+  /// **'Eliminar cuenta'**
   String get deleteAccountTwoSteps;
 
   /// No description provided for @calculate.
@@ -659,7 +659,7 @@ abstract class AppLocalizations {
   /// No description provided for @invalidPasswordFormat.
   ///
   /// In es, this message translates to:
-  /// **'Mínimo 10 caracteres, con mayúscula, minúscula, número y un símbolo (@, !, %, *, ? o &)'**
+  /// **'Mínimo 10 caracteres, con mayúscula, minúscula y número'**
   String get invalidPasswordFormat;
 
   /// No description provided for @resultDetail.
@@ -883,6 +883,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Este cálculo se eliminará de tu historial. Esta acción no se puede deshacer.'**
   String get deleteCalculationMessage;
+
+  /// No description provided for @deleteAccountTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Eliminar cuenta'**
+  String get deleteAccountTitle;
 }
 
 class _AppLocalizationsDelegate

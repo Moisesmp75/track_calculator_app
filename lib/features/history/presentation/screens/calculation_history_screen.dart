@@ -6,6 +6,7 @@ import 'package:vehicle_calculator/features/calculate/presentation/screens/resul
 import 'package:vehicle_calculator/features/history/presentation/viewmodels/history_view_model.dart';
 import 'package:vehicle_calculator/features/history/presentation/widgets/calculation_history_item.dart';
 import 'package:vehicle_calculator/features/shared/presentation/extensions/snackbar_extension.dart';
+import 'package:vehicle_calculator/features/shared/presentation/widgets/app_confirm_sheet.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_badge_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_icon_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_scaffold.dart';
@@ -154,24 +155,12 @@ Future<void> _confirmDelete(
   String id,
 ) async {
   final l10n = AppLocalizations.of(context);
-  final confirmed = await showDialog<bool>(
+  final confirmed = await showAppConfirmSheet(
     context: context,
-    builder: (dialogContext) {
-      return AlertDialog(
-        title: Text(l10n.deleteCalculationTitle),
-        content: Text(l10n.deleteCalculationMessage),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n.cancel),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n.delete),
-          ),
-        ],
-      );
-    },
+    title: l10n.deleteCalculationTitle,
+    message: l10n.deleteCalculationMessage,
+    confirmLabel: l10n.delete,
+    cancelLabel: l10n.cancel,
   );
   if (confirmed != true || !context.mounted) return;
 

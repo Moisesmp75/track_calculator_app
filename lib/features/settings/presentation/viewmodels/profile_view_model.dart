@@ -19,29 +19,31 @@ final profileViewModelProvider =
     NotifierProvider<ProfileViewModel, ProfileState>(ProfileViewModel.new);
 
 class ProfileViewModel extends Notifier<ProfileState> {
-  var _hasLoaded = false;
-
   @override
   ProfileState build() {
-    Future.microtask(loadIfNeeded);
+    final isAuthenticated =
+        ref.watch(authViewModelProvider).status == AuthStatus.authenticated;
+    if (!isAuthenticated) {
+      return const ProfileState();
+    }
+
+    Future.microtask(load);
     return const ProfileState(isLoading: true);
   }
 
-  Future<void> loadIfNeeded() async {
-    if (_hasLoaded) return;
-    await load();
-  }
-
   Future<void> load() async {
+    if (ref.read(authViewModelProvider).status != AuthStatus.authenticated) {
+      state = const ProfileState();
+      return;
+    }
+
     state = const ProfileState(isLoading: true);
 
     try {
       final user = await ref.read(authRepositoryProvider).getCurrentUser();
-      _hasLoaded = true;
       state = ProfileState(user: user);
     } catch (_) {
       final cached = ref.read(authViewModelProvider).user;
-      _hasLoaded = cached != null;
       state = ProfileState(user: cached);
     }
   }

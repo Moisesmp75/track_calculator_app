@@ -6,7 +6,9 @@ import 'package:vehicle_calculator/features/auth/presentation/viewmodels/auth_vi
 import 'package:vehicle_calculator/features/settings/presentation/viewmodels/profile_view_model.dart';
 import 'package:vehicle_calculator/features/shared/presentation/viewmodels/locale_view_model.dart';
 import 'package:vehicle_calculator/features/shared/presentation/viewmodels/theme_view_model.dart';
+import 'package:vehicle_calculator/features/shared/presentation/extensions/snackbar_extension.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_badge_widget.dart';
+import 'package:vehicle_calculator/features/shared/presentation/widgets/app_confirm_sheet.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_button_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_icon_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_scaffold.dart';
@@ -99,7 +101,7 @@ class _PersonalInformationSection extends ConsumerWidget {
                   spacing: 4,
                   children: [
                     Text(
-                      profile.user?.displayName ?? '—',
+                      profile.user?.displayName.toLowerCase() ?? '—',
                       style: theme.textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
@@ -266,7 +268,6 @@ class _AccountAndSecuritySection extends ConsumerWidget {
                 label: l10n.signOut,
                 onPressed: () async {
                   await ref.read(authViewModelProvider.notifier).logout();
-                  ref.invalidate(profileViewModelProvider);
                   if (context.mounted) {
                     context.goNamed(LoginScreen.screenName);
                   }
@@ -299,16 +300,12 @@ class _AccountAndSecuritySection extends ConsumerWidget {
                       l10n.deleteAccountWarning,
                       style: theme.textTheme.bodyMedium,
                     ),
-                    CardContainerWidget(
-                      color: theme.colorScheme.errorContainer,
-                      child: Text(
-                        l10n.deleteAccountTwoSteps,
-                        style: theme.textTheme.bodyLarge?.copyWith(
-                          color: theme.colorScheme.onErrorContainer,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+                    AppButtonWidget(
+                      label: l10n.deleteAccountTwoSteps,
+                      variant: AppButtonVariant.danger,
+                      trailingIcon: Icons.delete_outline,
+                      isLoading: ref.watch(authViewModelProvider).isLoading,
+                      onPressed: () => _deleteAccount(context, ref),
                     ),
                   ],
                 ),
@@ -319,4 +316,31 @@ class _AccountAndSecuritySection extends ConsumerWidget {
       ],
     );
   }
+}
+
+Future<void> _deleteAccount(BuildContext context, WidgetRef ref) async {
+  final l10n = AppLocalizations.of(context);
+  final confirmed = await showAppConfirmSheet(
+    context: context,
+    title: l10n.deleteAccountTitle,
+    message: l10n.deleteAccountWarning,
+    confirmLabel: l10n.delete,
+    cancelLabel: l10n.cancel,
+  );
+  if (!confirmed || !context.mounted) return;
+
+  final success = await ref.read(authViewModelProvider.notifier).deleteAccount(
+    networkErrorMessage: l10n.networkError,
+  );
+  if (!context.mounted) return;
+
+  if (!success) {
+    final message = ref.read(authViewModelProvider).errorMessage;
+    if (message != null) {
+      context.showSnackBar(message: message);
+    }
+    return;
+  }
+
+  context.goNamed(LoginScreen.screenName);
 }

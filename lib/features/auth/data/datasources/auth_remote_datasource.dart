@@ -52,6 +52,10 @@ class AuthRemoteDatasource {
     );
   }
 
+  Future<void> deleteUser(String id) {
+    return _apiClient.delete(ApiConfig.user(id));
+  }
+
   Future<RefreshTokensResponseModel> refreshToken(String refreshToken) {
     return _apiClient.post(
       ApiConfig.refreshToken,

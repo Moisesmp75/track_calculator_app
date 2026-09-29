@@ -156,7 +156,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Al borrar tu cuenta se borrarán todos tus datos, incluyendo el historial de resultados guardados. Esta acción no puede ser revertida.';
 
   @override
-  String get deleteAccountTwoSteps => 'Eliminar cuenta (proceso de 2 pasos)';
+  String get deleteAccountTwoSteps => 'Eliminar cuenta';
 
   @override
   String get calculate => 'Calcular';
@@ -297,7 +297,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invalidPasswordFormat =>
-      'Mínimo 10 caracteres, con mayúscula, minúscula, número y un símbolo (@, !, %, *, ? o &)';
+      'Mínimo 10 caracteres, con mayúscula, minúscula y número';
 
   @override
   String get resultDetail => 'Detalle de ciclo';
@@ -417,4 +417,7 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get deleteCalculationMessage =>
       'Este cálculo se eliminará de tu historial. Esta acción no se puede deshacer.';
+
+  @override
+  String get deleteAccountTitle => 'Eliminar cuenta';
 }
