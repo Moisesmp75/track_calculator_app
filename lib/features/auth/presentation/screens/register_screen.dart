@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vehicle_calculator/features/auth/presentation/screens/login_screen.dart';
 import 'package:vehicle_calculator/features/auth/presentation/viewmodels/auth_view_model.dart';
 import 'package:vehicle_calculator/features/auth/presentation/utils/auth_form_validators.dart';
+import 'package:vehicle_calculator/features/auth/presentation/utils/born_date_input_formatter.dart';
 import 'package:vehicle_calculator/features/auth/presentation/utils/born_date_parser.dart';
 import 'package:vehicle_calculator/features/shared/presentation/extensions/snackbar_extension.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_badge_widget.dart';
@@ -224,7 +225,8 @@ class _RegisterFormState extends ConsumerState<_RegisterForm> {
               label: l10n.birthDate,
               controller: _bornDateController,
               prefixIcon: Icons.calendar_month,
-              keyboardType: TextInputType.datetime,
+              keyboardType: TextInputType.number,
+              inputFormatters: const [BornDateInputFormatter()],
               hintText: l10n.birthDateHint,
               enabled: !isLoading,
               autovalidateMode: AutovalidateMode.onUserInteraction,

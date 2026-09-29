@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppTextFormField extends StatelessWidget {
   const AppTextFormField({
@@ -17,6 +18,7 @@ class AppTextFormField extends StatelessWidget {
     this.readOnly = false,
     this.autofocus = false,
     this.autovalidateMode,
+    this.inputFormatters,
   });
 
   final String label;
@@ -33,6 +35,7 @@ class AppTextFormField extends StatelessWidget {
   final bool readOnly;
   final bool autofocus;
   final AutovalidateMode? autovalidateMode;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +68,7 @@ class AppTextFormField extends StatelessWidget {
             enabled: enabled,
             readOnly: readOnly,
             autofocus: autofocus,
+            inputFormatters: inputFormatters,
             decoration: InputDecoration(
               hintText: hintText,
               prefixIcon: prefixIcon != null
