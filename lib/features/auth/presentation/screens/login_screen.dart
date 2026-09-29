@@ -11,8 +11,10 @@ import 'package:vehicle_calculator/features/shared/presentation/extensions/snack
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_badge_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_button_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_icon_toggle.dart';
+import 'package:vehicle_calculator/features/shared/presentation/widgets/app_logo.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_scaffold.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_text_form_field.dart';
+import 'package:vehicle_calculator/features/shared/presentation/widgets/app_version_label.dart';
 import 'package:vehicle_calculator/l10n/app_localizations.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -41,6 +43,7 @@ class _LoginScreenView extends StatelessWidget {
           _LoginViewHeader(),
           _LoginForm(),
           _LoginViewFooter(),
+          AppVersionLabel(),
         ],
       ),
     );
@@ -92,18 +95,18 @@ class _LoginViewHeader extends StatelessWidget {
     return Column(
       spacing: 12,
       children: [
-        AppBadgeWidget(
-          label: l10n.academicPortal,
-          showDot: false,
-          status: AppBadgeStatus.info,
-        ),
+        const AppLogo(),
         Text(
-          // l10n.appName,
-          'App Name',
+          l10n.appName,
           style: theme.textTheme.titleLarge?.copyWith(
             fontSize: 32,
             fontWeight: FontWeight.w700,
           ),
+        ),
+        AppBadgeWidget(
+          label: l10n.appBrandSubtitle,
+          showDot: false,
+          status: AppBadgeStatus.info,
         ),
         Text(
           l10n.appTagline,

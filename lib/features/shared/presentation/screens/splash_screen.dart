@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vehicle_calculator/features/auth/presentation/screens/login_screen.dart';
 import 'package:vehicle_calculator/features/auth/presentation/viewmodels/auth_view_model.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/screens/calculator_screen.dart';
+import 'package:vehicle_calculator/features/shared/presentation/widgets/app_logo.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   static const screenName = '/splash-screen';
@@ -38,7 +39,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     return Scaffold(
       backgroundColor: colorScheme.surface,
       body: Center(
-        child: CircularProgressIndicator(color: colorScheme.primary),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          spacing: 24,
+          children: [
+            const AppLogo(),
+            CircularProgressIndicator(color: colorScheme.primary),
+          ],
+        ),
       ),
     );
   }

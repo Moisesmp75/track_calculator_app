@@ -1,8 +1,15 @@
 {
   "@@locale": "es",
   "academicPortal": "PORTAL ACADÉMICO",
-  "appName": "Acarreo U",
+  "appName": "SmartHaul",
+  "appBrandSubtitle": "Transporte inteligente",
   "appTagline": "Optimización de ciclo, pala y tolvas para minería e ingeniería civil",
+  "appVersion": "Versión {version}",
+  "@appVersion": {
+    "placeholders": {
+      "version": { "type": "String" }
+    }
+  },
   "institutionalEmail": "Correo",
   "emailHint": "alumno@uni.edu.pe",
   "emailRequired": "Ingresa tu correo",

@@ -1,8 +1,15 @@
 {
   "@@locale": "en",
   "academicPortal": "ACADEMIC PORTAL",
-  "appName": "Acarreo U",
+  "appName": "SmartHaul",
+  "appBrandSubtitle": "Intelligent haulage",
   "appTagline": "Cycle, shovel and hopper optimization for mining and civil engineering",
+  "appVersion": "Version {version}",
+  "@appVersion": {
+    "placeholders": {
+      "version": { "type": "String" }
+    }
+  },
   "institutionalEmail": "Email",
   "emailHint": "student@uni.edu.pe",
   "emailRequired": "Enter your email",

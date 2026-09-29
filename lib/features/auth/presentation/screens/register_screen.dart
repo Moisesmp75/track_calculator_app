@@ -9,8 +9,10 @@ import 'package:vehicle_calculator/features/auth/presentation/utils/born_date_pa
 import 'package:vehicle_calculator/features/shared/presentation/extensions/snackbar_extension.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_badge_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_button_widget.dart';
+import 'package:vehicle_calculator/features/shared/presentation/widgets/app_logo.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_scaffold.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_text_form_field.dart';
+import 'package:vehicle_calculator/features/shared/presentation/widgets/app_version_label.dart';
 import 'package:vehicle_calculator/l10n/app_localizations.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -38,6 +40,7 @@ class _RegisterScreenView extends StatelessWidget {
           _RegisterViewHeader(),
           _RegisterForm(),
           _RegisterViewFooter(),
+          Center(child: AppVersionLabel()),
         ],
       ),
     );
@@ -56,6 +59,13 @@ class _RegisterViewHeader extends StatelessWidget {
       spacing: 4,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Center(child: const AppLogo()),
+        Text(
+          l10n.appName,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
+        ),
         AppBadgeWidget(
           label: l10n.newAccount,
           status: AppBadgeStatus.info,

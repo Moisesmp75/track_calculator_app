@@ -12,6 +12,7 @@ import 'package:vehicle_calculator/features/shared/presentation/widgets/app_conf
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_button_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_icon_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_scaffold.dart';
+import 'package:vehicle_calculator/features/shared/presentation/widgets/app_version_label.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/card_container_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/custom_app_bar.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/toogle_switch_dual.dart';
@@ -66,7 +67,7 @@ class _ProfileSettingsScreenView extends StatelessWidget {
           const _PersonalInformationSection(),
           const _PreferencesSection(),
           const _AccountAndSecuritySection(),
-          const SizedBox(height: 10),
+          const Center(child: AppVersionLabel()),
         ],
       ),
     );

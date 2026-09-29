@@ -13,11 +13,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get academicPortal => 'ACADEMIC PORTAL';
 
   @override
-  String get appName => 'Acarreo U';
+  String get appName => 'SmartHaul';
+
+  @override
+  String get appBrandSubtitle => 'Intelligent haulage';
 
   @override
   String get appTagline =>
       'Cycle, shovel and hopper optimization for mining and civil engineering';
+
+  @override
+  String appVersion(String version) {
+    return 'Version $version';
+  }
 
   @override
   String get institutionalEmail => 'Email';

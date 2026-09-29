@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vehicle_calculator/core/config/api_config.dart';
@@ -10,6 +11,10 @@ import 'package:vehicle_calculator/features/shared/presentation/viewmodels/local
 
 final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
   throw UnimplementedError('Override sharedPreferencesProvider in main.');
+});
+
+final packageInfoProvider = Provider<PackageInfo>((ref) {
+  throw UnimplementedError('Override packageInfoProvider in main.');
 });
 
 final tokenStorageProvider = Provider<TokenStorage>((ref) {

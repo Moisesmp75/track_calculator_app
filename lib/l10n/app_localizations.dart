@@ -107,14 +107,26 @@ abstract class AppLocalizations {
   /// No description provided for @appName.
   ///
   /// In es, this message translates to:
-  /// **'Acarreo U'**
+  /// **'SmartHaul'**
   String get appName;
+
+  /// No description provided for @appBrandSubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Transporte inteligente'**
+  String get appBrandSubtitle;
 
   /// No description provided for @appTagline.
   ///
   /// In es, this message translates to:
   /// **'Optimización de ciclo, pala y tolvas para minería e ingeniería civil'**
   String get appTagline;
+
+  /// No description provided for @appVersion.
+  ///
+  /// In es, this message translates to:
+  /// **'Versión {version}'**
+  String appVersion(String version);
 
   /// No description provided for @institutionalEmail.
   ///
