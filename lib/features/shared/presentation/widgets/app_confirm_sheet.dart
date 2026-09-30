@@ -8,6 +8,8 @@ Future<bool> showAppConfirmSheet({
   required String message,
   required String confirmLabel,
   required String cancelLabel,
+  AppButtonVariant confirmVariant = AppButtonVariant.danger,
+  IconData confirmIcon = Icons.delete_outline,
 }) async {
   final confirmed = await showModalBottomSheet<bool>(
     context: context,
@@ -19,6 +21,8 @@ Future<bool> showAppConfirmSheet({
         message: message,
         confirmLabel: confirmLabel,
         cancelLabel: cancelLabel,
+        confirmVariant: confirmVariant,
+        confirmIcon: confirmIcon,
       );
     },
   );
@@ -31,12 +35,16 @@ class _AppConfirmSheet extends StatelessWidget {
     required this.message,
     required this.confirmLabel,
     required this.cancelLabel,
+    required this.confirmVariant,
+    required this.confirmIcon,
   });
 
   final String title;
   final String message;
   final String confirmLabel;
   final String cancelLabel;
+  final AppButtonVariant confirmVariant;
+  final IconData confirmIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -94,8 +102,8 @@ class _AppConfirmSheet extends StatelessWidget {
                 ),
                 AppButtonWidget(
                   label: confirmLabel,
-                  variant: AppButtonVariant.danger,
-                  trailingIcon: Icons.delete_outline,
+                  variant: confirmVariant,
+                  trailingIcon: confirmIcon,
                   onPressed: () => Navigator.of(context).pop(true),
                 ),
                 AppButtonWidget(

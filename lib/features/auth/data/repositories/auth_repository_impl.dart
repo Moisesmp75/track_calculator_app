@@ -4,6 +4,7 @@ import 'package:vehicle_calculator/core/utils/jwt_utils.dart';
 import 'package:vehicle_calculator/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:vehicle_calculator/features/auth/data/mappers/auth_mapper.dart';
 import 'package:vehicle_calculator/features/auth/data/models/sign_in_request_model.dart';
+import 'package:vehicle_calculator/features/auth/data/models/verify_password_recovery_request_model.dart';
 import 'package:vehicle_calculator/features/auth/data/models/sign_up_request_model.dart';
 import 'package:vehicle_calculator/features/auth/domain/model/auth_session.dart';
 import 'package:vehicle_calculator/features/auth/domain/model/user.dart';
@@ -95,5 +96,34 @@ class AuthRepositoryImpl implements AuthRepository {
     }
     await _datasource.deleteUser(userId);
     await _tokenStorage.clear();
+  }
+
+  @override
+  Future<String> verifyPasswordRecovery({
+    required String email,
+    required String name,
+    required String lastName,
+    required String bornDate,
+  }) async {
+    final model = await _datasource.verifyPasswordRecovery(
+      VerifyPasswordRecoveryRequestModel(
+        email: email,
+        name: name,
+        lastName: lastName,
+        bornDate: bornDate,
+      ),
+    );
+    return model.resetToken;
+  }
+
+  @override
+  Future<void> resetPassword({
+    required String resetToken,
+    required String newPassword,
+  }) {
+    return _datasource.resetPassword(
+      resetToken: resetToken,
+      newPassword: newPassword,
+    );
   }
 }

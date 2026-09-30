@@ -83,6 +83,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lastNamesHint => 'E.g. Perez';
 
   @override
+  String get forgotPassword => 'Forgot your password?';
+
+  @override
+  String get recoverPassword => 'RECOVER ACCOUNT';
+
+  @override
+  String get recoverPasswordTitle => 'Recover password';
+
+  @override
+  String get recoverPasswordTagline =>
+      'Enter your account details to verify your identity.';
+
+  @override
+  String get verifyIdentity => 'Verify identity';
+
+  @override
+  String get newPasswordTitle => 'New password';
+
+  @override
+  String get newPasswordTagline => 'Choose a new password for your account.';
+
+  @override
+  String get newPassword => 'New password';
+
+  @override
+  String get confirmNewPassword => 'Confirm new password';
+
+  @override
+  String get saveNewPassword => 'Save password';
+
+  @override
+  String get passwordUpdated => 'Password updated. Sign in to continue.';
+
+  @override
+  String get birthDateRequired => 'Enter your date of birth';
+
+  @override
   String get birthDate => 'Date of birth';
 
   @override
@@ -427,4 +464,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteAccountTitle => 'Delete account';
+
+  @override
+  String get signOutTitle => 'Sign out';
+
+  @override
+  String get signOutMessage =>
+      'You will be signed out on this device. You can sign back in whenever you want.';
 }

@@ -71,16 +71,54 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ingresa tus datos personales para acceder a la calculadora y simulaciones de transporte minero.';
 
   @override
-  String get firstNames => 'Nombres';
+  String get firstNames => 'Nombre';
 
   @override
   String get firstNamesHint => 'Ej. Juan';
 
   @override
-  String get lastNames => 'Apellidos';
+  String get lastNames => 'Apellido';
 
   @override
   String get lastNamesHint => 'Ej. Pérez';
+
+  @override
+  String get forgotPassword => '¿Olvidaste tu contraseña?';
+
+  @override
+  String get recoverPassword => 'RECUPERAR CUENTA';
+
+  @override
+  String get recoverPasswordTitle => 'Recuperar contraseña';
+
+  @override
+  String get recoverPasswordTagline =>
+      'Ingresa los datos de tu cuenta para verificar tu identidad.';
+
+  @override
+  String get verifyIdentity => 'Verificar identidad';
+
+  @override
+  String get newPasswordTitle => 'Nueva contraseña';
+
+  @override
+  String get newPasswordTagline => 'Elige una contraseña nueva para tu cuenta.';
+
+  @override
+  String get newPassword => 'Nueva contraseña';
+
+  @override
+  String get confirmNewPassword => 'Confirmar nueva contraseña';
+
+  @override
+  String get saveNewPassword => 'Guardar contraseña';
+
+  @override
+  String get passwordUpdated =>
+      'Contraseña actualizada. Inicia sesión para continuar.';
+
+  @override
+  String get birthDateRequired => 'Ingresa tu fecha de nacimiento';
 
   @override
   String get birthDate => 'Fecha de Nacimiento';
@@ -428,4 +466,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get deleteAccountTitle => 'Eliminar cuenta';
+
+  @override
+  String get signOutTitle => 'Cerrar sesión';
+
+  @override
+  String get signOutMessage =>
+      'Se cerrará tu sesión en este dispositivo. Podrás volver a entrar cuando quieras.';
 }

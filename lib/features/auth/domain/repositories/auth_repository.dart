@@ -22,4 +22,16 @@ abstract class AuthRepository {
   Future<void> logout();
 
   Future<void> deleteAccount();
+
+  Future<String> verifyPasswordRecovery({
+    required String email,
+    required String name,
+    required String lastName,
+    required String bornDate,
+  });
+
+  Future<void> resetPassword({
+    required String resetToken,
+    required String newPassword,
+  });
 }

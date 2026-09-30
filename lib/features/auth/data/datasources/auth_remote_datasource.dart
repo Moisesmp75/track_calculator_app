@@ -1,6 +1,8 @@
 import 'package:vehicle_calculator/core/config/api_config.dart';
 import 'package:vehicle_calculator/core/network/api_client.dart';
+import 'package:vehicle_calculator/features/auth/data/models/password_reset_token_model.dart';
 import 'package:vehicle_calculator/features/auth/data/models/refresh_tokens_response_model.dart';
+import 'package:vehicle_calculator/features/auth/data/models/verify_password_recovery_request_model.dart';
 import 'package:vehicle_calculator/features/auth/data/models/sign_in_request_model.dart';
 import 'package:vehicle_calculator/features/auth/data/models/sign_in_response_model.dart';
 import 'package:vehicle_calculator/features/auth/data/models/sign_up_request_model.dart';
@@ -54,6 +56,31 @@ class AuthRemoteDatasource {
 
   Future<void> deleteUser(String id) {
     return _apiClient.delete(ApiConfig.user(id));
+  }
+
+  Future<PasswordResetTokenModel> verifyPasswordRecovery(
+    VerifyPasswordRecoveryRequestModel request,
+  ) {
+    return _apiClient.post(
+      ApiConfig.verifyPasswordRecovery,
+      data: request.toJson(),
+      skipAuth: true,
+      parse: (data) => PasswordResetTokenModel.fromJson(_asMap(data)),
+    );
+  }
+
+  Future<void> resetPassword({
+    required String resetToken,
+    required String newPassword,
+  }) {
+    return _apiClient.postNoContent(
+      ApiConfig.resetPassword,
+      data: {
+        'resetToken': resetToken,
+        'newPassword': newPassword,
+      },
+      skipAuth: true,
+    );
   }
 
   Future<RefreshTokensResponseModel> refreshToken(String refreshToken) {

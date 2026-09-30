@@ -107,6 +107,48 @@ class AuthViewModel extends Notifier<AuthState> {
     state = const AuthState(status: AuthStatus.unauthenticated);
   }
 
+  Future<String?> verifyPasswordRecovery({
+    required String email,
+    required String name,
+    required String lastName,
+    required String bornDate,
+    required String networkErrorMessage,
+  }) async {
+    state = state.copyWith(isLoading: true, clearError: true);
+    try {
+      final token = await _repository.verifyPasswordRecovery(
+        email: email.trim(),
+        name: name.trim(),
+        lastName: lastName.trim(),
+        bornDate: bornDate,
+      );
+      state = state.copyWith(isLoading: false);
+      return token;
+    } on ApiException catch (error) {
+      state = state.copyWith(isLoading: false, errorMessage: error.message);
+      return null;
+    } catch (_) {
+      state = state.copyWith(
+        isLoading: false,
+        errorMessage: networkErrorMessage,
+      );
+      return null;
+    }
+  }
+
+  Future<bool> resetPassword({
+    required String resetToken,
+    required String newPassword,
+    required String networkErrorMessage,
+  }) {
+    return _run(() async {
+      await _repository.resetPassword(
+        resetToken: resetToken,
+        newPassword: newPassword,
+      );
+    }, networkErrorMessage);
+  }
+
   Future<bool> deleteAccount({required String networkErrorMessage}) async {
     state = state.copyWith(isLoading: true, clearError: true);
     try {

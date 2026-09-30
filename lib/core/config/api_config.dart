@@ -7,6 +7,8 @@ class ApiConfig {
   static const signIn = '/v1/authentication/sign-in';
   static const refreshToken = '/v1/authentication/refresh-token';
   static const validateRefreshToken = '/v1/authentication/refresh-token/validate';
+  static const verifyPasswordRecovery = '/v1/authentication/password-recovery/verify';
+  static const resetPassword = '/v1/authentication/password-recovery/reset';
   static const me = '/v1/authentication/me';
   static const materials = '/v1/materials';
   static const dumpTruckTypes = '/v1/dump-truck-types';

@@ -65,6 +65,28 @@ class ApiClient {
     );
   }
 
+  Future<void> postNoContent(
+    String path, {
+    Object? data,
+    bool skipAuth = false,
+  }) async {
+    try {
+      final response = await _dio.post<dynamic>(
+        path,
+        data: data,
+        options: Options(extra: {'skipAuth': skipAuth}),
+      );
+      if (response.statusCode == 204) return;
+      if (response.data is Map<String, dynamic> &&
+          response.data['success'] == true) {
+        return;
+      }
+      throw const ApiException(message: 'Respuesta inválida del servidor.');
+    } on DioException catch (error) {
+      throw _mapDioException(error);
+    }
+  }
+
   Future<void> delete(
     String path, {
     bool skipAuth = false,

@@ -27,6 +27,10 @@ class AuthFormValidators {
   static bool isValidOptionalBornDate(String value) {
     final text = value.trim();
     if (text.isEmpty) return true;
-    return RegExp(r'^(\d{2})/(\d{2})/(\d{4})$').hasMatch(text);
+    return isValidRequiredBornDate(text);
+  }
+
+  static bool isValidRequiredBornDate(String value) {
+    return RegExp(r'^(\d{2})/(\d{2})/(\d{4})$').hasMatch(value.trim());
   }
 }

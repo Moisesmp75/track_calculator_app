@@ -215,7 +215,7 @@ abstract class AppLocalizations {
   /// No description provided for @firstNames.
   ///
   /// In es, this message translates to:
-  /// **'Nombres'**
+  /// **'Nombre'**
   String get firstNames;
 
   /// No description provided for @firstNamesHint.
@@ -227,7 +227,7 @@ abstract class AppLocalizations {
   /// No description provided for @lastNames.
   ///
   /// In es, this message translates to:
-  /// **'Apellidos'**
+  /// **'Apellido'**
   String get lastNames;
 
   /// No description provided for @lastNamesHint.
@@ -235,6 +235,78 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Ej. Pérez'**
   String get lastNamesHint;
+
+  /// No description provided for @forgotPassword.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Olvidaste tu contraseña?'**
+  String get forgotPassword;
+
+  /// No description provided for @recoverPassword.
+  ///
+  /// In es, this message translates to:
+  /// **'RECUPERAR CUENTA'**
+  String get recoverPassword;
+
+  /// No description provided for @recoverPasswordTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Recuperar contraseña'**
+  String get recoverPasswordTitle;
+
+  /// No description provided for @recoverPasswordTagline.
+  ///
+  /// In es, this message translates to:
+  /// **'Ingresa los datos de tu cuenta para verificar tu identidad.'**
+  String get recoverPasswordTagline;
+
+  /// No description provided for @verifyIdentity.
+  ///
+  /// In es, this message translates to:
+  /// **'Verificar identidad'**
+  String get verifyIdentity;
+
+  /// No description provided for @newPasswordTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Nueva contraseña'**
+  String get newPasswordTitle;
+
+  /// No description provided for @newPasswordTagline.
+  ///
+  /// In es, this message translates to:
+  /// **'Elige una contraseña nueva para tu cuenta.'**
+  String get newPasswordTagline;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In es, this message translates to:
+  /// **'Nueva contraseña'**
+  String get newPassword;
+
+  /// No description provided for @confirmNewPassword.
+  ///
+  /// In es, this message translates to:
+  /// **'Confirmar nueva contraseña'**
+  String get confirmNewPassword;
+
+  /// No description provided for @saveNewPassword.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardar contraseña'**
+  String get saveNewPassword;
+
+  /// No description provided for @passwordUpdated.
+  ///
+  /// In es, this message translates to:
+  /// **'Contraseña actualizada. Inicia sesión para continuar.'**
+  String get passwordUpdated;
+
+  /// No description provided for @birthDateRequired.
+  ///
+  /// In es, this message translates to:
+  /// **'Ingresa tu fecha de nacimiento'**
+  String get birthDateRequired;
 
   /// No description provided for @birthDate.
   ///
@@ -901,6 +973,18 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Eliminar cuenta'**
   String get deleteAccountTitle;
+
+  /// No description provided for @signOutTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Cerrar sesión'**
+  String get signOutTitle;
+
+  /// No description provided for @signOutMessage.
+  ///
+  /// In es, this message translates to:
+  /// **'Se cerrará tu sesión en este dispositivo. Podrás volver a entrar cuando quieras.'**
+  String get signOutMessage;
 }
 
 class _AppLocalizationsDelegate

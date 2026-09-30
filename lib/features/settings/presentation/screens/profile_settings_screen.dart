@@ -267,12 +267,7 @@ class _AccountAndSecuritySection extends ConsumerWidget {
               ),
               AppButtonWidget(
                 label: l10n.signOut,
-                onPressed: () async {
-                  await ref.read(authViewModelProvider.notifier).logout();
-                  if (context.mounted) {
-                    context.goNamed(LoginScreen.screenName);
-                  }
-                },
+                onPressed: () => _signOut(context, ref),
                 trailingIcon: Icons.logout,
                 variant: AppButtonVariant.primary,
               ),
@@ -316,6 +311,25 @@ class _AccountAndSecuritySection extends ConsumerWidget {
         ),
       ],
     );
+  }
+}
+
+Future<void> _signOut(BuildContext context, WidgetRef ref) async {
+  final l10n = AppLocalizations.of(context);
+  final confirmed = await showAppConfirmSheet(
+    context: context,
+    title: l10n.signOutTitle,
+    message: l10n.signOutMessage,
+    confirmLabel: l10n.signOut,
+    cancelLabel: l10n.cancel,
+    confirmVariant: AppButtonVariant.primary,
+    confirmIcon: Icons.logout,
+  );
+  if (!confirmed || !context.mounted) return;
+
+  await ref.read(authViewModelProvider.notifier).logout();
+  if (context.mounted) {
+    context.goNamed(LoginScreen.screenName);
   }
 }
 

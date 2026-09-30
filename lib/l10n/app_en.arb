@@ -28,6 +28,18 @@
   "firstNamesHint": "E.g. John",
   "lastNames": "Last name",
   "lastNamesHint": "E.g. Perez",
+  "forgotPassword": "Forgot your password?",
+  "recoverPassword": "RECOVER ACCOUNT",
+  "recoverPasswordTitle": "Recover password",
+  "recoverPasswordTagline": "Enter your account details to verify your identity.",
+  "verifyIdentity": "Verify identity",
+  "newPasswordTitle": "New password",
+  "newPasswordTagline": "Choose a new password for your account.",
+  "newPassword": "New password",
+  "confirmNewPassword": "Confirm new password",
+  "saveNewPassword": "Save password",
+  "passwordUpdated": "Password updated. Sign in to continue.",
+  "birthDateRequired": "Enter your date of birth",
   "birthDate": "Date of birth",
   "birthDateHint": "dd/mm/yyyy",
   "email": "Email",
@@ -149,5 +161,7 @@
   "delete": "Delete",
   "deleteCalculationTitle": "Delete calculation",
   "deleteCalculationMessage": "This calculation will be removed from your history. This action cannot be undone.",
-  "deleteAccountTitle": "Delete account"
+  "deleteAccountTitle": "Delete account",
+  "signOutTitle": "Sign out",
+  "signOutMessage": "You will be signed out on this device. You can sign back in whenever you want."
 }

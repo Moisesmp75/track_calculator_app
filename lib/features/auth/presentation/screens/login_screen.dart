@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vehicle_calculator/features/auth/presentation/screens/register_screen.dart';
+import 'package:vehicle_calculator/features/auth/presentation/screens/restore_password.dart';
 import 'package:vehicle_calculator/features/auth/presentation/utils/auth_form_validators.dart';
 import 'package:vehicle_calculator/features/auth/presentation/viewmodels/auth_view_model.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/screens/calculator_screen.dart';
@@ -241,6 +242,21 @@ class _LoginFormState extends ConsumerState<_LoginForm> {
                 }
                 return null;
               },
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: isLoading
+                    ? null
+                    : () => context.pushNamed(RestorePassword.screenName),
+                child: Text(
+                  l10n.forgotPassword,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    fontSize: 15,
+                    color: colorScheme.primary,
+                  ),
+                ),
+              ),
             ),
             const SizedBox(height: 6),
             AppButtonWidget(
