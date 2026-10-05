@@ -217,6 +217,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get calculateFleetAndCycle => 'Calcular Flota y Ciclo';
 
   @override
+  String get premium => 'Premium';
+
+  @override
+  String get premiumLockedSubtitle => 'Disponible en una próxima versión';
+
+  @override
+  String get premiumComingSoonTitle => 'Funcionalidad en desarrollo';
+
+  @override
+  String get premiumComingSoonMessage =>
+      'Estamos trabajando en esta función. Estará disponible en una versión futura de la aplicación.';
+
+  @override
+  String get gotIt => 'Entendido';
+
+  @override
   String get generalData => 'Datos Generales';
 
   @override

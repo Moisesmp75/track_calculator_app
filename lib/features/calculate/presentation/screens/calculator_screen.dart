@@ -9,9 +9,8 @@ import 'package:vehicle_calculator/features/calculate/presentation/utils/calcula
 import 'package:vehicle_calculator/features/calculate/presentation/viewmodels/calculator_view_model.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/viewmodels/catalog_view_model.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/widgets/calculator_view_header.dart';
-import 'package:vehicle_calculator/features/calculate/presentation/widgets/cost_analysis_form.dart';
-import 'package:vehicle_calculator/features/calculate/presentation/widgets/general_information_form.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/widgets/numeric_field_pair.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/widgets/premium_section_card.dart';
 import 'package:vehicle_calculator/features/shared/presentation/extensions/snackbar_extension.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_button_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_icon_widget.dart';
@@ -65,17 +64,12 @@ class _CalculatorForm extends ConsumerStatefulWidget {
 }
 
 class _CalculatorFormState extends ConsumerState<_CalculatorForm> {
-  final _projectController = TextEditingController();
-  final _sectionController = TextEditingController();
   final _distanceController = TextEditingController();
   final _loaderPerformanceController = TextEditingController();
   final _loadedSpeedController = TextEditingController();
   final _unloadedSpeedController = TextEditingController();
   final _shiftHoursController = TextEditingController();
   final _efficiencyController = TextEditingController();
-  final _dumpTruckRateController = TextEditingController();
-  final _loaderRateController = TextEditingController();
-  final _staffRateController = TextEditingController();
 
   String? _materialId;
   String? _dumpTruckTypeId;
@@ -89,17 +83,12 @@ class _CalculatorFormState extends ConsumerState<_CalculatorForm> {
   }
 
   List<TextEditingController> get _controllers => [
-        _projectController,
-        _sectionController,
         _distanceController,
         _loaderPerformanceController,
         _loadedSpeedController,
         _unloadedSpeedController,
         _shiftHoursController,
         _efficiencyController,
-        _dumpTruckRateController,
-        _loaderRateController,
-        _staffRateController,
       ];
 
   void _onFieldChanged() => setState(() {});
@@ -129,25 +118,13 @@ class _CalculatorFormState extends ConsumerState<_CalculatorForm> {
     if (!isValidEfficiency(parseOptionalNumber(_efficiencyController.text))) {
       return false;
     }
-    if (!isPositive(parseOptionalNumber(_loaderPerformanceController.text))) {
-      return false;
-    }
-    return _isOptionalRateValid(_dumpTruckRateController.text) &&
-        _isOptionalRateValid(_loaderRateController.text) &&
-        _isOptionalRateValid(_staffRateController.text);
-  }
-
-  bool _isOptionalRateValid(String raw) {
-    if (raw.trim().isEmpty) return true;
-    return isPositive(parseOptionalNumber(raw));
+    return isPositive(parseOptionalNumber(_loaderPerformanceController.text));
   }
 
   Future<void> _submit() async {
     if (!_canSubmit) return;
 
     final l10n = AppLocalizations.of(context);
-    final projectName = _projectController.text.trim();
-    final section = _sectionController.text.trim();
 
     final result = await ref.read(calculatorViewModelProvider.notifier).submit(
       input: CreateCalculationInput(
@@ -160,11 +137,6 @@ class _CalculatorFormState extends ConsumerState<_CalculatorForm> {
         efficiency: parseOptionalNumber(_efficiencyController.text)!,
         loaderPerformanceM3h:
             parseOptionalNumber(_loaderPerformanceController.text)!,
-        projectName: projectName.isEmpty ? null : projectName,
-        section: section.isEmpty ? null : section,
-        dumpTruckHourlyRate: parseOptionalNumber(_dumpTruckRateController.text),
-        loaderHourlyRate: parseOptionalNumber(_loaderRateController.text),
-        staffHourlyRate: parseOptionalNumber(_staffRateController.text),
       ),
       networkErrorMessage: l10n.networkError,
     );
@@ -215,12 +187,14 @@ class _CalculatorFormState extends ConsumerState<_CalculatorForm> {
       }
     });
 
+    final l10n = AppLocalizations.of(context);
+
     return Column(
       spacing: 22,
       children: [
-        GeneralInformationForm(
-          projectController: _projectController,
-          sectionController: _sectionController,
+        PremiumSectionCard(
+          title: l10n.generalData,
+          icon: AppIconAction.map,
         ),
         _OperationInformationForm(
           materialId: _materialId,
@@ -236,10 +210,9 @@ class _CalculatorFormState extends ConsumerState<_CalculatorForm> {
             setState(() => _dumpTruckTypeId = value);
           },
         ),
-        CostAnalysisForm(
-          dumpTruckRateController: _dumpTruckRateController,
-          loaderRateController: _loaderRateController,
-          staffRateController: _staffRateController,
+        PremiumSectionCard(
+          title: l10n.costAnalysis,
+          icon: AppIconAction.payments,
         ),
         _CalculatorSubmitButton(
           enabled: _canSubmit,

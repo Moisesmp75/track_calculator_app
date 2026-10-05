@@ -494,6 +494,36 @@ abstract class AppLocalizations {
   /// **'Calcular Flota y Ciclo'**
   String get calculateFleetAndCycle;
 
+  /// No description provided for @premium.
+  ///
+  /// In es, this message translates to:
+  /// **'Premium'**
+  String get premium;
+
+  /// No description provided for @premiumLockedSubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Disponible en una próxima versión'**
+  String get premiumLockedSubtitle;
+
+  /// No description provided for @premiumComingSoonTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Funcionalidad en desarrollo'**
+  String get premiumComingSoonTitle;
+
+  /// No description provided for @premiumComingSoonMessage.
+  ///
+  /// In es, this message translates to:
+  /// **'Estamos trabajando en esta función. Estará disponible en una versión futura de la aplicación.'**
+  String get premiumComingSoonMessage;
+
+  /// No description provided for @gotIt.
+  ///
+  /// In es, this message translates to:
+  /// **'Entendido'**
+  String get gotIt;
+
   /// No description provided for @generalData.
   ///
   /// In es, this message translates to:
