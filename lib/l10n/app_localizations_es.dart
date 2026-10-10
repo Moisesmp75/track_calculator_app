@@ -281,6 +281,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get shiftHours => 'Jornada Turno';
 
   @override
+  String get shiftHoursFixedNote => 'Fija en 8 h en esta versión';
+
+  @override
+  String get selectLoadingYield => 'Selecciona el equipo';
+
+  @override
+  String get selectSpeed => 'Selecciona la velocidad';
+
+  @override
+  String get selectEfficiency => 'Selecciona la eficiencia';
+
+  @override
   String get efficiency => 'Eficiencia';
 
   @override

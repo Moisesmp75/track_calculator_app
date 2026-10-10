@@ -620,6 +620,30 @@ abstract class AppLocalizations {
   /// **'Jornada Turno'**
   String get shiftHours;
 
+  /// No description provided for @shiftHoursFixedNote.
+  ///
+  /// In es, this message translates to:
+  /// **'Fija en 8 h en esta versión'**
+  String get shiftHoursFixedNote;
+
+  /// No description provided for @selectLoadingYield.
+  ///
+  /// In es, this message translates to:
+  /// **'Selecciona el equipo'**
+  String get selectLoadingYield;
+
+  /// No description provided for @selectSpeed.
+  ///
+  /// In es, this message translates to:
+  /// **'Selecciona la velocidad'**
+  String get selectSpeed;
+
+  /// No description provided for @selectEfficiency.
+  ///
+  /// In es, this message translates to:
+  /// **'Selecciona la eficiencia'**
+  String get selectEfficiency;
+
   /// No description provided for @efficiency.
   ///
   /// In es, this message translates to:

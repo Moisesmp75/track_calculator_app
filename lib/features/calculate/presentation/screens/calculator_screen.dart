@@ -8,16 +8,15 @@ import 'package:vehicle_calculator/features/calculate/presentation/screens/resul
 import 'package:vehicle_calculator/features/calculate/presentation/utils/calculation_form_parsers.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/viewmodels/calculator_view_model.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/viewmodels/catalog_view_model.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/models/operation_parameter_presets.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/widgets/calculator_view_header.dart';
-import 'package:vehicle_calculator/features/calculate/presentation/widgets/numeric_field_pair.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/widgets/operation_parameters_basic_form.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/widgets/premium_section_card.dart';
 import 'package:vehicle_calculator/features/shared/presentation/extensions/snackbar_extension.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_button_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_icon_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_scaffold.dart';
-import 'package:vehicle_calculator/features/shared/presentation/widgets/card_container_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/custom_app_bar.dart';
-import 'package:vehicle_calculator/features/shared/presentation/widgets/drop_down_form_field.dart';
 import 'package:vehicle_calculator/l10n/app_localizations.dart';
 
 class CalculatorScreen extends StatelessWidget {
@@ -65,60 +64,39 @@ class _CalculatorForm extends ConsumerStatefulWidget {
 
 class _CalculatorFormState extends ConsumerState<_CalculatorForm> {
   final _distanceController = TextEditingController();
-  final _loaderPerformanceController = TextEditingController();
-  final _loadedSpeedController = TextEditingController();
-  final _unloadedSpeedController = TextEditingController();
-  final _shiftHoursController = TextEditingController();
-  final _efficiencyController = TextEditingController();
 
   String? _materialId;
   String? _dumpTruckTypeId;
+  double? _loaderYieldM3h;
+  double? _loadedSpeedKmh;
+  double? _returnSpeedKmh;
+  double? _efficiency;
 
   @override
   void initState() {
     super.initState();
-    for (final controller in _controllers) {
-      controller.addListener(_onFieldChanged);
-    }
+    _distanceController.addListener(_onFieldChanged);
   }
-
-  List<TextEditingController> get _controllers => [
-        _distanceController,
-        _loaderPerformanceController,
-        _loadedSpeedController,
-        _unloadedSpeedController,
-        _shiftHoursController,
-        _efficiencyController,
-      ];
 
   void _onFieldChanged() => setState(() {});
 
   @override
   void dispose() {
-    for (final controller in _controllers) {
-      controller.dispose();
-    }
+    _distanceController
+      ..removeListener(_onFieldChanged)
+      ..dispose();
     super.dispose();
   }
 
   bool get _canSubmit {
     if (_materialId == null || _dumpTruckTypeId == null) return false;
-    if (!isPositive(parseOptionalNumber(_distanceController.text))) {
+    if (_loaderYieldM3h == null ||
+        _loadedSpeedKmh == null ||
+        _returnSpeedKmh == null ||
+        _efficiency == null) {
       return false;
     }
-    if (!isValidSpeed(parseOptionalNumber(_loadedSpeedController.text))) {
-      return false;
-    }
-    if (!isValidSpeed(parseOptionalNumber(_unloadedSpeedController.text))) {
-      return false;
-    }
-    if (!isPositive(parseOptionalNumber(_shiftHoursController.text))) {
-      return false;
-    }
-    if (!isValidEfficiency(parseOptionalNumber(_efficiencyController.text))) {
-      return false;
-    }
-    return isPositive(parseOptionalNumber(_loaderPerformanceController.text));
+    return isPositive(parseOptionalNumber(_distanceController.text));
   }
 
   Future<void> _submit() async {
@@ -131,12 +109,11 @@ class _CalculatorFormState extends ConsumerState<_CalculatorForm> {
         materialId: _materialId!,
         dumpTruckTypeId: _dumpTruckTypeId!,
         distanceKm: parseOptionalNumber(_distanceController.text)!,
-        loadedSpeedKmh: parseOptionalNumber(_loadedSpeedController.text)!,
-        unloadedSpeedKmh: parseOptionalNumber(_unloadedSpeedController.text)!,
-        shiftHours: parseOptionalNumber(_shiftHoursController.text)!,
-        efficiency: parseOptionalNumber(_efficiencyController.text)!,
-        loaderPerformanceM3h:
-            parseOptionalNumber(_loaderPerformanceController.text)!,
+        loadedSpeedKmh: _loadedSpeedKmh!,
+        unloadedSpeedKmh: _returnSpeedKmh!,
+        shiftHours: OperationParameterPresets.shiftHours,
+        efficiency: _efficiency!,
+        loaderPerformanceM3h: _loaderYieldM3h!,
       ),
       networkErrorMessage: l10n.networkError,
     );
@@ -169,12 +146,14 @@ class _CalculatorFormState extends ConsumerState<_CalculatorForm> {
   }
 
   void _resetForm() {
-    for (final controller in _controllers) {
-      controller.clear();
-    }
+    _distanceController.clear();
     setState(() {
       _materialId = null;
       _dumpTruckTypeId = null;
+      _loaderYieldM3h = null;
+      _loadedSpeedKmh = null;
+      _returnSpeedKmh = null;
+      _efficiency = null;
     });
   }
 
@@ -196,18 +175,29 @@ class _CalculatorFormState extends ConsumerState<_CalculatorForm> {
           title: l10n.generalData,
           icon: AppIconAction.map,
         ),
-        _OperationInformationForm(
+        OperationParametersBasicForm(
           materialId: _materialId,
           dumpTruckTypeId: _dumpTruckTypeId,
           distanceController: _distanceController,
-          loaderPerformanceController: _loaderPerformanceController,
-          loadedSpeedController: _loadedSpeedController,
-          unloadedSpeedController: _unloadedSpeedController,
-          shiftHoursController: _shiftHoursController,
-          efficiencyController: _efficiencyController,
+          loaderYieldM3h: _loaderYieldM3h,
+          loadedSpeedKmh: _loadedSpeedKmh,
+          returnSpeedKmh: _returnSpeedKmh,
+          efficiency: _efficiency,
           onMaterialChanged: (value) => setState(() => _materialId = value),
           onDumpTruckTypeChanged: (value) {
             setState(() => _dumpTruckTypeId = value);
+          },
+          onLoaderYieldChanged: (value) {
+            setState(() => _loaderYieldM3h = value);
+          },
+          onLoadedSpeedChanged: (value) {
+            setState(() => _loadedSpeedKmh = value);
+          },
+          onReturnSpeedChanged: (value) {
+            setState(() => _returnSpeedKmh = value);
+          },
+          onEfficiencyChanged: (value) {
+            setState(() => _efficiency = value);
           },
         ),
         PremiumSectionCard(
@@ -244,140 +234,6 @@ class _CalculatorSubmitButton extends ConsumerWidget {
       isLoading: isSubmitting,
       trailingIcon: Icons.speed,
       icon: Icons.arrow_forward,
-    );
-  }
-}
-
-class _OperationInformationForm extends ConsumerWidget {
-  const _OperationInformationForm({
-    required this.materialId,
-    required this.dumpTruckTypeId,
-    required this.distanceController,
-    required this.loaderPerformanceController,
-    required this.loadedSpeedController,
-    required this.unloadedSpeedController,
-    required this.shiftHoursController,
-    required this.efficiencyController,
-    required this.onMaterialChanged,
-    required this.onDumpTruckTypeChanged,
-  });
-
-  final String? materialId;
-  final String? dumpTruckTypeId;
-  final TextEditingController distanceController;
-  final TextEditingController loaderPerformanceController;
-  final TextEditingController loadedSpeedController;
-  final TextEditingController unloadedSpeedController;
-  final TextEditingController shiftHoursController;
-  final TextEditingController efficiencyController;
-  final ValueChanged<String?> onMaterialChanged;
-  final ValueChanged<String?> onDumpTruckTypeChanged;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
-    final catalog = ref.watch(catalogViewModelProvider);
-    final materialItems = catalog.materials
-        .map(
-          (material) => DropdownMenuItem(
-            value: material.id,
-            child: Text(material.label, overflow: TextOverflow.ellipsis),
-          ),
-        )
-        .toList();
-    final truckItems = catalog.dumpTruckTypes
-        .map(
-          (truck) => DropdownMenuItem(
-            value: truck.id,
-            child: Text(truck.label, overflow: TextOverflow.ellipsis),
-          ),
-        )
-        .toList();
-
-    return CardContainerWidget(
-      child: Column(
-        spacing: 12,
-        children: [
-          Row(
-            spacing: 12,
-            children: [
-              AppSimpleIcon(action: AppIconAction.truck),
-              Text(
-                l10n.operationParameters,
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              if (catalog.isLoading) ...[
-                const Spacer(),
-                const SizedBox(
-                  width: 18,
-                  height: 18,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                ),
-              ],
-            ],
-          ),
-          Form(
-            child: Column(
-              spacing: 12,
-              children: [
-                DropdownFormField<String>(
-                  key: ValueKey('materials-${catalog.materials.length}'),
-                  label: l10n.inSituMaterial,
-                  hintText: l10n.selectMaterial,
-                  prefixIcon: Icons.layers_outlined,
-                  enabled: !catalog.isLoading && materialItems.isNotEmpty,
-                  value: materialId,
-                  items: materialItems,
-                  onChanged: onMaterialChanged,
-                ),
-                DropdownFormField<String>(
-                  key: ValueKey('trucks-${catalog.dumpTruckTypes.length}'),
-                  label: l10n.haulageUnit,
-                  hintText: l10n.selectUnit,
-                  prefixIcon: Icons.layers_outlined,
-                  enabled: !catalog.isLoading && truckItems.isNotEmpty,
-                  value: dumpTruckTypeId,
-                  items: truckItems,
-                  onChanged: onDumpTruckTypeChanged,
-                ),
-                NumericFieldPair(
-                  leftLabel: l10n.outboundDistance,
-                  leftHint: '4.2',
-                  leftController: distanceController,
-                  leftSuffix: l10n.unitKm,
-                  rightLabel: l10n.loadingYield,
-                  rightHint: '450',
-                  rightController: loaderPerformanceController,
-                  rightSuffix: l10n.unitM3h,
-                ),
-                NumericFieldPair(
-                  leftLabel: l10n.loadedSpeed,
-                  leftHint: '24',
-                  leftController: loadedSpeedController,
-                  leftSuffix: l10n.unitKmh,
-                  rightLabel: l10n.returnSpeed,
-                  rightHint: '38',
-                  rightController: unloadedSpeedController,
-                  rightSuffix: l10n.unitKmh,
-                ),
-                NumericFieldPair(
-                  leftLabel: l10n.shiftHours,
-                  leftHint: '8.0',
-                  leftController: shiftHoursController,
-                  leftSuffix: l10n.unitHours,
-                  rightLabel: l10n.efficiency,
-                  rightHint: '0.85',
-                  rightController: efficiencyController,
-                  rightSuffix: l10n.unitRatio,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
