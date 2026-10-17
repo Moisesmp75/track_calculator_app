@@ -36,6 +36,7 @@ enum AppIconAction {
   lockReset,
   logout,
   warning,
+  refresh
 }
 
 IconData _getIconData(AppIconAction action) {
@@ -110,6 +111,8 @@ IconData _getIconData(AppIconAction action) {
       return Icons.logout_outlined;
     case AppIconAction.warning:
       return Icons.warning_amber_outlined;
+    case AppIconAction.refresh:
+      return Icons.refresh;
   }
 }
 

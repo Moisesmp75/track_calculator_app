@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppTextFormField extends StatelessWidget {
   const AppTextFormField({
@@ -8,6 +9,7 @@ class AppTextFormField extends StatelessWidget {
     this.hintText,
     this.prefixIcon,
     this.suffixIcon,
+    this.suffixText,
     this.keyboardType,
     this.obscureText = false,
     this.validator,
@@ -15,6 +17,8 @@ class AppTextFormField extends StatelessWidget {
     this.enabled = true,
     this.readOnly = false,
     this.autofocus = false,
+    this.autovalidateMode,
+    this.inputFormatters,
   });
 
   final String label;
@@ -22,6 +26,7 @@ class AppTextFormField extends StatelessWidget {
   final String? hintText;
   final IconData? prefixIcon;
   final Widget? suffixIcon;
+  final String? suffixText;
   final TextInputType? keyboardType;
   final bool obscureText;
   final String? Function(String?)? validator;
@@ -29,6 +34,8 @@ class AppTextFormField extends StatelessWidget {
   final bool enabled;
   final bool readOnly;
   final bool autofocus;
+  final AutovalidateMode? autovalidateMode;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -56,16 +63,35 @@ class AppTextFormField extends StatelessWidget {
             keyboardType: keyboardType,
             obscureText: obscureText,
             validator: validator,
+            autovalidateMode: autovalidateMode,
             onChanged: onChanged,
             enabled: enabled,
             readOnly: readOnly,
             autofocus: autofocus,
+            inputFormatters: inputFormatters,
             decoration: InputDecoration(
               hintText: hintText,
               prefixIcon: prefixIcon != null
                   ? Icon(prefixIcon)
                   : null,
-              suffixIcon: suffixIcon,
+              suffixIcon: suffixText != null
+                  ? Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Center(
+                        widthFactor: 1,
+                        child: Text(
+                          suffixText!,
+                          style: theme.textTheme.labelLarge?.copyWith(
+                            color: colorScheme.outline,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    )
+                  : suffixIcon,
+              suffixIconConstraints: suffixText != null
+                  ? const BoxConstraints(minWidth: 0, minHeight: 0)
+                  : null,
             ),
           ),
         ),

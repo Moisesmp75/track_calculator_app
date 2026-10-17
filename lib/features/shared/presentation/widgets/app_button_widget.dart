@@ -9,6 +9,8 @@ class AppButtonWidget extends StatelessWidget {
   final IconData? icon;
   final IconData? trailingIcon;
   final double height;
+  final bool isLoading;
+  final bool enabled;
 
   const AppButtonWidget({
     super.key,
@@ -18,6 +20,8 @@ class AppButtonWidget extends StatelessWidget {
     this.icon,
     this.trailingIcon,
     this.height = 56.0,
+    this.isLoading = false,
+    this.enabled = true,
   });
 
   @override
@@ -62,27 +66,36 @@ class AppButtonWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
         ),
-        onPressed: onPressed,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (trailingIcon != null) ...[
-              Icon(trailingIcon, size: 20, color: fgColor),
-              const SizedBox(width: 8),
-            ],
-            Text(
-              label,
-              style: theme.textTheme.labelLarge?.copyWith(
-                color: fgColor,
-                fontWeight: FontWeight.bold,
+        onPressed: (isLoading || !enabled) ? null : onPressed,
+        child: isLoading
+            ? SizedBox(
+                width: 22,
+                height: 22,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.4,
+                  color: fgColor,
+                ),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (trailingIcon != null) ...[
+                    Icon(trailingIcon, size: 20, color: fgColor),
+                    const SizedBox(width: 8),
+                  ],
+                  Text(
+                    label,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: fgColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  if (icon != null) ...[
+                    const SizedBox(width: 8),
+                    Icon(icon, size: 20, color: fgColor),
+                  ],
+                ],
               ),
-            ),
-            if (icon != null) ...[
-              const SizedBox(width: 8),
-              Icon(icon, size: 20, color: fgColor),
-            ],
-          ],
-        ),
       ),
     );
   }

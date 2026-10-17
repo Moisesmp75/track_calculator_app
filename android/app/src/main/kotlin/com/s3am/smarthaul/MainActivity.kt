@@ -1,4 +1,4 @@
-package com.example.vehicle_calculator
+package com.s3am.smarthaul
 
 import io.flutter.embedding.android.FlutterActivity
 

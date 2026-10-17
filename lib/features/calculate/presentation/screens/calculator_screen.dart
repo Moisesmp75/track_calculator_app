@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:vehicle_calculator/features/shared/presentation/widgets/app_badge_widget.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:vehicle_calculator/core/di/core_providers.dart';
+import 'package:vehicle_calculator/features/calculate/domain/model/create_calculation_input.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/models/result_detail_args.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/screens/result_detail_screen.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/utils/calculation_form_parsers.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/viewmodels/calculator_view_model.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/viewmodels/catalog_view_model.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/models/operation_parameter_presets.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/widgets/calculator_view_header.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/widgets/operation_parameters_basic_form.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/widgets/premium_section_card.dart';
+import 'package:vehicle_calculator/features/shared/presentation/extensions/snackbar_extension.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_button_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_icon_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_scaffold.dart';
-import 'package:vehicle_calculator/features/shared/presentation/widgets/app_text_form_field.dart';
-import 'package:vehicle_calculator/features/shared/presentation/widgets/card_container_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/custom_app_bar.dart';
-import 'package:vehicle_calculator/features/shared/presentation/widgets/drop_down_form_field.dart';
 import 'package:vehicle_calculator/l10n/app_localizations.dart';
 
 class CalculatorScreen extends StatelessWidget {
@@ -31,270 +41,199 @@ class _CalculatorScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 22,
         children: [
-          Text(
-            l10n.haulageSimulation,
-            style: theme.textTheme.bodySmall
-          ),
-          Text(
-            l10n.newCalculation,
-            style: theme.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.w600,
-              fontSize: 24,
-            ),
-          ),
-          const _GeneralInformationForm(),
-          const _OperationInformationForm(),
-          const _CoastAnalysisForm(),
-          AppButtonWidget(
-            label: l10n.calculateFleetAndCycle,
-            onPressed: () {},
-            trailingIcon: Icons.speed,
-            icon: Icons.arrow_forward,
-          ),
-          const SizedBox(height: 10,)
+          CalculatorViewHeader(),
+          _CalculatorForm(),
+          SizedBox(height: 10),
         ],
       ),
     );
   }
 }
 
-class _GeneralInformationForm extends StatelessWidget {
-  const _GeneralInformationForm();
+class _CalculatorForm extends ConsumerStatefulWidget {
+  const _CalculatorForm();
+
+  @override
+  ConsumerState<_CalculatorForm> createState() => _CalculatorFormState();
+}
+
+class _CalculatorFormState extends ConsumerState<_CalculatorForm> {
+  final _distanceController = TextEditingController();
+
+  String? _materialId;
+  String? _dumpTruckTypeId;
+  double? _loaderYieldM3h;
+  double? _loadedSpeedKmh;
+  double? _returnSpeedKmh;
+  double? _efficiency;
+
+  @override
+  void initState() {
+    super.initState();
+    _distanceController.addListener(_onFieldChanged);
+  }
+
+  void _onFieldChanged() => setState(() {});
+
+  @override
+  void dispose() {
+    _distanceController
+      ..removeListener(_onFieldChanged)
+      ..dispose();
+    super.dispose();
+  }
+
+  bool get _canSubmit {
+    if (_materialId == null || _dumpTruckTypeId == null) return false;
+    if (_loaderYieldM3h == null ||
+        _loadedSpeedKmh == null ||
+        _returnSpeedKmh == null ||
+        _efficiency == null) {
+      return false;
+    }
+    return isPositive(parseOptionalNumber(_distanceController.text));
+  }
+
+  Future<void> _submit() async {
+    if (!_canSubmit) return;
+
+    final l10n = AppLocalizations.of(context);
+
+    final result = await ref.read(calculatorViewModelProvider.notifier).submit(
+      input: CreateCalculationInput(
+        materialId: _materialId!,
+        dumpTruckTypeId: _dumpTruckTypeId!,
+        distanceKm: parseOptionalNumber(_distanceController.text)!,
+        loadedSpeedKmh: _loadedSpeedKmh!,
+        unloadedSpeedKmh: _returnSpeedKmh!,
+        shiftHours: OperationParameterPresets.shiftHours,
+        efficiency: _efficiency!,
+        loaderPerformanceM3h: _loaderYieldM3h!,
+      ),
+      networkErrorMessage: l10n.networkError,
+    );
+    if (!mounted) return;
+
+    if (result == null) {
+      final message = ref.read(calculatorViewModelProvider).errorMessage;
+      if (message != null) {
+        context.showSnackBar(message: message);
+      }
+      return;
+    }
+
+    await ref
+        .read(interstitialAdControllerProvider)
+        .showAfterSuccessfulCalculation();
+    if (!mounted) return;
+
+    final popAction = await context.pushNamed(
+      ResultDetailScreen.screenName,
+      extra: ResultDetailArgs(
+        result: result,
+        canModifyParameters: true,
+      ),
+    );
+    if (!mounted) return;
+    if (popAction != ResultPopAction.keepForm) {
+      _resetForm();
+    }
+  }
+
+  void _resetForm() {
+    _distanceController.clear();
+    setState(() {
+      _materialId = null;
+      _dumpTruckTypeId = null;
+      _loaderYieldM3h = null;
+      _loadedSpeedKmh = null;
+      _returnSpeedKmh = null;
+      _efficiency = null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    ref.listen(catalogViewModelProvider, (previous, next) {
+      final message = next.errorMessage;
+      if (message != null && message != previous?.errorMessage) {
+        context.showSnackBar(message: message);
+      }
+    });
+
     final l10n = AppLocalizations.of(context);
-    return CardContainerWidget(
-      child: Column(
-        spacing: 12,
-        children: [
-          Row(
-            spacing: 12,
-            children: [
-              AppSimpleIcon(action: AppIconAction.map),
-              Text(
-                l10n.generalData,
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const Spacer(),
-              AppBadgeWidget(
-                label: l10n.optional,
-                showDot: false,
-              )
-            ],
-          ),
-          Form(
-            child: Column(
-              spacing: 12,
-              children: [
-                AppTextFormField(
-                  label: l10n.miningProject,
-                  hintText: l10n.transportRoute,
-                  suffixIcon: AppSimpleIcon(action: AppIconAction.apartment),
-                  onChanged: (value) {},
-                ),
-                AppTextFormField(
-                  label: l10n.transportRoute,
-                  hintText: l10n.transportRoute,
-                  suffixIcon: AppSimpleIcon(action: AppIconAction.allRoute),
-                  onChanged: (value) {},
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
+
+    return Column(
+      spacing: 22,
+      children: [
+        PremiumSectionCard(
+          title: l10n.generalData,
+          icon: AppIconAction.map,
+        ),
+        OperationParametersBasicForm(
+          materialId: _materialId,
+          dumpTruckTypeId: _dumpTruckTypeId,
+          distanceController: _distanceController,
+          loaderYieldM3h: _loaderYieldM3h,
+          loadedSpeedKmh: _loadedSpeedKmh,
+          returnSpeedKmh: _returnSpeedKmh,
+          efficiency: _efficiency,
+          onMaterialChanged: (value) => setState(() => _materialId = value),
+          onDumpTruckTypeChanged: (value) {
+            setState(() => _dumpTruckTypeId = value);
+          },
+          onLoaderYieldChanged: (value) {
+            setState(() => _loaderYieldM3h = value);
+          },
+          onLoadedSpeedChanged: (value) {
+            setState(() => _loadedSpeedKmh = value);
+          },
+          onReturnSpeedChanged: (value) {
+            setState(() => _returnSpeedKmh = value);
+          },
+          onEfficiencyChanged: (value) {
+            setState(() => _efficiency = value);
+          },
+        ),
+        PremiumSectionCard(
+          title: l10n.costAnalysis,
+          icon: AppIconAction.payments,
+        ),
+        _CalculatorSubmitButton(
+          enabled: _canSubmit,
+          onPressed: _submit,
+        ),
+      ],
     );
   }
 }
 
-class _OperationInformationForm extends StatelessWidget {
-  const _OperationInformationForm();
+class _CalculatorSubmitButton extends ConsumerWidget {
+  const _CalculatorSubmitButton({
+    required this.enabled,
+    required this.onPressed,
+  });
+
+  final bool enabled;
+  final VoidCallback onPressed;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    return CardContainerWidget(
-      child: Column(
-        spacing: 12,
-        children: [
-          Row(
-            spacing: 12,
-            children: [
-              AppSimpleIcon(action: AppIconAction.truck),
-              Text(
-                l10n.operationParameters,
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-          Form(
-            child: Column(
-              spacing: 12,
-              children: [
-                DropdownFormField<String>(
-                  label: l10n.inSituMaterial,
-                  hintText: l10n.selectMaterial,
-                  prefixIcon: Icons.layers_outlined,
-                  items: const [
-                    DropdownMenuItem(
-                      value: '1.85',
-                      child: Text('Grava / Roca Fragmentada - 1.85 t/m³'),
-                    ),
-                    DropdownMenuItem(
-                      value: '2.10',
-                      child: Text('Sulfuros Pesados / Cobre - 2.10 t/m³'),
-                    ),
-                    DropdownMenuItem(
-                      value: '1.60',
-                      child: Text('Estéril de Desbroce / Andesita - 1.60 t/m³'),
-                    ),
-                  ],
-                  onChanged: (newValue) {},
-                ),
-                DropdownFormField<String>(
-                  label: l10n.haulageUnit,
-                  hintText: l10n.selectUnit,
-                  prefixIcon: Icons.layers_outlined,
-                  items: const [
-                    DropdownMenuItem(
-                      value: '1.85',
-                      child: Text('Grava / Roca Fragmentada - 1.85 t/m³'),
-                    ),
-                    DropdownMenuItem(
-                      value: '2.10',
-                      child: Text('Sulfuros Pesados / Cobre - 2.10 t/m³'),
-                    ),
-                    DropdownMenuItem(
-                      value: '1.60',
-                      child: Text('Estéril de Desbroce / Andesita - 1.60 t/m³'),
-                    ),
-                  ],
-                  onChanged: (newValue) {},
-                ),
-                Row(
-                  spacing: 12,
-                  children: [
-                    Expanded(
-                      child: AppTextFormField(
-                        label: l10n.outboundDistance,
-                        hintText: '4.2',
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) {},
-                      ),
-                    ),
-                    Expanded(
-                      child: AppTextFormField(
-                        label: l10n.loadingYield,
-                        hintText: '450',
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) {},
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  spacing: 12,
-                  children: [
-                    Expanded(
-                      child: AppTextFormField(
-                        label: l10n.loadedSpeed,
-                        hintText: '24',
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) {},
-                      ),
-                    ),
-                    Expanded(
-                      child: AppTextFormField(
-                        label: l10n.returnSpeed,
-                        hintText: '38',
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) {},
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  spacing: 12,
-                  children: [
-                    Expanded(
-                      child: AppTextFormField(
-                        label: l10n.shiftHours,
-                        hintText: '8.0',
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) {},
-                      ),
-                    ),
-                    Expanded(
-                      child: AppTextFormField(
-                        label: l10n.efficiency,
-                        hintText: '0.85',
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) {},
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+    final isSubmitting = ref.watch(calculatorViewModelProvider).isSubmitting;
 
-class _CoastAnalysisForm extends StatelessWidget {
-  const _CoastAnalysisForm();
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
-    return CardContainerWidget(
-      child: Column(
-        spacing: 12,
-        children: [
-          Row(
-            spacing: 12,
-            children: [
-              AppSimpleIcon(action: AppIconAction.payments),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    l10n.costAnalysis,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Text(
-                    l10n.estimateUnitRatios,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
+    return AppButtonWidget(
+      label: l10n.calculateFleetAndCycle,
+      onPressed: onPressed,
+      enabled: enabled && !isSubmitting,
+      isLoading: isSubmitting,
+      trailingIcon: Icons.speed,
+      icon: Icons.arrow_forward,
     );
   }
 }

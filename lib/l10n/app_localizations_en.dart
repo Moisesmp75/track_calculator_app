@@ -13,11 +13,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get academicPortal => 'ACADEMIC PORTAL';
 
   @override
-  String get appName => 'Acarreo U';
+  String get appName => 'SmartHaul';
+
+  @override
+  String get appBrandSubtitle => 'Intelligent haulage';
 
   @override
   String get appTagline =>
       'Cycle, shovel and hopper optimization for mining and civil engineering';
+
+  @override
+  String appVersion(String version) {
+    return 'Version $version';
+  }
 
   @override
   String get institutionalEmail => 'Email';
@@ -66,13 +74,50 @@ class AppLocalizationsEn extends AppLocalizations {
   String get firstNames => 'First name';
 
   @override
-  String get firstNamesHint => 'E.g. John Charles';
+  String get firstNamesHint => 'E.g. John';
 
   @override
   String get lastNames => 'Last name';
 
   @override
-  String get lastNamesHint => 'E.g. Perez Mendoza';
+  String get lastNamesHint => 'E.g. Perez';
+
+  @override
+  String get forgotPassword => 'Forgot your password?';
+
+  @override
+  String get recoverPassword => 'RECOVER ACCOUNT';
+
+  @override
+  String get recoverPasswordTitle => 'Recover password';
+
+  @override
+  String get recoverPasswordTagline =>
+      'Enter your account details to verify your identity.';
+
+  @override
+  String get verifyIdentity => 'Verify identity';
+
+  @override
+  String get newPasswordTitle => 'New password';
+
+  @override
+  String get newPasswordTagline => 'Choose a new password for your account.';
+
+  @override
+  String get newPassword => 'New password';
+
+  @override
+  String get confirmNewPassword => 'Confirm new password';
+
+  @override
+  String get saveNewPassword => 'Save password';
+
+  @override
+  String get passwordUpdated => 'Password updated. Sign in to continue.';
+
+  @override
+  String get birthDateRequired => 'Enter your date of birth';
 
   @override
   String get birthDate => 'Date of birth';
@@ -155,7 +200,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Deleting your account will erase all your data, including the saved results history. This action cannot be undone.';
 
   @override
-  String get deleteAccountTwoSteps => 'Delete account (2-step process)';
+  String get deleteAccountTwoSteps => 'Delete account';
 
   @override
   String get calculate => 'Calculate';
@@ -170,6 +215,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calculateFleetAndCycle => 'Calculate fleet and cycle';
 
   @override
+  String get premium => 'Premium';
+
+  @override
+  String get premiumLockedSubtitle => 'Coming in a future version';
+
+  @override
+  String get premiumComingSoonTitle => 'Feature in development';
+
+  @override
+  String get premiumComingSoonMessage =>
+      'We are working on this feature. It will be available in a future version of the app.';
+
+  @override
+  String get gotIt => 'Got it';
+
+  @override
   String get generalData => 'General data';
 
   @override
@@ -179,7 +240,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get miningProject => 'Mining project / site';
 
   @override
+  String get miningProjectHint => 'E.g. North pit';
+
+  @override
   String get transportRoute => 'Transport route';
+
+  @override
+  String get transportRouteHint => 'E.g. Segment A-B';
 
   @override
   String get operationParameters => 'Operation parameters';
@@ -212,6 +279,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shiftHours => 'Shift hours';
 
   @override
+  String get shiftHoursFixedNote => 'Fixed at 8 h in this version';
+
+  @override
+  String get selectLoadingYield => 'Select the loader';
+
+  @override
+  String get selectSpeed => 'Select the speed';
+
+  @override
+  String get selectEfficiency => 'Select the efficiency';
+
+  @override
   String get efficiency => 'Efficiency';
 
   @override
@@ -221,5 +300,203 @@ class AppLocalizationsEn extends AppLocalizations {
   String get estimateUnitRatios => 'Estimate unit ratios';
 
   @override
+  String get dumpTruckHourlyRate => 'Dump truck rate';
+
+  @override
+  String get loaderHourlyRate => 'Loader rate';
+
+  @override
+  String get staffHourlyRate => 'Staff rate';
+
+  @override
+  String get unitKm => 'km';
+
+  @override
+  String get unitKmh => 'km/h';
+
+  @override
+  String get unitM3h => 'm³/h';
+
+  @override
+  String get unitHours => 'h';
+
+  @override
+  String get unitRatio => '0–1';
+
+  @override
+  String get unitPerHour => '/h';
+
+  @override
   String get history => 'History';
+
+  @override
+  String get calculationHistoryTitle => 'Calculation history';
+
+  @override
+  String get historySubtitle =>
+      'Your saved simulations and reports for field and lab work';
+
+  @override
+  String get historySynced => 'Synced';
+
+  @override
+  String get historyEmpty => 'You don\'t have any saved calculations yet.';
+
+  @override
+  String get untitledCalculation => 'Calculation';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get networkError =>
+      'Could not connect to the server. Please try again.';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get invalidBirthDateFormat => 'Use the dd/mm/yyyy format';
+
+  @override
+  String get registerSuccess => 'Account created. Sign in to continue.';
+
+  @override
+  String get invalidEmailFormat => 'Enter a valid email address';
+
+  @override
+  String get invalidNameFormat => 'Letters only, no spaces or numbers';
+
+  @override
+  String get invalidPasswordFormat =>
+      'At least 10 characters, with uppercase, lowercase, and a number';
+
+  @override
+  String get resultDetail => 'Cycle detail';
+
+  @override
+  String get missingCalculationResult => 'There is no result to show.';
+
+  @override
+  String get suggestedTrucks => 'Suggested trucks';
+
+  @override
+  String get cycleTime => 'Cycle time';
+
+  @override
+  String get tripsPerShift => 'Trips per shift';
+
+  @override
+  String get totalVolume => 'Total volume';
+
+  @override
+  String get hourlyOutput => 'Hourly output';
+
+  @override
+  String get swellFactor => 'Swell factor';
+
+  @override
+  String get effectiveCapacity => 'Effective capacity';
+
+  @override
+  String get unitCost => 'Unit cost';
+
+  @override
+  String get unitMinutes => 'min';
+
+  @override
+  String get unitM3 => 'm³';
+
+  @override
+  String get unitPerM3 => '/m³';
+
+  @override
+  String get simulationCompleted => 'Simulation completed';
+
+  @override
+  String get requiredFleet => 'Required fleet';
+
+  @override
+  String get dumpTrucks => 'Dump trucks';
+
+  @override
+  String get fleetBalanceHint =>
+      'Suggested fleet to balance loader and haulage';
+
+  @override
+  String get totalProduction => 'Total production';
+
+  @override
+  String perShiftHours(String hours) {
+    return 'per shift ($hours h)';
+  }
+
+  @override
+  String get yieldLabel => 'Yield';
+
+  @override
+  String get hourlyCapacity => 'hourly capacity';
+
+  @override
+  String get cycleTimeCaption => 'outbound, return and dump';
+
+  @override
+  String get perM3Hauled => 'per hauled m³';
+
+  @override
+  String get operationalBreakdown => 'Operational breakdown and factors';
+
+  @override
+  String get swellFactorLabel => 'Swell factor';
+
+  @override
+  String get effectiveHopperCapacity => 'Effective hopper capacity';
+
+  @override
+  String get tripsPerUnit => 'Trips / shift per unit';
+
+  @override
+  String get tripsUnit => 'trips';
+
+  @override
+  String get modifyParameters => 'Edit parameters';
+
+  @override
+  String swellFactorValue(String factor, String percent) {
+    return '$factor (+$percent%)';
+  }
+
+  @override
+  String get invalidPositiveNumber => 'Enter a number greater than 0';
+
+  @override
+  String get invalidSpeedRange =>
+      'Speed must be greater than 0 and at most 120 km/h';
+
+  @override
+  String get invalidEfficiencyRange =>
+      'Efficiency must be greater than 0 and at most 1';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get deleteCalculationTitle => 'Delete calculation';
+
+  @override
+  String get deleteCalculationMessage =>
+      'This calculation will be removed from your history. This action cannot be undone.';
+
+  @override
+  String get deleteAccountTitle => 'Delete account';
+
+  @override
+  String get signOutTitle => 'Sign out';
+
+  @override
+  String get signOutMessage =>
+      'You will be signed out on this device. You can sign back in whenever you want.';
 }

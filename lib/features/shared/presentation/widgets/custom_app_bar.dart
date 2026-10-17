@@ -32,13 +32,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         bottom: 12,
       ),
       decoration: BoxDecoration(
-        color: colorScheme.surface.withAlpha(217),
+        // color: colorScheme.surface.withAlpha(217),
+        color: colorScheme.surface,
         boxShadow: [
           BoxShadow(
             color: theme.brightness == Brightness.dark
-                ? Colors.black.withAlpha(40)
-                : Colors.black.withAlpha(3),
+                ? Colors.black.withAlpha(100)
+                : Colors.black.withAlpha(30),
             blurRadius: 8,
+            spreadRadius: 4,
             offset: const Offset(0, 1),
           ),
         ],
@@ -98,26 +100,26 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ],
             ),
           ),
-          Material(
-            color: Colors.transparent,
-            child: InkWell(
-              borderRadius: BorderRadius.circular(16),
-              onTap: onProfileTap,
-              child: Container(
-                width: 32,
-                height: 32,
-                decoration: BoxDecoration(
-                  color: colorScheme.primary,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.person_outline,
-                  size: 18,
-                  color: colorScheme.onPrimary,
-                ),
-              ),
-            ),
-          ),
+          // Material(
+          //   color: Colors.transparent,
+          //   child: InkWell(
+          //     borderRadius: BorderRadius.circular(16),
+          //     onTap: onProfileTap,
+          //     child: Container(
+          //       width: 32,
+          //       height: 32,
+          //       decoration: BoxDecoration(
+          //         color: colorScheme.primary,
+          //         shape: BoxShape.circle,
+          //       ),
+          //       child: Icon(
+          //         Icons.person_outline,
+          //         size: 18,
+          //         color: colorScheme.onPrimary,
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

@@ -13,11 +13,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get academicPortal => 'PORTAL ACADÉMICO';
 
   @override
-  String get appName => 'Acarreo U';
+  String get appName => 'SmartHaul';
+
+  @override
+  String get appBrandSubtitle => 'Transporte inteligente';
 
   @override
   String get appTagline =>
       'Optimización de ciclo, pala y tolvas para minería e ingeniería civil';
+
+  @override
+  String appVersion(String version) {
+    return 'Versión $version';
+  }
 
   @override
   String get institutionalEmail => 'Correo';
@@ -63,16 +71,54 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ingresa tus datos personales para acceder a la calculadora y simulaciones de transporte minero.';
 
   @override
-  String get firstNames => 'Nombres';
+  String get firstNames => 'Nombre';
 
   @override
-  String get firstNamesHint => 'Ej. Juan Carlos';
+  String get firstNamesHint => 'Ej. Juan';
 
   @override
-  String get lastNames => 'Apellidos';
+  String get lastNames => 'Apellido';
 
   @override
-  String get lastNamesHint => 'Ej. Pérez Mendoza';
+  String get lastNamesHint => 'Ej. Pérez';
+
+  @override
+  String get forgotPassword => '¿Olvidaste tu contraseña?';
+
+  @override
+  String get recoverPassword => 'RECUPERAR CUENTA';
+
+  @override
+  String get recoverPasswordTitle => 'Recuperar contraseña';
+
+  @override
+  String get recoverPasswordTagline =>
+      'Ingresa los datos de tu cuenta para verificar tu identidad.';
+
+  @override
+  String get verifyIdentity => 'Verificar identidad';
+
+  @override
+  String get newPasswordTitle => 'Nueva contraseña';
+
+  @override
+  String get newPasswordTagline => 'Elige una contraseña nueva para tu cuenta.';
+
+  @override
+  String get newPassword => 'Nueva contraseña';
+
+  @override
+  String get confirmNewPassword => 'Confirmar nueva contraseña';
+
+  @override
+  String get saveNewPassword => 'Guardar contraseña';
+
+  @override
+  String get passwordUpdated =>
+      'Contraseña actualizada. Inicia sesión para continuar.';
+
+  @override
+  String get birthDateRequired => 'Ingresa tu fecha de nacimiento';
 
   @override
   String get birthDate => 'Fecha de Nacimiento';
@@ -156,7 +202,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Al borrar tu cuenta se borrarán todos tus datos, incluyendo el historial de resultados guardados. Esta acción no puede ser revertida.';
 
   @override
-  String get deleteAccountTwoSteps => 'Eliminar cuenta (proceso de 2 pasos)';
+  String get deleteAccountTwoSteps => 'Eliminar cuenta';
 
   @override
   String get calculate => 'Calcular';
@@ -171,6 +217,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get calculateFleetAndCycle => 'Calcular Flota y Ciclo';
 
   @override
+  String get premium => 'Premium';
+
+  @override
+  String get premiumLockedSubtitle => 'Disponible en una próxima versión';
+
+  @override
+  String get premiumComingSoonTitle => 'Funcionalidad en desarrollo';
+
+  @override
+  String get premiumComingSoonMessage =>
+      'Estamos trabajando en esta función. Estará disponible en una versión futura de la aplicación.';
+
+  @override
+  String get gotIt => 'Entendido';
+
+  @override
   String get generalData => 'Datos Generales';
 
   @override
@@ -180,7 +242,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get miningProject => 'Proyecto Minero / Obra';
 
   @override
+  String get miningProjectHint => 'Ej. Tajo Norte';
+
+  @override
   String get transportRoute => 'Ruta de Transporte';
+
+  @override
+  String get transportRouteHint => 'Ej. Tramo A-B';
 
   @override
   String get operationParameters => 'Parámetros de Operación';
@@ -213,6 +281,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get shiftHours => 'Jornada Turno';
 
   @override
+  String get shiftHoursFixedNote => 'Fija en 8 h en esta versión';
+
+  @override
+  String get selectLoadingYield => 'Selecciona el equipo';
+
+  @override
+  String get selectSpeed => 'Selecciona la velocidad';
+
+  @override
+  String get selectEfficiency => 'Selecciona la eficiencia';
+
+  @override
   String get efficiency => 'Eficiencia';
 
   @override
@@ -222,5 +302,203 @@ class AppLocalizationsEs extends AppLocalizations {
   String get estimateUnitRatios => 'Estimar ratios unitarios';
 
   @override
+  String get dumpTruckHourlyRate => 'Costo volquete';
+
+  @override
+  String get loaderHourlyRate => 'Costo pala';
+
+  @override
+  String get staffHourlyRate => 'Costo personal';
+
+  @override
+  String get unitKm => 'km';
+
+  @override
+  String get unitKmh => 'km/h';
+
+  @override
+  String get unitM3h => 'm³/h';
+
+  @override
+  String get unitHours => 'h';
+
+  @override
+  String get unitRatio => '0–1';
+
+  @override
+  String get unitPerHour => '/h';
+
+  @override
   String get history => 'Historial';
+
+  @override
+  String get calculationHistoryTitle => 'Historial de cálculos';
+
+  @override
+  String get historySubtitle =>
+      'Tus simulaciones y reportes guardados para campo y laboratorio';
+
+  @override
+  String get historySynced => 'Sincronizado';
+
+  @override
+  String get historyEmpty => 'Aún no tienes cálculos guardados.';
+
+  @override
+  String get untitledCalculation => 'Cálculo';
+
+  @override
+  String get fieldRequired => 'Este campo es obligatorio';
+
+  @override
+  String get networkError =>
+      'No se pudo conectar con el servidor. Inténtalo de nuevo.';
+
+  @override
+  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
+
+  @override
+  String get invalidBirthDateFormat => 'Usa el formato dd/mm/aaaa';
+
+  @override
+  String get registerSuccess => 'Cuenta creada. Inicia sesión para continuar.';
+
+  @override
+  String get invalidEmailFormat => 'Ingresa un correo con formato válido';
+
+  @override
+  String get invalidNameFormat => 'Solo letras, sin espacios ni números';
+
+  @override
+  String get invalidPasswordFormat =>
+      'Mínimo 10 caracteres, con mayúscula, minúscula y número';
+
+  @override
+  String get resultDetail => 'Detalle de ciclo';
+
+  @override
+  String get missingCalculationResult => 'No hay un resultado para mostrar.';
+
+  @override
+  String get suggestedTrucks => 'Volquetes sugeridos';
+
+  @override
+  String get cycleTime => 'Tiempo de ciclo';
+
+  @override
+  String get tripsPerShift => 'Viajes por turno';
+
+  @override
+  String get totalVolume => 'Volumen total';
+
+  @override
+  String get hourlyOutput => 'Productividad';
+
+  @override
+  String get swellFactor => 'Esponjamiento';
+
+  @override
+  String get effectiveCapacity => 'Capacidad efectiva';
+
+  @override
+  String get unitCost => 'Costo unitario';
+
+  @override
+  String get unitMinutes => 'min';
+
+  @override
+  String get unitM3 => 'm³';
+
+  @override
+  String get unitPerM3 => '/m³';
+
+  @override
+  String get simulationCompleted => 'Simulación completada';
+
+  @override
+  String get requiredFleet => 'Flota requerida';
+
+  @override
+  String get dumpTrucks => 'Volquetes';
+
+  @override
+  String get fleetBalanceHint =>
+      'Flota sugerida para equilibrar pala y acarreo';
+
+  @override
+  String get totalProduction => 'Producción total';
+
+  @override
+  String perShiftHours(String hours) {
+    return 'por turno ($hours h)';
+  }
+
+  @override
+  String get yieldLabel => 'Rendimiento';
+
+  @override
+  String get hourlyCapacity => 'capacidad horaria';
+
+  @override
+  String get cycleTimeCaption => 'ida, vuelta y descarga';
+
+  @override
+  String get perM3Hauled => 'por m³ transportado';
+
+  @override
+  String get operationalBreakdown => 'Desglose operativo y factores';
+
+  @override
+  String get swellFactorLabel => 'Factor de esponjamiento';
+
+  @override
+  String get effectiveHopperCapacity => 'Capacidad tolva efectiva';
+
+  @override
+  String get tripsPerUnit => 'Viajes / turno por unidad';
+
+  @override
+  String get tripsUnit => 'viajes';
+
+  @override
+  String get modifyParameters => 'Modificar parámetros';
+
+  @override
+  String swellFactorValue(String factor, String percent) {
+    return '$factor (+$percent%)';
+  }
+
+  @override
+  String get invalidPositiveNumber => 'Ingresa un número mayor a 0';
+
+  @override
+  String get invalidSpeedRange =>
+      'La velocidad debe ser mayor a 0 y hasta 120 km/h';
+
+  @override
+  String get invalidEfficiencyRange =>
+      'La eficiencia debe ser mayor a 0 y hasta 1';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get delete => 'Eliminar';
+
+  @override
+  String get deleteCalculationTitle => 'Eliminar cálculo';
+
+  @override
+  String get deleteCalculationMessage =>
+      'Este cálculo se eliminará de tu historial. Esta acción no se puede deshacer.';
+
+  @override
+  String get deleteAccountTitle => 'Eliminar cuenta';
+
+  @override
+  String get signOutTitle => 'Cerrar sesión';
+
+  @override
+  String get signOutMessage =>
+      'Se cerrará tu sesión en este dispositivo. Podrás volver a entrar cuando quieras.';
 }

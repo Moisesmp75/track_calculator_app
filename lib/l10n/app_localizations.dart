@@ -107,14 +107,26 @@ abstract class AppLocalizations {
   /// No description provided for @appName.
   ///
   /// In es, this message translates to:
-  /// **'Acarreo U'**
+  /// **'SmartHaul'**
   String get appName;
+
+  /// No description provided for @appBrandSubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Transporte inteligente'**
+  String get appBrandSubtitle;
 
   /// No description provided for @appTagline.
   ///
   /// In es, this message translates to:
   /// **'Optimización de ciclo, pala y tolvas para minería e ingeniería civil'**
   String get appTagline;
+
+  /// No description provided for @appVersion.
+  ///
+  /// In es, this message translates to:
+  /// **'Versión {version}'**
+  String appVersion(String version);
 
   /// No description provided for @institutionalEmail.
   ///
@@ -203,26 +215,98 @@ abstract class AppLocalizations {
   /// No description provided for @firstNames.
   ///
   /// In es, this message translates to:
-  /// **'Nombres'**
+  /// **'Nombre'**
   String get firstNames;
 
   /// No description provided for @firstNamesHint.
   ///
   /// In es, this message translates to:
-  /// **'Ej. Juan Carlos'**
+  /// **'Ej. Juan'**
   String get firstNamesHint;
 
   /// No description provided for @lastNames.
   ///
   /// In es, this message translates to:
-  /// **'Apellidos'**
+  /// **'Apellido'**
   String get lastNames;
 
   /// No description provided for @lastNamesHint.
   ///
   /// In es, this message translates to:
-  /// **'Ej. Pérez Mendoza'**
+  /// **'Ej. Pérez'**
   String get lastNamesHint;
+
+  /// No description provided for @forgotPassword.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Olvidaste tu contraseña?'**
+  String get forgotPassword;
+
+  /// No description provided for @recoverPassword.
+  ///
+  /// In es, this message translates to:
+  /// **'RECUPERAR CUENTA'**
+  String get recoverPassword;
+
+  /// No description provided for @recoverPasswordTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Recuperar contraseña'**
+  String get recoverPasswordTitle;
+
+  /// No description provided for @recoverPasswordTagline.
+  ///
+  /// In es, this message translates to:
+  /// **'Ingresa los datos de tu cuenta para verificar tu identidad.'**
+  String get recoverPasswordTagline;
+
+  /// No description provided for @verifyIdentity.
+  ///
+  /// In es, this message translates to:
+  /// **'Verificar identidad'**
+  String get verifyIdentity;
+
+  /// No description provided for @newPasswordTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Nueva contraseña'**
+  String get newPasswordTitle;
+
+  /// No description provided for @newPasswordTagline.
+  ///
+  /// In es, this message translates to:
+  /// **'Elige una contraseña nueva para tu cuenta.'**
+  String get newPasswordTagline;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In es, this message translates to:
+  /// **'Nueva contraseña'**
+  String get newPassword;
+
+  /// No description provided for @confirmNewPassword.
+  ///
+  /// In es, this message translates to:
+  /// **'Confirmar nueva contraseña'**
+  String get confirmNewPassword;
+
+  /// No description provided for @saveNewPassword.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardar contraseña'**
+  String get saveNewPassword;
+
+  /// No description provided for @passwordUpdated.
+  ///
+  /// In es, this message translates to:
+  /// **'Contraseña actualizada. Inicia sesión para continuar.'**
+  String get passwordUpdated;
+
+  /// No description provided for @birthDateRequired.
+  ///
+  /// In es, this message translates to:
+  /// **'Ingresa tu fecha de nacimiento'**
+  String get birthDateRequired;
 
   /// No description provided for @birthDate.
   ///
@@ -383,7 +467,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteAccountTwoSteps.
   ///
   /// In es, this message translates to:
-  /// **'Eliminar cuenta (proceso de 2 pasos)'**
+  /// **'Eliminar cuenta'**
   String get deleteAccountTwoSteps;
 
   /// No description provided for @calculate.
@@ -410,6 +494,36 @@ abstract class AppLocalizations {
   /// **'Calcular Flota y Ciclo'**
   String get calculateFleetAndCycle;
 
+  /// No description provided for @premium.
+  ///
+  /// In es, this message translates to:
+  /// **'Premium'**
+  String get premium;
+
+  /// No description provided for @premiumLockedSubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Disponible en una próxima versión'**
+  String get premiumLockedSubtitle;
+
+  /// No description provided for @premiumComingSoonTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Funcionalidad en desarrollo'**
+  String get premiumComingSoonTitle;
+
+  /// No description provided for @premiumComingSoonMessage.
+  ///
+  /// In es, this message translates to:
+  /// **'Estamos trabajando en esta función. Estará disponible en una versión futura de la aplicación.'**
+  String get premiumComingSoonMessage;
+
+  /// No description provided for @gotIt.
+  ///
+  /// In es, this message translates to:
+  /// **'Entendido'**
+  String get gotIt;
+
   /// No description provided for @generalData.
   ///
   /// In es, this message translates to:
@@ -428,11 +542,23 @@ abstract class AppLocalizations {
   /// **'Proyecto Minero / Obra'**
   String get miningProject;
 
+  /// No description provided for @miningProjectHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Ej. Tajo Norte'**
+  String get miningProjectHint;
+
   /// No description provided for @transportRoute.
   ///
   /// In es, this message translates to:
   /// **'Ruta de Transporte'**
   String get transportRoute;
+
+  /// No description provided for @transportRouteHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Ej. Tramo A-B'**
+  String get transportRouteHint;
 
   /// No description provided for @operationParameters.
   ///
@@ -494,6 +620,30 @@ abstract class AppLocalizations {
   /// **'Jornada Turno'**
   String get shiftHours;
 
+  /// No description provided for @shiftHoursFixedNote.
+  ///
+  /// In es, this message translates to:
+  /// **'Fija en 8 h en esta versión'**
+  String get shiftHoursFixedNote;
+
+  /// No description provided for @selectLoadingYield.
+  ///
+  /// In es, this message translates to:
+  /// **'Selecciona el equipo'**
+  String get selectLoadingYield;
+
+  /// No description provided for @selectSpeed.
+  ///
+  /// In es, this message translates to:
+  /// **'Selecciona la velocidad'**
+  String get selectSpeed;
+
+  /// No description provided for @selectEfficiency.
+  ///
+  /// In es, this message translates to:
+  /// **'Selecciona la eficiencia'**
+  String get selectEfficiency;
+
   /// No description provided for @efficiency.
   ///
   /// In es, this message translates to:
@@ -512,11 +662,383 @@ abstract class AppLocalizations {
   /// **'Estimar ratios unitarios'**
   String get estimateUnitRatios;
 
+  /// No description provided for @dumpTruckHourlyRate.
+  ///
+  /// In es, this message translates to:
+  /// **'Costo volquete'**
+  String get dumpTruckHourlyRate;
+
+  /// No description provided for @loaderHourlyRate.
+  ///
+  /// In es, this message translates to:
+  /// **'Costo pala'**
+  String get loaderHourlyRate;
+
+  /// No description provided for @staffHourlyRate.
+  ///
+  /// In es, this message translates to:
+  /// **'Costo personal'**
+  String get staffHourlyRate;
+
+  /// No description provided for @unitKm.
+  ///
+  /// In es, this message translates to:
+  /// **'km'**
+  String get unitKm;
+
+  /// No description provided for @unitKmh.
+  ///
+  /// In es, this message translates to:
+  /// **'km/h'**
+  String get unitKmh;
+
+  /// No description provided for @unitM3h.
+  ///
+  /// In es, this message translates to:
+  /// **'m³/h'**
+  String get unitM3h;
+
+  /// No description provided for @unitHours.
+  ///
+  /// In es, this message translates to:
+  /// **'h'**
+  String get unitHours;
+
+  /// No description provided for @unitRatio.
+  ///
+  /// In es, this message translates to:
+  /// **'0–1'**
+  String get unitRatio;
+
+  /// No description provided for @unitPerHour.
+  ///
+  /// In es, this message translates to:
+  /// **'/h'**
+  String get unitPerHour;
+
   /// No description provided for @history.
   ///
   /// In es, this message translates to:
   /// **'Historial'**
   String get history;
+
+  /// No description provided for @calculationHistoryTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Historial de cálculos'**
+  String get calculationHistoryTitle;
+
+  /// No description provided for @historySubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus simulaciones y reportes guardados para campo y laboratorio'**
+  String get historySubtitle;
+
+  /// No description provided for @historySynced.
+  ///
+  /// In es, this message translates to:
+  /// **'Sincronizado'**
+  String get historySynced;
+
+  /// No description provided for @historyEmpty.
+  ///
+  /// In es, this message translates to:
+  /// **'Aún no tienes cálculos guardados.'**
+  String get historyEmpty;
+
+  /// No description provided for @untitledCalculation.
+  ///
+  /// In es, this message translates to:
+  /// **'Cálculo'**
+  String get untitledCalculation;
+
+  /// No description provided for @fieldRequired.
+  ///
+  /// In es, this message translates to:
+  /// **'Este campo es obligatorio'**
+  String get fieldRequired;
+
+  /// No description provided for @networkError.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo conectar con el servidor. Inténtalo de nuevo.'**
+  String get networkError;
+
+  /// No description provided for @passwordsDoNotMatch.
+  ///
+  /// In es, this message translates to:
+  /// **'Las contraseñas no coinciden'**
+  String get passwordsDoNotMatch;
+
+  /// No description provided for @invalidBirthDateFormat.
+  ///
+  /// In es, this message translates to:
+  /// **'Usa el formato dd/mm/aaaa'**
+  String get invalidBirthDateFormat;
+
+  /// No description provided for @registerSuccess.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuenta creada. Inicia sesión para continuar.'**
+  String get registerSuccess;
+
+  /// No description provided for @invalidEmailFormat.
+  ///
+  /// In es, this message translates to:
+  /// **'Ingresa un correo con formato válido'**
+  String get invalidEmailFormat;
+
+  /// No description provided for @invalidNameFormat.
+  ///
+  /// In es, this message translates to:
+  /// **'Solo letras, sin espacios ni números'**
+  String get invalidNameFormat;
+
+  /// No description provided for @invalidPasswordFormat.
+  ///
+  /// In es, this message translates to:
+  /// **'Mínimo 10 caracteres, con mayúscula, minúscula y número'**
+  String get invalidPasswordFormat;
+
+  /// No description provided for @resultDetail.
+  ///
+  /// In es, this message translates to:
+  /// **'Detalle de ciclo'**
+  String get resultDetail;
+
+  /// No description provided for @missingCalculationResult.
+  ///
+  /// In es, this message translates to:
+  /// **'No hay un resultado para mostrar.'**
+  String get missingCalculationResult;
+
+  /// No description provided for @suggestedTrucks.
+  ///
+  /// In es, this message translates to:
+  /// **'Volquetes sugeridos'**
+  String get suggestedTrucks;
+
+  /// No description provided for @cycleTime.
+  ///
+  /// In es, this message translates to:
+  /// **'Tiempo de ciclo'**
+  String get cycleTime;
+
+  /// No description provided for @tripsPerShift.
+  ///
+  /// In es, this message translates to:
+  /// **'Viajes por turno'**
+  String get tripsPerShift;
+
+  /// No description provided for @totalVolume.
+  ///
+  /// In es, this message translates to:
+  /// **'Volumen total'**
+  String get totalVolume;
+
+  /// No description provided for @hourlyOutput.
+  ///
+  /// In es, this message translates to:
+  /// **'Productividad'**
+  String get hourlyOutput;
+
+  /// No description provided for @swellFactor.
+  ///
+  /// In es, this message translates to:
+  /// **'Esponjamiento'**
+  String get swellFactor;
+
+  /// No description provided for @effectiveCapacity.
+  ///
+  /// In es, this message translates to:
+  /// **'Capacidad efectiva'**
+  String get effectiveCapacity;
+
+  /// No description provided for @unitCost.
+  ///
+  /// In es, this message translates to:
+  /// **'Costo unitario'**
+  String get unitCost;
+
+  /// No description provided for @unitMinutes.
+  ///
+  /// In es, this message translates to:
+  /// **'min'**
+  String get unitMinutes;
+
+  /// No description provided for @unitM3.
+  ///
+  /// In es, this message translates to:
+  /// **'m³'**
+  String get unitM3;
+
+  /// No description provided for @unitPerM3.
+  ///
+  /// In es, this message translates to:
+  /// **'/m³'**
+  String get unitPerM3;
+
+  /// No description provided for @simulationCompleted.
+  ///
+  /// In es, this message translates to:
+  /// **'Simulación completada'**
+  String get simulationCompleted;
+
+  /// No description provided for @requiredFleet.
+  ///
+  /// In es, this message translates to:
+  /// **'Flota requerida'**
+  String get requiredFleet;
+
+  /// No description provided for @dumpTrucks.
+  ///
+  /// In es, this message translates to:
+  /// **'Volquetes'**
+  String get dumpTrucks;
+
+  /// No description provided for @fleetBalanceHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Flota sugerida para equilibrar pala y acarreo'**
+  String get fleetBalanceHint;
+
+  /// No description provided for @totalProduction.
+  ///
+  /// In es, this message translates to:
+  /// **'Producción total'**
+  String get totalProduction;
+
+  /// No description provided for @perShiftHours.
+  ///
+  /// In es, this message translates to:
+  /// **'por turno ({hours} h)'**
+  String perShiftHours(String hours);
+
+  /// No description provided for @yieldLabel.
+  ///
+  /// In es, this message translates to:
+  /// **'Rendimiento'**
+  String get yieldLabel;
+
+  /// No description provided for @hourlyCapacity.
+  ///
+  /// In es, this message translates to:
+  /// **'capacidad horaria'**
+  String get hourlyCapacity;
+
+  /// No description provided for @cycleTimeCaption.
+  ///
+  /// In es, this message translates to:
+  /// **'ida, vuelta y descarga'**
+  String get cycleTimeCaption;
+
+  /// No description provided for @perM3Hauled.
+  ///
+  /// In es, this message translates to:
+  /// **'por m³ transportado'**
+  String get perM3Hauled;
+
+  /// No description provided for @operationalBreakdown.
+  ///
+  /// In es, this message translates to:
+  /// **'Desglose operativo y factores'**
+  String get operationalBreakdown;
+
+  /// No description provided for @swellFactorLabel.
+  ///
+  /// In es, this message translates to:
+  /// **'Factor de esponjamiento'**
+  String get swellFactorLabel;
+
+  /// No description provided for @effectiveHopperCapacity.
+  ///
+  /// In es, this message translates to:
+  /// **'Capacidad tolva efectiva'**
+  String get effectiveHopperCapacity;
+
+  /// No description provided for @tripsPerUnit.
+  ///
+  /// In es, this message translates to:
+  /// **'Viajes / turno por unidad'**
+  String get tripsPerUnit;
+
+  /// No description provided for @tripsUnit.
+  ///
+  /// In es, this message translates to:
+  /// **'viajes'**
+  String get tripsUnit;
+
+  /// No description provided for @modifyParameters.
+  ///
+  /// In es, this message translates to:
+  /// **'Modificar parámetros'**
+  String get modifyParameters;
+
+  /// No description provided for @swellFactorValue.
+  ///
+  /// In es, this message translates to:
+  /// **'{factor} (+{percent}%)'**
+  String swellFactorValue(String factor, String percent);
+
+  /// No description provided for @invalidPositiveNumber.
+  ///
+  /// In es, this message translates to:
+  /// **'Ingresa un número mayor a 0'**
+  String get invalidPositiveNumber;
+
+  /// No description provided for @invalidSpeedRange.
+  ///
+  /// In es, this message translates to:
+  /// **'La velocidad debe ser mayor a 0 y hasta 120 km/h'**
+  String get invalidSpeedRange;
+
+  /// No description provided for @invalidEfficiencyRange.
+  ///
+  /// In es, this message translates to:
+  /// **'La eficiencia debe ser mayor a 0 y hasta 1'**
+  String get invalidEfficiencyRange;
+
+  /// No description provided for @cancel.
+  ///
+  /// In es, this message translates to:
+  /// **'Cancelar'**
+  String get cancel;
+
+  /// No description provided for @delete.
+  ///
+  /// In es, this message translates to:
+  /// **'Eliminar'**
+  String get delete;
+
+  /// No description provided for @deleteCalculationTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Eliminar cálculo'**
+  String get deleteCalculationTitle;
+
+  /// No description provided for @deleteCalculationMessage.
+  ///
+  /// In es, this message translates to:
+  /// **'Este cálculo se eliminará de tu historial. Esta acción no se puede deshacer.'**
+  String get deleteCalculationMessage;
+
+  /// No description provided for @deleteAccountTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Eliminar cuenta'**
+  String get deleteAccountTitle;
+
+  /// No description provided for @signOutTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Cerrar sesión'**
+  String get signOutTitle;
+
+  /// No description provided for @signOutMessage.
+  ///
+  /// In es, this message translates to:
+  /// **'Se cerrará tu sesión en este dispositivo. Podrás volver a entrar cuando quieras.'**
+  String get signOutMessage;
 }
 
 class _AppLocalizationsDelegate

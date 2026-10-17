@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:vehicle_calculator/features/auth/presentation/screens/login_screen.dart';
-import 'package:vehicle_calculator/features/shared/presentation/providers/locale_provider.dart';
-import 'package:vehicle_calculator/features/shared/presentation/providers/theme_provider.dart';
+import 'package:vehicle_calculator/features/auth/presentation/viewmodels/auth_view_model.dart';
+import 'package:vehicle_calculator/features/settings/presentation/viewmodels/profile_view_model.dart';
+import 'package:vehicle_calculator/features/shared/presentation/viewmodels/locale_view_model.dart';
+import 'package:vehicle_calculator/features/shared/presentation/viewmodels/theme_view_model.dart';
+import 'package:vehicle_calculator/features/shared/presentation/extensions/snackbar_extension.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_badge_widget.dart';
+import 'package:vehicle_calculator/features/shared/presentation/widgets/app_confirm_sheet.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_button_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_icon_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_scaffold.dart';
+import 'package:vehicle_calculator/features/shared/presentation/widgets/app_version_label.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/card_container_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/custom_app_bar.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/toogle_switch_dual.dart';
@@ -55,29 +60,36 @@ class _ProfileSettingsScreenView extends StatelessWidget {
               ),
               Text(
                 l10n.settingsSubtitle,
-                style: theme.textTheme.bodySmall,
+                style: theme.textTheme.bodyMedium,
               ),
             ],
           ),
           const _PersonalInformationSection(),
           const _PreferencesSection(),
           const _AccountAndSecuritySection(),
-          const SizedBox(height: 10),
+          const Center(child: AppVersionLabel()),
         ],
       ),
     );
   }
 }
 
-class _PersonalInformationSection extends StatelessWidget {
+class _PersonalInformationSection extends ConsumerWidget {
   const _PersonalInformationSection();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
+    final profile = ref.watch(profileViewModelProvider);
+
     return CardContainerWidget(
-      child: Column(
+      child: profile.isLoading
+          ? const SizedBox(
+              height: 88,
+              child: Center(child: CircularProgressIndicator()),
+            )
+          : Column(
         spacing: 12,
         children: [
           Row(
@@ -90,16 +102,17 @@ class _PersonalInformationSection extends StatelessWidget {
                   spacing: 4,
                   children: [
                     Text(
-                      'Carlos Mendoza Davila',
+                      profile.user?.displayName.toLowerCase() ?? '—',
                       style: theme.textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    AppBadgeWidget(
-                      label: 'carlos.mendoza@gmail.com',
-                      showDot: false,
-                      status: AppBadgeStatus.info,
-                    )
+                    if (profile.user?.email.isNotEmpty == true)
+                      AppBadgeWidget(
+                        label: profile.user!.email,
+                        showDot: false,
+                        status: AppBadgeStatus.info,
+                      )
                   ],
                 ),
               )
@@ -142,15 +155,17 @@ class _PersonalInformationSection extends StatelessWidget {
   }
 }
 
-class _PreferencesSection extends StatelessWidget {
+class _PreferencesSection extends ConsumerWidget {
   const _PreferencesSection();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
-    final localeProvider = context.watch<LocaleProvider>();
-    final themeProvider = context.watch<ThemeProvider>();
+    final locale = ref.watch(localeViewModelProvider);
+    final themeMode = ref.watch(themeViewModelProvider);
+    final isSpanish = locale.languageCode == 'es';
+    final isDark = themeMode == ThemeMode.dark;
 
     return Column(
       spacing: 12,
@@ -163,10 +178,8 @@ class _PreferencesSection extends StatelessWidget {
             children: [
               AppToogleSwitchDual<String>(
                 title: l10n.systemLanguage,
-                statusText: localeProvider.isSpanish
-                    ? l10n.spanishActive
-                    : l10n.englishActive,
-                selectedValue: localeProvider.locale.languageCode,
+                statusText: isSpanish ? l10n.spanishActive : l10n.englishActive,
+                selectedValue: locale.languageCode,
                 option1: ToogleSwitchDualOption(
                   value: 'es',
                   label: l10n.spanishPe,
@@ -178,13 +191,13 @@ class _PreferencesSection extends StatelessWidget {
                   icon: Icons.translate,
                 ),
                 valueChanged: (val) {
-                  context.read<LocaleProvider>().setLocale(Locale(val));
+                  ref.read(localeViewModelProvider.notifier).setLocale(Locale(val));
                 },
               ),
               AppToogleSwitchDual<ThemeMode>(
                 title: l10n.visualAppearance,
-                statusText: themeProvider.isDark ? l10n.darkMode : l10n.lightMode,
-                selectedValue: themeProvider.themeMode,
+                statusText: isDark ? l10n.darkMode : l10n.lightMode,
+                selectedValue: themeMode,
                 option1: ToogleSwitchDualOption(
                   value: ThemeMode.light,
                   label: l10n.lightMode,
@@ -196,7 +209,7 @@ class _PreferencesSection extends StatelessWidget {
                   icon: Icons.dark_mode_outlined,
                 ),
                 valueChanged: (mode) {
-                  context.read<ThemeProvider>().setThemeMode(mode);
+                  ref.read(themeViewModelProvider.notifier).setThemeMode(mode);
                 },
               ),
             ],
@@ -207,11 +220,11 @@ class _PreferencesSection extends StatelessWidget {
   }
 }
 
-class _AccountAndSecuritySection extends StatelessWidget {
+class _AccountAndSecuritySection extends ConsumerWidget {
   const _AccountAndSecuritySection();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
     return Column(
@@ -254,9 +267,7 @@ class _AccountAndSecuritySection extends StatelessWidget {
               ),
               AppButtonWidget(
                 label: l10n.signOut,
-                onPressed: () {
-                  context.goNamed(LoginScreen.screenName);
-                },
+                onPressed: () => _signOut(context, ref),
                 trailingIcon: Icons.logout,
                 variant: AppButtonVariant.primary,
               ),
@@ -285,16 +296,12 @@ class _AccountAndSecuritySection extends StatelessWidget {
                       l10n.deleteAccountWarning,
                       style: theme.textTheme.bodyMedium,
                     ),
-                    CardContainerWidget(
-                      color: theme.colorScheme.errorContainer,
-                      child: Text(
-                        l10n.deleteAccountTwoSteps,
-                        style: theme.textTheme.bodyLarge?.copyWith(
-                          color: theme.colorScheme.onErrorContainer,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+                    AppButtonWidget(
+                      label: l10n.deleteAccountTwoSteps,
+                      variant: AppButtonVariant.danger,
+                      trailingIcon: Icons.delete_outline,
+                      isLoading: ref.watch(authViewModelProvider).isLoading,
+                      onPressed: () => _deleteAccount(context, ref),
                     ),
                   ],
                 ),
@@ -305,4 +312,50 @@ class _AccountAndSecuritySection extends StatelessWidget {
       ],
     );
   }
+}
+
+Future<void> _signOut(BuildContext context, WidgetRef ref) async {
+  final l10n = AppLocalizations.of(context);
+  final confirmed = await showAppConfirmSheet(
+    context: context,
+    title: l10n.signOutTitle,
+    message: l10n.signOutMessage,
+    confirmLabel: l10n.signOut,
+    cancelLabel: l10n.cancel,
+    confirmVariant: AppButtonVariant.primary,
+    confirmIcon: Icons.logout,
+  );
+  if (!confirmed || !context.mounted) return;
+
+  await ref.read(authViewModelProvider.notifier).logout();
+  if (context.mounted) {
+    context.goNamed(LoginScreen.screenName);
+  }
+}
+
+Future<void> _deleteAccount(BuildContext context, WidgetRef ref) async {
+  final l10n = AppLocalizations.of(context);
+  final confirmed = await showAppConfirmSheet(
+    context: context,
+    title: l10n.deleteAccountTitle,
+    message: l10n.deleteAccountWarning,
+    confirmLabel: l10n.delete,
+    cancelLabel: l10n.cancel,
+  );
+  if (!confirmed || !context.mounted) return;
+
+  final success = await ref.read(authViewModelProvider.notifier).deleteAccount(
+    networkErrorMessage: l10n.networkError,
+  );
+  if (!context.mounted) return;
+
+  if (!success) {
+    final message = ref.read(authViewModelProvider).errorMessage;
+    if (message != null) {
+      context.showSnackBar(message: message);
+    }
+    return;
+  }
+
+  context.goNamed(LoginScreen.screenName);
 }
