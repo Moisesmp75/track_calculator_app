@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vehicle_calculator/features/shared/presentation/widgets/card_container_widget.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/widgets/result_accent_card.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/widgets/result_section_tone.dart';
 
 class ResultStatCard extends StatelessWidget {
   const ResultStatCard({
@@ -8,6 +9,7 @@ class ResultStatCard extends StatelessWidget {
     required this.icon,
     required this.value,
     required this.caption,
+    required this.tone,
     this.unit,
   });
 
@@ -15,47 +17,51 @@ class ResultStatCard extends StatelessWidget {
   final IconData icon;
   final String value;
   final String caption;
+  final ResultSectionTone tone;
   final String? unit;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final colors = tone.colorsOf(theme.brightness);
 
-    return CardContainerWidget(
+    return ResultAccentCard(
+      tone: tone,
+      fillHeight: true,
+      header: Row(
+        children: [
+          Expanded(
+            child: Text(
+              label.toUpperCase(),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Icon(icon, size: 18),
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 8,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  label.toUpperCase(),
-                  style: theme.textTheme.labelSmall?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.4,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              Icon(icon, size: 18, color: colorScheme.outline),
-            ],
-          ),
           Text.rich(
             TextSpan(
               text: value,
               style: theme.textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.w700,
+                color: colors.foreground,
+                fontWeight: FontWeight.w800,
+                fontSize: 26,
+                height: 1.1,
               ),
               children: [
                 if (unit != null)
                   TextSpan(
                     text: ' $unit',
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      color: colors.foreground,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
                     ),
                   ),
               ],
@@ -64,7 +70,8 @@ class ResultStatCard extends StatelessWidget {
           Text(
             caption,
             style: theme.textTheme.bodySmall?.copyWith(
-              color: colorScheme.onSurfaceVariant,
+              color: colors.muted,
+              height: 1.3,
             ),
           ),
         ],

@@ -5,6 +5,8 @@ import 'package:vehicle_calculator/features/calculate/presentation/models/result
 import 'package:vehicle_calculator/features/calculate/presentation/utils/result_number_format.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/widgets/breakdown_header.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/widgets/breakdown_row.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/widgets/result_accent_card.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/widgets/result_section_tone.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/widgets/cycle_cost_row.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/widgets/fleet_card.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/widgets/modify_parameters_button.dart';
@@ -12,7 +14,6 @@ import 'package:vehicle_calculator/features/calculate/presentation/widgets/produ
 import 'package:vehicle_calculator/features/calculate/presentation/widgets/result_empty_state.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/widgets/result_header.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/app_scaffold.dart';
-import 'package:vehicle_calculator/features/shared/presentation/widgets/card_container_widget.dart';
 import 'package:vehicle_calculator/features/shared/presentation/widgets/custom_app_bar.dart';
 import 'package:vehicle_calculator/l10n/app_localizations.dart';
 
@@ -92,49 +93,60 @@ class _BreakdownCardState extends State<_BreakdownCard> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final calculation = widget.calculation;
-    final swellPercent =
-        ((calculation.calculatedSwellFactor - 1) * 100).clamp(0, 999);
+    final colors = ResultSectionTone.breakdown.colorsOf(
+      Theme.of(context).brightness,
+    );
+    final swellPercent = ((calculation.calculatedSwellFactor - 1) * 100).clamp(
+      0,
+      999,
+    );
 
-    return CardContainerWidget(
-      child: Column(
-        children: [
-          BreakdownHeader(
-            isExpanded: _isExpanded,
-            onTap: () => setState(() => _isExpanded = !_isExpanded),
-          ),
-          if (_isExpanded) ...[
-            const SizedBox(height: 4),
-            BreakdownRow(
-              icon: Icons.layers_outlined,
-              label: l10n.swellFactorLabel,
-              value: l10n.swellFactorValue(
-                ResultNumberFormat.decimal(
-                  context,
-                  calculation.calculatedSwellFactor,
-                  maxDecimals: 3,
-                ),
-                ResultNumberFormat.decimal(
-                  context,
-                  swellPercent.toDouble(),
-                  maxDecimals: 0,
-                ),
-              ),
-            ),
-            BreakdownRow(
-              icon: Icons.inventory_2_outlined,
-              label: l10n.effectiveHopperCapacity,
-              value:
-                  '${ResultNumberFormat.decimal(context, calculation.effectiveCapacityM3)} ${l10n.unitM3}',
-            ),
-            BreakdownRow(
-              icon: Icons.sync_outlined,
-              label: l10n.tripsPerUnit,
-              value:
-                  '${ResultNumberFormat.decimal(context, calculation.tripsPerShiftPerTruck)} ${l10n.tripsUnit}',
-            ),
-          ],
-        ],
+    return ResultAccentCard(
+      tone: ResultSectionTone.breakdown,
+      bodyPadding: _isExpanded
+          ? const EdgeInsets.fromLTRB(14, 8, 14, 8)
+          : EdgeInsets.zero,
+      header: BreakdownHeader(
+        isExpanded: _isExpanded,
+        onTap: () => setState(() => _isExpanded = !_isExpanded),
       ),
+      child: _isExpanded
+          ? Column(
+              children: [
+                BreakdownRow(
+                  colors: colors,
+                  icon: Icons.layers_outlined,
+                  label: l10n.swellFactorLabel,
+                  value: l10n.swellFactorValue(
+                    ResultNumberFormat.decimal(
+                      context,
+                      calculation.calculatedSwellFactor,
+                      maxDecimals: 3,
+                    ),
+                    ResultNumberFormat.decimal(
+                      context,
+                      swellPercent.toDouble(),
+                      maxDecimals: 0,
+                    ),
+                  ),
+                ),
+                BreakdownRow(
+                  colors: colors,
+                  icon: Icons.inventory_2_outlined,
+                  label: l10n.effectiveHopperCapacity,
+                  value:
+                      '${ResultNumberFormat.decimal(context, calculation.effectiveCapacityM3)} ${l10n.unitM3}',
+                ),
+                BreakdownRow(
+                  colors: colors,
+                  icon: Icons.sync_outlined,
+                  label: l10n.tripsPerUnit,
+                  value:
+                      '${ResultNumberFormat.decimal(context, calculation.tripsPerShiftPerTruck)} ${l10n.tripsUnit}',
+                ),
+              ],
+            )
+          : const SizedBox.shrink(),
     );
   }
 }

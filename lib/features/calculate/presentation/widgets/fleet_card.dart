@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vehicle_calculator/features/calculate/domain/model/calculation_history.dart';
 import 'package:vehicle_calculator/features/calculate/presentation/utils/result_number_format.dart';
-import 'package:vehicle_calculator/features/shared/presentation/widgets/app_icon_widget.dart';
-import 'package:vehicle_calculator/features/shared/presentation/widgets/card_container_widget.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/widgets/result_accent_card.dart';
+import 'package:vehicle_calculator/features/calculate/presentation/widgets/result_section_tone.dart';
 import 'package:vehicle_calculator/l10n/app_localizations.dart';
 
 class FleetCard extends StatelessWidget {
@@ -14,53 +14,39 @@ class FleetCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final colors = ResultSectionTone.fleet.colorsOf(theme.brightness);
 
-    return CardContainerWidget(
+    return ResultAccentCard(
+      tone: ResultSectionTone.fleet,
+      header: Row(
+        children: [
+          Expanded(child: Text(l10n.requiredFleet.toUpperCase())),
+          const SizedBox(width: 8),
+          const Icon(Icons.local_shipping_outlined, size: 20),
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 12,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      l10n.requiredFleet.toUpperCase(),
-                      style: theme.textTheme.labelSmall?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 0.6,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text.rich(
-                      TextSpan(
-                        text: ResultNumberFormat.count(
-                          calculation.suggestedTrucksCount,
-                        ),
-                        style: theme.textTheme.displaySmall?.copyWith(
-                          fontWeight: FontWeight.w700,
-                          height: 1,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: ' ${l10n.dumpTrucks}',
-                            style: theme.textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+          Text.rich(
+            TextSpan(
+              text: ResultNumberFormat.count(calculation.suggestedTrucksCount),
+              style: theme.textTheme.displaySmall?.copyWith(
+                color: colors.foreground,
+                fontWeight: FontWeight.w800,
+                height: 1,
               ),
-              AppSimpleIcon(action: AppIconAction.truck, size: 28),
-            ],
+              children: [
+                TextSpan(
+                  text: ' ${l10n.dumpTrucks}',
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: colors.foreground,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
           ),
           Row(
             spacing: 8,
@@ -68,13 +54,13 @@ class FleetCard extends StatelessWidget {
               Icon(
                 Icons.check_circle_outline,
                 size: 18,
-                color: colorScheme.primary,
+                color: colors.foreground,
               ),
               Expanded(
                 child: Text(
                   l10n.fleetBalanceHint,
                   style: theme.textTheme.bodySmall?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
+                    color: colors.muted,
                   ),
                 ),
               ),
